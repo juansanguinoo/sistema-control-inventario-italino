@@ -1,0 +1,111 @@
+/* Estilos para el Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 17.5rem;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  transition: width 0.3s ease;
+}
+
+.navbar.collapsed {
+  width: 5rem;
+}
+
+.navbar.expanded {
+  width: 17.5rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.navigation {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.nav-item {
+  border-radius: 10px;
+  color: #53545C;
+  cursor: pointer;
+  padding: 1rem 1rem 1rem 3rem; 
+  margin: 0.8rem 0;
+}
+
+.nav-item:hover {
+  background-color: #b4c1ff;
+}
+
+.nav-item:focus {
+  background-color: #5570f1;
+  outline: none;
+}
+
+.logout {
+  margin-top: auto;
+  cursor: pointer;
+}
+
+/* Estilos para el Header */
+.header {
+  height: 60px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  transition: width 0.3s ease;
+}
+
+.header.collapsed {
+  width: calc(100% - 5rem);
+  margin-left: 5rem;
+}
+
+.header.expanded {
+  width: calc(100% - 17.5rem);
+  margin-left: 17.5rem;
+}
+
+.circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.green {
+  background-color: green;
+}
+
+.red {
+  background-color: red;
+}
+
+.title {
+  font-size: 1.2rem;
+}
+
+/* Estilos para el Main */
+.main {
+  height: calc(100vh - 60px);
+  background-color: #eef0fa;
+  padding: 1rem;
+  transition: margin-left 0.3s ease;
+}
+
+.main.collapsed {
+  margin-left: 5rem;
+}
+
+.main.expanded {
+  margin-left: 17.5rem;
+}
