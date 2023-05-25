@@ -1,3 +1,9 @@
+import Dashboard from "../../../assets/DashboardSVG.svg";
+import Bag from "../../../assets/Bag.svg";
+import User from "../../../assets/User.svg";
+import Folder from "../../../assets/Folder.svg";
+import { NavItemHome } from "./NavItem";
+
 interface INavbarProps {
   expanded: boolean;
   toggleNavbar: () => void;
@@ -9,17 +15,13 @@ export const NavbarHome = ({ expanded, toggleNavbar }: INavbarProps) => {
       <div className="logo" onClick={toggleNavbar}>
         LOGO
       </div>
-      {expanded && (
-        <>
-          <ul className="navigation">
-            <li className="nav-item">Item 1</li>
-            <li className="nav-item">Item 2</li>
-            <li className="nav-item">Item 3</li>
-            <li className="nav-item">Item 4</li>
-          </ul>
-          <div className="logout">Logout</div>
-        </>
-      )}
+      <ul className="navigation">
+        <NavItemHome expanded={expanded} icon={Dashboard} label="Dashboard" />
+        <NavItemHome expanded={expanded} icon={Bag} label="Ordenes" />
+        <NavItemHome expanded={expanded} icon={User} label="Clientes" />
+        <NavItemHome expanded={expanded} icon={Folder} label="Productos" />
+      </ul>
+      <div className="logout">Logout</div>
     </div>
   );
 };
