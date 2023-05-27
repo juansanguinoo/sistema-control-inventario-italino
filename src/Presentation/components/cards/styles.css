@@ -1,0 +1,15 @@
+.card {
+  background-color: #ffffff;
+  border-radius: 0.6rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 1rem;
+  padding: 1rem;
+  width: calc(50% - 2rem);
+  height: 10rem;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: calc(100% - 2rem);
+  }
+}

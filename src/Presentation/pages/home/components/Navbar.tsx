@@ -10,8 +10,10 @@ interface INavbarProps {
 }
 
 export const NavbarHome = ({ expanded, toggleNavbar }: INavbarProps) => {
+  const navbarClass = expanded ? "expanded" : "collapsed";
+
   return (
-    <div className={`navbar ${expanded ? "expanded" : "collapsed"}`}>
+    <div className={`navbar ${navbarClass}`}>
       <div className="logo" onClick={toggleNavbar}>
         LOGO
       </div>
