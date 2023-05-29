@@ -3,6 +3,8 @@ import { HeaderButton } from "../../../components/buttons/HeaderButton";
 import { CardInformation } from "../../../components/cards/CardInformation";
 import { TableInformation } from "../../../components/tables/TableInformation";
 
+// import { Inventory } from "../../inventory/Inventory";
+
 interface IMainProps {
   expanded: boolean;
 }
