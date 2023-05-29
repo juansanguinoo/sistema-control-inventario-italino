@@ -13,7 +13,6 @@ export const TableInformation = () => {
   const getData = async () => {
     await axios.get(endpoint).then((response) => {
       const data = response.data;
-      console.log(data);
       setProducts(data);
     });
   };
@@ -62,7 +61,7 @@ export const TableInformation = () => {
 
   const options = {
     filterType: "checkbox" as FilterType,
-    rowsPerPage: 7,
+    rowsPerPage: 10,
     tableBodyHeight: "450px",
   };
 

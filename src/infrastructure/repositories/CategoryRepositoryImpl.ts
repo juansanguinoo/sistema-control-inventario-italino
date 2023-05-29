@@ -3,6 +3,7 @@ import { ICategoryRepository } from "../../domain/repositories/ICategoryReposito
 import { injectable, inject } from "inversify";
 import { TYPES } from "../../config/types";
 import type { IHttpClient } from "../api/interfaces/IHttpClient";
+import { ResponseAPI } from "../api/models/ResponseApi";
 
 @injectable()
 export class CategoryRepositoryImpl implements ICategoryRepository {
@@ -17,29 +18,31 @@ export class CategoryRepositoryImpl implements ICategoryRepository {
     this.baseUrl = `${apiUrl}/categories`;
   }
 
-  async getCategories(): Promise<Category[]> {
-    const response = await this.httpClient.get<Category[]>(this.baseUrl);
+  async getCategories(): Promise<ResponseAPI<Category[]>> {
+    const response = await this.httpClient.get<ResponseAPI<Category[]>>(
+      this.baseUrl
+    );
     return response;
   }
-  async createCategory(category: Category): Promise<Category> {
-    const response: Category = await this.httpClient.post(
-      this.baseUrl,
-      category
-    );
+  async createCategory(category: Category): Promise<ResponseAPI<Category>> {
+    const response = await this.httpClient.post<
+      ResponseAPI<Category>,
+      Category
+    >(this.baseUrl, category);
     return response;
   }
   async updateCategory(
     categoryId: number,
     category: Category
-  ): Promise<boolean> {
-    const response: boolean = await this.httpClient.put(
+  ): Promise<ResponseAPI<boolean>> {
+    const response = await this.httpClient.put<ResponseAPI<boolean>, Category>(
       `${this.baseUrl}/${categoryId}`,
       category
     );
     return response;
   }
-  async deleteCategory(categoryId: number): Promise<boolean> {
-    const response: boolean = await this.httpClient.delete(
+  async deleteCategory(categoryId: number): Promise<ResponseAPI<boolean>> {
+    const response = await this.httpClient.delete<ResponseAPI<boolean>>(
       `${this.baseUrl}/${categoryId}`
     );
     return response;
