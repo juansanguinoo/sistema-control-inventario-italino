@@ -1,0 +1,15 @@
+.header-button {
+  padding: 0.5rem;
+  background-color: #5570f1; /* Color hover del navbar */
+  border: none;
+  border-radius: 1rem;
+  color: #fff;
+  cursor: pointer;
+  margin: 1rem;
+  width: 15rem;
+}
+
+.header-button:hover {
+  background-color: #b4c1ff; /* Color hover del navbar */
+  color: #000;
+}
