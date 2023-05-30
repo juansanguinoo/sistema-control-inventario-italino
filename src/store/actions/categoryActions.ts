@@ -23,6 +23,10 @@ import { UpdateCategoryUseCase } from "../../domain/useCases/category/UpdateCate
 import { DeleteCategoryUseCase } from "../../domain/useCases/category/DeleteCategoryUseCase";
 import { container } from "../../config/inversifyContainer";
 import { AppError } from "../../domain/errors/AppError";
+import {
+  adaptCategories,
+  adaptCategory,
+} from "../../infrastructure/adapters/categoryAdapter";
 
 export type CategoryAction =
   | GetCategoriesAction
@@ -50,7 +54,7 @@ export const getCategories = () => {
       const categories = await useCase.execute();
       dispatch({
         type: CategoryActionTypes.GET_CATEGORIES_SUCCESS,
-        payload: categories,
+        payload: adaptCategories(categories.data!),
       });
     } catch (error: any) {
       const handleError = new AppError(
@@ -76,7 +80,7 @@ export const createCategory = (category: Category) => {
       const createdCategory = await useCase.execute(category);
       dispatch({
         type: CategoryActionTypes.CREATE_CATEGORY_SUCCESS,
-        payload: createdCategory,
+        payload: adaptCategory(createdCategory.data!),
       });
     } catch (error) {
       dispatch({
@@ -99,7 +103,7 @@ export const updateCategory = (idCategory: number, category: Category) => {
       const updatedCategory = await useCase.execute(idCategory, category);
       dispatch({
         type: CategoryActionTypes.UPDATE_CATEGORY_SUCCESS,
-        payload: updatedCategory,
+        payload: updatedCategory.data!,
       });
     } catch (error) {
       dispatch({
@@ -119,10 +123,10 @@ export const deleteCategory = (idCategory: number) => {
     dispatch({ type: CategoryActionTypes.DELETE_CATEGORY });
 
     try {
-      await useCase.execute(idCategory);
+      const deleteCategory = await useCase.execute(idCategory);
       dispatch({
         type: CategoryActionTypes.DELETE_CATEGORY_SUCCESS,
-        payload: idCategory,
+        payload: deleteCategory.data!,
       });
     } catch (error) {
       dispatch({
