@@ -4,6 +4,7 @@ import { CardInformation } from "../../../components/cards/CardInformation";
 import { TableInformation } from "../../../components/tables/TableInformation";
 
 // import { Inventory } from "../../inventory/Inventory";
+// import { Category } from "../../category/Category";
 
 interface IMainProps {
   expanded: boolean;
@@ -23,6 +24,8 @@ export const MainHome = ({ expanded }: IMainProps) => {
         <CardInformation />
         <TableInformation />
       </div>
+      {/* <Inventory /> */}
+      {/* <Category /> */}
     </div>
   );
 };
