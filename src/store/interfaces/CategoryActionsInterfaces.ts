@@ -1,5 +1,5 @@
 import { AppError } from "../../domain/errors/AppError";
-import { Category } from "../../domain/models/Category";
+import { CategoryModel } from "../../domain/models/CategoryModel";
 import { CategoryActionTypes } from "../enums/CategoryActionsEnum";
 
 export interface GetCategoriesAction {
@@ -8,7 +8,7 @@ export interface GetCategoriesAction {
 
 export interface GetCategoriesSuccessAction {
   type: CategoryActionTypes.GET_CATEGORIES_SUCCESS;
-  payload: Category[];
+  payload: CategoryModel[];
 }
 
 export interface GetCategoriesFailureAction {
@@ -22,7 +22,7 @@ export interface CreateCategoryAction {
 
 export interface CreateCategorySuccessAction {
   type: CategoryActionTypes.CREATE_CATEGORY_SUCCESS;
-  payload: Category;
+  payload: CategoryModel;
 }
 
 export interface CreateCategoryFailureAction {
@@ -36,7 +36,7 @@ export interface UpdateCategoryAction {
 
 export interface UpdateCategorySuccessAction {
   type: CategoryActionTypes.UPDATE_CATEGORY_SUCCESS;
-  payload: Category;
+  payload: boolean;
 }
 
 export interface UpdateCategoryFailureAction {
@@ -50,7 +50,7 @@ export interface DeleteCategoryAction {
 
 export interface DeleteCategorySuccessAction {
   type: CategoryActionTypes.DELETE_CATEGORY_SUCCESS;
-  payload: number; // categoryId
+  payload: boolean;
 }
 
 export interface DeleteCategoryFailureAction {
