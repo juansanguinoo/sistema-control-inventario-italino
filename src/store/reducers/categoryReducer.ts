@@ -1,10 +1,10 @@
-import { Category } from "../../domain/models/Category";
+import { CategoryModel } from "../../domain/models/CategoryModel";
 import { CategoryAction } from "../actions/categoryActions";
 import { CategoryActionTypes } from "../enums/CategoryActionsEnum";
 
 export interface CategoryState {
   loading: boolean;
-  categories: Category[] | [];
+  categories: CategoryModel[] | [];
   error: Error | null;
 }
 
@@ -60,11 +60,7 @@ export const categoryReducer = (
       return {
         ...state,
         loading: false,
-        categories: state.categories.map((category) =>
-          category.id_category === action.payload.id_category
-            ? action.payload
-            : category
-        ),
+        categories: state.categories,
         error: null,
       };
 
@@ -73,7 +69,7 @@ export const categoryReducer = (
         ...state,
         loading: false,
         categories: state.categories.filter(
-          (category) => category.id_category !== action.payload
+          (category) => category.idCategory !== action.payload
         ),
         error: null,
       };

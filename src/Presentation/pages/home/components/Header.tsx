@@ -1,11 +1,18 @@
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store/store";
+
 interface IHeaderProps {
-  expanded: boolean;
+  title: string;
 }
 
-export const HeaderHome = ({ expanded }: IHeaderProps) => {
+export const HeaderHome = ({ title }: IHeaderProps) => {
+  const navbarOpen = useSelector(
+    (state: RootState) => state.navbarReducer.stateOpen
+  );
+
   return (
-    <div className={`header ${expanded ? "expanded" : "collapsed"}`}>
-      <div className="title">Dashboard</div>
+    <div className={`header ${navbarOpen ? "expanded" : "collapsed"}`}>
+      <div className="title">{title}</div>
       <div className="circle green"></div>
       <div className="circle red"></div>
     </div>

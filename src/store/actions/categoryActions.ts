@@ -100,10 +100,10 @@ export const updateCategory = (idCategory: number, category: Category) => {
     dispatch({ type: CategoryActionTypes.UPDATE_CATEGORY });
 
     try {
-      const updatedCategory = await useCase.execute(idCategory, category);
+      await useCase.execute(idCategory, category);
       dispatch({
         type: CategoryActionTypes.UPDATE_CATEGORY_SUCCESS,
-        payload: updatedCategory.data!,
+        payload: idCategory,
       });
     } catch (error) {
       dispatch({
@@ -123,10 +123,10 @@ export const deleteCategory = (idCategory: number) => {
     dispatch({ type: CategoryActionTypes.DELETE_CATEGORY });
 
     try {
-      const deleteCategory = await useCase.execute(idCategory);
+      await useCase.execute(idCategory);
       dispatch({
         type: CategoryActionTypes.DELETE_CATEGORY_SUCCESS,
-        payload: deleteCategory.data!,
+        payload: idCategory,
       });
     } catch (error) {
       dispatch({

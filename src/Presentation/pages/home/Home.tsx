@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { NavbarHome } from "./components/Navbar";
 import { HeaderHome } from "./components/Header";
-import { MainHome } from "./components/Main";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategories } from "../../../store/actions/categoryActions";
 import { Dispatch } from "redux";
-import { RootState } from "../../../store/store";
 import "./styles.css";
+import { handleNavbar } from "../../../store/actions/navbarActions";
+import { getCategories } from "../../../store/actions/categoryActions";
+import { RootState } from "../../../store/store";
 
 export const Home = () => {
   const [navbarExpanded, setNavbarExpanded] = useState<boolean>(true);
@@ -14,30 +14,27 @@ export const Home = () => {
   const categories = useSelector(
     (state: RootState) => state.categoryReducer.categories
   );
-  const isLoading = useSelector(
-    (state: RootState) => state.categoryReducer.loading
-  );
 
   useEffect(() => {
-    dispatch(getCategories());
-  }, [dispatch]);
-
-  useEffect(() => {
-    console.log("categories", categories);
-    console.log("isLoading", isLoading);
+    console.log(categories);
   }, [categories]);
 
   const toggleNavbar = () => {
     setNavbarExpanded(!navbarExpanded);
   };
 
+  useEffect(() => {
+    dispatch(getCategories());
+  }, []);
+
+  useEffect(() => {
+    dispatch(handleNavbar(navbarExpanded));
+  }, [navbarExpanded]);
+
   return (
     <div className="app">
-      <NavbarHome expanded={navbarExpanded} toggleNavbar={toggleNavbar} />
-      <div className="content">
-        <HeaderHome expanded={navbarExpanded} />
-        <MainHome expanded={navbarExpanded} />
-      </div>
+      <HeaderHome title={"Inventory"} />
+      <NavbarHome toggleNavbar={toggleNavbar} />
     </div>
   );
 };
