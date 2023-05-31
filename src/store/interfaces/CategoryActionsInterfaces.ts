@@ -36,7 +36,7 @@ export interface UpdateCategoryAction {
 
 export interface UpdateCategorySuccessAction {
   type: CategoryActionTypes.UPDATE_CATEGORY_SUCCESS;
-  payload: boolean;
+  payload: number;
 }
 
 export interface UpdateCategoryFailureAction {
@@ -50,7 +50,7 @@ export interface DeleteCategoryAction {
 
 export interface DeleteCategorySuccessAction {
   type: CategoryActionTypes.DELETE_CATEGORY_SUCCESS;
-  payload: boolean;
+  payload: number;
 }
 
 export interface DeleteCategoryFailureAction {

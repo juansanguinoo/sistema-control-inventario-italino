@@ -59,9 +59,10 @@
   background-color: #b4c1ff;
 }
 
-.nav-item:focus {
+.nav-item.active {
   background-color: #5570f1;
   outline: none;
+  color: #fff;
 }
 
 .logout {

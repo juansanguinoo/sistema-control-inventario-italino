@@ -1,16 +1,24 @@
 import Dashboard from "../../../assets/DashboardSVG.svg";
+import DashboardWhite from "../../../assets/DashboardWhite.svg";
 import Bag from "../../../assets/Bag.svg";
+import BagWhite from "../../../assets/BagWhite.svg";
 import User from "../../../assets/User.svg";
+import UserWhite from "../../../assets/UserWhite.svg";
 import Folder from "../../../assets/Folder.svg";
+import FolderWhite from "../../../assets/FolderWhite.svg";
 import { NavItemHome } from "./NavItem";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store/store";
 
 interface INavbarProps {
-  expanded: boolean;
   toggleNavbar: () => void;
 }
 
-export const NavbarHome = ({ expanded, toggleNavbar }: INavbarProps) => {
-  const navbarClass = expanded ? "expanded" : "collapsed";
+export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
+  const navbarOpen = useSelector(
+    (state: RootState) => state.navbarReducer.stateOpen
+  );
+  const navbarClass = navbarOpen ? "expanded" : "collapsed";
 
   return (
     <div className={`navbar ${navbarClass}`}>
@@ -18,10 +26,30 @@ export const NavbarHome = ({ expanded, toggleNavbar }: INavbarProps) => {
         LOGO
       </div>
       <ul className="navigation">
-        <NavItemHome expanded={expanded} icon={Dashboard} label="Dashboard" />
-        <NavItemHome expanded={expanded} icon={Bag} label="Ordenes" />
-        <NavItemHome expanded={expanded} icon={User} label="Clientes" />
-        <NavItemHome expanded={expanded} icon={Folder} label="Productos" />
+        <NavItemHome
+          icon={Dashboard}
+          iconWhite={DashboardWhite}
+          label="Dashboard"
+          to={"/"}
+        />
+        <NavItemHome
+          icon={Bag}
+          iconWhite={BagWhite}
+          label="Ordenes"
+          to={"/orders"}
+        />
+        <NavItemHome
+          icon={User}
+          iconWhite={UserWhite}
+          label="Clientes"
+          to={"/customers"}
+        />
+        <NavItemHome
+          icon={Folder}
+          iconWhite={FolderWhite}
+          label="Productos"
+          to={"/inventory"}
+        />
       </ul>
       <div className="logout">Logout</div>
     </div>
