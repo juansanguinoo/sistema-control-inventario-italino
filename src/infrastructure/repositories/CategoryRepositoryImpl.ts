@@ -4,6 +4,7 @@ import { injectable, inject } from "inversify";
 import { TYPES } from "../../config/types";
 import type { IHttpClient } from "../api/interfaces/IHttpClient";
 import { ResponseAPI } from "../api/models/ResponseApi";
+import { CategoryModel } from "../../domain/models/CategoryModel";
 
 @injectable()
 export class CategoryRepositoryImpl implements ICategoryRepository {
@@ -12,7 +13,7 @@ export class CategoryRepositoryImpl implements ICategoryRepository {
 
   constructor(
     @inject(TYPES.HttpClient) httpClient: IHttpClient,
-    apiUrl: string = "http://localhost:3000"
+    apiUrl = "http://localhost:3000"
   ) {
     this.httpClient = httpClient;
     this.baseUrl = `${apiUrl}/categories`;
@@ -24,10 +25,12 @@ export class CategoryRepositoryImpl implements ICategoryRepository {
     );
     return response;
   }
-  async createCategory(category: Category): Promise<ResponseAPI<Category>> {
+  async createCategory(
+    category: CategoryModel
+  ): Promise<ResponseAPI<Category>> {
     const response = await this.httpClient.post<
       ResponseAPI<Category>,
-      Category
+      CategoryModel
     >(this.baseUrl, category);
     return response;
   }

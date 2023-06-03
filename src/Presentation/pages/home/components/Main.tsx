@@ -5,9 +5,6 @@ import { TableInformation } from "../../../components/tables/TableInformation";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 
-// import { Inventory } from "../../inventory/Inventory";
-// import { Category } from "../../category/Category";
-
 interface IMainProps {
   title: string;
 }
@@ -29,8 +26,6 @@ export const MainHome = ({ title }: IMainProps) => {
         <CardInformation />
         <TableInformation />
       </div>
-      {/* <Inventory /> */}
-      {/* <Category /> */}
     </div>
   );
 };

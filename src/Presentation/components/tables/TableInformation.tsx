@@ -1,77 +1,109 @@
 import "./styles.css";
-import MUIDataTable from "mui-datatables";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { CategoryModel } from "../../../domain/models/CategoryModel";
+import { IColumnsDataTable } from "../../interfaces/interfaces";
+import { DataGrid } from "@mui/x-data-grid";
+import { ModalCategory } from "../../pages/category/components/Modal";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "redux";
+import { useState } from "react";
 
-export type FilterType = "checkbox" | "dropdown" | "multiselect" | "textField";
+interface ITableInformationProps {
+  categories: CategoryModel[] | [];
+  columns: IColumnsDataTable[];
+  deleteCategory: (id: number) => void;
+}
 
-export const TableInformation = () => {
-  const [products, setProducts] = useState([]);
+export const TableInformation = ({
+  categories,
+  columns,
+  deleteCategory,
+}: ITableInformationProps) => {
+  const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [actions, setActions] = useState<string>("");
+  const [categoryData, setCategoryData] = useState<CategoryModel>({
+    nameCategory: "",
+    referenceCategory: "",
+    statusCategory: "Inactive",
+    descriptionCategory: "",
+  });
 
-  const endpoint = "https://fakestoreapi.com/products";
-
-  const getData = async () => {
-    await axios.get(endpoint).then((response) => {
-      const data = response.data;
-      setProducts(data);
-    });
+  const openModal = (props?: string) => {
+    if (props) {
+      setActions(props);
+    }
+    setShowModal(true);
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
-  const columns = [
+  const handleWatch = (params: any) => {
+    setCategoryData(params.row);
+    openModal("watch");
+  };
+
+  const handleEdit = (params: any) => {
+    setCategoryData(params.row);
+    openModal("edit");
+  };
+
+  const handleDelete = (params: any) => {
+    dispatch(deleteCategory(params.row.idCategory));
+  };
+
+  const rowsWithId = categories.map((category) => {
+    return {
+      ...category,
+      id: category.idCategory,
+    };
+  });
+
+  const actionsColumns = [
     {
-      name: "image",
-      label: "Image",
-      options: {
-        filter: true,
-        sort: true,
-        customBodyRender: (value: string) => (
-          <img src={value} alt="product" className="table-image" />
-        ),
-      },
-    },
-    {
-      name: "title",
-      label: "Product Name",
-      options: {
-        filter: true,
-        sort: true,
-      },
-    },
-    {
-      name: "category",
-      label: "Category",
-      options: {
-        filter: true,
-        sort: true,
-      },
-    },
-    {
-      name: "price",
-      label: "Price",
-      options: {
-        filter: true,
-        sort: true,
+      field: "actions",
+      headerName: "Acciones",
+      width: 270,
+      renderCell: (params: any) => {
+        return (
+          <div className="cellAction">
+            <div className="viewButton" onClick={() => handleWatch(params)}>
+              Ver
+            </div>
+            <div className="editButton" onClick={() => handleEdit(params)}>
+              Editar
+            </div>
+            <div className="deleteButton" onClick={() => handleDelete(params)}>
+              Eliminar
+            </div>
+          </div>
+        );
       },
     },
   ];
 
-  const options = {
-    filterType: "checkbox" as FilterType,
-    rowsPerPage: 10,
-    tableBodyHeight: "450px",
-  };
+  if (showModal) {
+    return (
+      <ModalCategory
+        onCloseModal={closeModal}
+        initialState={categoryData}
+        action={actions}
+      />
+    );
+  }
 
   return (
-    <div className="table-container">
-      <MUIDataTable
-        title={"Products List"}
-        data={products}
-        columns={columns}
-        options={options}
+    <div className="datatable">
+      <DataGrid
+        rows={rowsWithId}
+        columns={columns.concat(actionsColumns)}
+        initialState={{
+          pagination: {
+            paginationModel: { page: 0, pageSize: 5 },
+          },
+        }}
+        pageSizeOptions={[5, 10]}
       />
     </div>
   );

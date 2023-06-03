@@ -1,10 +1,25 @@
+.category-container {
+  height: calc(100vh - 60px);
+  background-color: #eef0fa;
+  padding: 1rem;
+  transition: margin-left 0.5s ease;
+}
+
+.category-container.collapsed {
+  margin-left: 5rem;
+}
+
+.category-container.expanded {
+  margin-left: 17.5rem;
+}
+
 .category-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.category-container {
+.category-main {
   display: flex;
   flex-wrap: wrap;
 }
@@ -25,7 +40,7 @@
   background-color: #fff;
   padding: 1rem;
   border-radius: 5px;
-  width: 420px;
+  width: 520px;
 }
 
 .modal-header {
@@ -101,9 +116,17 @@ input {
   display: none;
 }
 
+textarea {
+  width: 100%;
+  height: 150px;
+  background-color: #f2f2f2;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
 .modal-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: 1rem;
 }
 
@@ -120,6 +143,8 @@ button {
   background-color: transparent;
   border: 1px solid #5570f1;
   color: #5570f1;
+
+  background-color: #f2f2f2;
 }
 
 .add-button {

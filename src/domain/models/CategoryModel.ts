@@ -4,5 +4,6 @@ export interface CategoryModel {
   nameCategory: string;
   referenceCategory: string;
   statusCategory: string;
+  descriptionCategory?: string;
   updatedAt?: string;
 }
