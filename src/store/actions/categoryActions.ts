@@ -16,7 +16,6 @@ import {
 import { CategoryActionTypes } from "../enums/CategoryActionsEnum";
 import { GetCategoriesUseCase } from "../../domain/useCases/category/GetCategoriesUseCase";
 import { TYPES } from "../../config/types";
-import { Container } from "inversify";
 import { Category } from "../../domain/models/Category";
 import { CreateCategoryUseCase } from "../../domain/useCases/category/CreateCategoryUseCase";
 import { UpdateCategoryUseCase } from "../../domain/useCases/category/UpdateCategoryUseCase";
@@ -27,6 +26,7 @@ import {
   adaptCategories,
   adaptCategory,
 } from "../../infrastructure/adapters/categoryAdapter";
+import { CategoryModel } from "../../domain/models/CategoryModel";
 
 export type CategoryAction =
   | GetCategoriesAction
@@ -68,8 +68,8 @@ export const getCategories = () => {
   };
 };
 
-export const createCategory = (category: Category) => {
-  return async (dispatch: Dispatch, container: Container) => {
+export const createCategory = (category: CategoryModel) => {
+  return async (dispatch: Dispatch) => {
     const useCase = container.get<CreateCategoryUseCase>(
       TYPES.CreateCategoryUseCase
     );
@@ -92,7 +92,7 @@ export const createCategory = (category: Category) => {
 };
 
 export const updateCategory = (idCategory: number, category: Category) => {
-  return async (dispatch: Dispatch, container: Container) => {
+  return async (dispatch: Dispatch) => {
     const useCase = container.get<UpdateCategoryUseCase>(
       TYPES.UpdateCategoryUseCase
     );
@@ -115,7 +115,7 @@ export const updateCategory = (idCategory: number, category: Category) => {
 };
 
 export const deleteCategory = (idCategory: number) => {
-  return async (dispatch: Dispatch, container: Container) => {
+  return async (dispatch: Dispatch) => {
     const useCase = container.get<DeleteCategoryUseCase>(
       TYPES.DeleteCategoryUseCase
     );

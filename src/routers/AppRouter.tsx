@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { selectedNavItem } from "../store/actions/navbarActions";
+import { Category } from "../Presentation/pages/category/Category";
 
 export const AppRouter = () => {
   const dispatch = useDispatch<Dispatch<any>>();
@@ -22,6 +23,7 @@ export const AppRouter = () => {
         <Route path="orders" element={<MainHome title={"Ordenes"} />} />
         <Route path="customers" element={<MainHome title={"Clientes"} />} />
         <Route path="inventory" element={<MainHome title={"Inventario"} />} />
+        <Route path="category" element={<Category />} />
       </Routes>
     </>
   );

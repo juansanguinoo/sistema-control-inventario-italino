@@ -50,6 +50,12 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
           label="Productos"
           to={"/inventory"}
         />
+        <NavItemHome
+          icon={Folder}
+          iconWhite={FolderWhite}
+          label="Categorías"
+          to={"/category"}
+        />
       </ul>
       <div className="logout">Logout</div>
     </div>
