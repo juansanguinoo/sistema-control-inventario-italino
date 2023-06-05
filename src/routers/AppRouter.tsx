@@ -6,9 +6,10 @@ import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { selectedNavItem } from "../store/actions/navbarActions";
 import { Category } from "../Presentation/pages/category/Category";
+import { Inventory } from "../Presentation/pages/inventory/Inventory";
 
 export const AppRouter = () => {
-  const dispatch = useDispatch<Dispatch<any>>();
+  const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
 
   useEffect(() => {
     const currentUrl = window.location.pathname;
@@ -22,7 +23,7 @@ export const AppRouter = () => {
         <Route path="/" element={<MainHome title={"Dashboard"} />} />
         <Route path="orders" element={<MainHome title={"Ordenes"} />} />
         <Route path="customers" element={<MainHome title={"Clientes"} />} />
-        <Route path="inventory" element={<MainHome title={"Inventario"} />} />
+        <Route path="inventory" element={<Inventory />} />
         <Route path="category" element={<Category />} />
       </Routes>
     </>

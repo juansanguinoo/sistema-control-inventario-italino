@@ -8,6 +8,12 @@ import { CreateCategoryUseCase } from "../domain/useCases/category/CreateCategor
 import { GetCategoriesUseCase } from "../domain/useCases/category/GetCategoriesUseCase";
 import { DeleteCategoryUseCase } from "../domain/useCases/category/DeleteCategoryUseCase";
 import { UpdateCategoryUseCase } from "../domain/useCases/category/UpdateCategoryUseCase";
+import { IInventoryRepository } from "../domain/repositories/IInventoryRepository";
+import { InventoryRepositoryImpl } from "../infrastructure/repositories/InventoryRepositoryImpl";
+import { CreateInventoryUseCase } from "../domain/useCases/inventory/CreateInventoryUseCase";
+import { GetInventoriesUseCase } from "../domain/useCases/inventory/GetInventoriesUseCase";
+import { DeleteInventoryUseCase } from "../domain/useCases/inventory/DeleteInventoryUseCase";
+import { UpdateInventoryUseCase } from "../domain/useCases/inventory/UpdateInventoryUseCase";
 
 const container = new Container();
 
@@ -26,6 +32,11 @@ container
   .to(CategoryRepositoryImpl)
   .inSingletonScope();
 
+container
+  .bind<IInventoryRepository>(TYPES.IInventoryRepository)
+  .to(InventoryRepositoryImpl)
+  .inSingletonScope();
+
 // UseCases
 container
   .bind<CreateCategoryUseCase>(TYPES.CreateCategoryUseCase)
@@ -39,5 +50,18 @@ container
 container
   .bind<UpdateCategoryUseCase>(TYPES.UpdateCategoryUseCase)
   .to(UpdateCategoryUseCase);
+
+container
+  .bind<CreateInventoryUseCase>(TYPES.CreateInventoryUseCase)
+  .to(CreateInventoryUseCase);
+container
+  .bind<GetInventoriesUseCase>(TYPES.GetInventoriesUseCase)
+  .to(GetInventoriesUseCase);
+container
+  .bind<DeleteInventoryUseCase>(TYPES.DeleteInventoryUseCase)
+  .to(DeleteInventoryUseCase);
+container
+  .bind<UpdateInventoryUseCase>(TYPES.UpdateInventoryUseCase)
+  .to(UpdateInventoryUseCase);
 
 export { container };

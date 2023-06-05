@@ -3,6 +3,7 @@ import "./styles.css";
 interface IHeaderButtonProps {
   title: string;
   handleFunction?: () => void;
+  redirect?: boolean;
 }
 
 export const HeaderButton = ({ title, handleFunction }: IHeaderButtonProps) => {

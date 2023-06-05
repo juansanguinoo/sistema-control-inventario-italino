@@ -1,29 +1,23 @@
 import { MdCloudUpload, MdDelete } from "react-icons/md";
 import { useState, useRef, ChangeEvent, RefObject } from "react";
+import { IFileName, IFilesState } from "../../../interfaces/interfaces";
 
-interface IFileData {
-  file1: { File: File; url: string } | null;
-  file2: { File: File; url: string } | null;
-  file3: { File: File; url: string } | null;
+interface IFormImagesProps {
+  handleFileDataChange: (fileKey: string, fileData: any) => void;
 }
 
-interface IFileName {
-  file1: string;
-  file2: string;
-  file3: string;
-}
-
-export const FormImagesInventory = () => {
+export const FormImagesInventory = ({
+  handleFileDataChange,
+}: IFormImagesProps) => {
+  const [fileData, setFileData] = useState<IFilesState>({
+    file1: null,
+    file2: null,
+    file3: null,
+  });
   const [fileName, setFileName] = useState<IFileName>({
     file1: "No selected file",
     file2: "No selected file",
     file3: "No selected file",
-  });
-
-  const [fileData, setFileData] = useState<IFileData>({
-    file1: null,
-    file2: null,
-    file3: null,
   });
 
   const fileInputRefs = [
@@ -46,39 +40,46 @@ export const FormImagesInventory = () => {
     e: ChangeEvent<HTMLInputElement>,
     fileKey: string
   ) => {
-    const file = (e.target as HTMLInputElement).files?.[0];
+    const file = e.target.files?.[0];
 
     if (file) {
-      setFileData((prevState) => ({
-        ...prevState,
-        [fileKey]: {
-          file: file,
-          url: URL.createObjectURL(file as Blob),
-        },
-      }));
+      const fileData = {
+        file,
+        url: URL.createObjectURL(file),
+      };
 
-      setFileName((prevState) => ({
-        ...prevState,
-        [fileKey]:
+      const fileName = {
+        file:
           file.name.length > 15
             ? file.name.substring(0, 15) + "..."
             : file.name,
+      };
+
+      handleFileDataChange(fileKey, fileData);
+
+      setFileData((prevFiles: IFilesState) => ({
+        ...prevFiles,
+        [fileKey]: fileData,
+      }));
+
+      setFileName((prevFiles: IFileName) => ({
+        ...prevFiles,
+        [fileKey]: fileName.file,
       }));
     } else {
-      setFileData((prevState) => ({
-        ...prevState,
+      handleFileDataChange(fileKey, null);
+
+      setFileData((prevFiles: IFilesState) => ({
+        ...prevFiles,
         [fileKey]: null,
       }));
 
-      setFileName((prevState) => ({
-        ...prevState,
+      setFileName((prevFiles: IFileName) => ({
+        ...prevFiles,
         [fileKey]: "No selected file",
       }));
     }
   };
-
-  const { file1, file2, file3 } = fileData;
-  console.log(fileData);
 
   return (
     <div className="image-column">
@@ -93,8 +94,8 @@ export const FormImagesInventory = () => {
           hidden
         />
 
-        {file1 ? (
-          <img src={file1.url} width={300} height={300} alt="file-1" />
+        {fileData.file1 ? (
+          <img src={fileData.file1.url} width={300} height={300} alt="file-1" />
         ) : (
           <>
             <MdCloudUpload color="#5570f1" size={60} />
@@ -109,13 +110,14 @@ export const FormImagesInventory = () => {
             color="#5570f1"
             size={20}
             onClick={() => {
-              setFileName((prevState) => ({
-                ...prevState,
-                file1: "No selected file",
-              }));
-              setFileData((prevState) => ({
-                ...prevState,
+              handleFileDataChange("file1", null);
+              setFileData((prevFiles: IFilesState) => ({
+                ...prevFiles,
                 file1: null,
+              }));
+              setFileName((prevFiles: IFileName) => ({
+                ...prevFiles,
+                file1: "No selected file",
               }));
             }}
           />
@@ -137,8 +139,13 @@ export const FormImagesInventory = () => {
               hidden
             />
 
-            {file2 ? (
-              <img src={file2.url} width={200} height={200} alt="file-2" />
+            {fileData.file2 ? (
+              <img
+                src={fileData.file2.url}
+                width={200}
+                height={200}
+                alt="file-2"
+              />
             ) : (
               <>
                 <MdCloudUpload color="#5570f1" size={40} />
@@ -155,13 +162,14 @@ export const FormImagesInventory = () => {
                 color="#5570f1"
                 size={20}
                 onClick={() => {
-                  setFileName((prevState) => ({
-                    ...prevState,
-                    file2: "No selected file",
-                  }));
-                  setFileData((prevState) => ({
-                    ...prevState,
+                  handleFileDataChange("file2", null);
+                  setFileData((prevFiles: IFilesState) => ({
+                    ...prevFiles,
                     file2: null,
+                  }));
+                  setFileName((prevFiles: IFileName) => ({
+                    ...prevFiles,
+                    file2: "No selected file",
                   }));
                 }}
               />
@@ -183,8 +191,13 @@ export const FormImagesInventory = () => {
               hidden
             />
 
-            {file3 ? (
-              <img src={file3.url} width={200} height={200} alt="file-3" />
+            {fileData.file3 ? (
+              <img
+                src={fileData.file3.url}
+                width={200}
+                height={200}
+                alt="file-3"
+              />
             ) : (
               <>
                 <MdCloudUpload color="#5570f1" size={40} />
@@ -201,13 +214,14 @@ export const FormImagesInventory = () => {
                 color="#5570f1"
                 size={20}
                 onClick={() => {
-                  setFileName((prevState) => ({
-                    ...prevState,
-                    file3: "No selected file",
-                  }));
-                  setFileData((prevState) => ({
-                    ...prevState,
+                  handleFileDataChange("file3", null);
+                  setFileData((prevFiles: IFilesState) => ({
+                    ...prevFiles,
                     file3: null,
+                  }));
+                  setFileName((prevFiles: IFileName) => ({
+                    ...prevFiles,
+                    file3: "No selected file",
                   }));
                 }}
               />
