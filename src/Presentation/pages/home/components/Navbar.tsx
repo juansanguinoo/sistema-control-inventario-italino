@@ -56,6 +56,18 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
           label="Categorías"
           to={"/category"}
         />
+        <NavItemHome
+          icon={Folder}
+          iconWhite={FolderWhite}
+          label="Usuarios"
+          to={"/users"}
+        />
+        <NavItemHome
+          icon={Folder}
+          iconWhite={FolderWhite}
+          label="Roles"
+          to={"/role"}
+        />
       </ul>
       <div className="logout">Logout</div>
     </div>

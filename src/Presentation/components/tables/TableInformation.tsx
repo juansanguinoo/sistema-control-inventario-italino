@@ -8,7 +8,7 @@ import { Dispatch } from "redux";
 import { useState } from "react";
 
 interface ITableInformationProps {
-  categories: CategoryModel[] | [];
+  categories: any[] | [];
   columns: IColumnsDataTable[];
   deleteCategory: (id: number) => void;
 }
@@ -56,7 +56,7 @@ export const TableInformation = ({
   const rowsWithId = categories.map((category) => {
     return {
       ...category,
-      id: category.idCategory,
+      id: category.id,
     };
   });
 

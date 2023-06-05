@@ -14,6 +14,21 @@ import { CreateInventoryUseCase } from "../domain/useCases/inventory/CreateInven
 import { GetInventoriesUseCase } from "../domain/useCases/inventory/GetInventoriesUseCase";
 import { DeleteInventoryUseCase } from "../domain/useCases/inventory/DeleteInventoryUseCase";
 import { UpdateInventoryUseCase } from "../domain/useCases/inventory/UpdateInventoryUseCase";
+import { IUserRepository } from "../domain/repositories/IUserRepository";
+import { UserRepositoryImpl } from "../infrastructure/repositories/UserRepositoryImpl";
+import { CreateUserUseCase } from "../domain/useCases/user/CreateUserUseCase";
+import { GetUserUseCase } from "../domain/useCases/user/GetUserUseCase";
+import { GetAllUserUseCase } from "../domain/useCases/user/GetAllUserUseCase";
+import { DeleteUserUseCase } from "../domain/useCases/user/DeleteUserUseCase";
+import { UpdateUserUseCase } from "../domain/useCases/user/UpdateUserUseCase";
+import { IRoleRepository } from "../domain/repositories/IRoleRepository";
+import { RoleRepositoryImpl } from "../infrastructure/repositories/RoleRepositoryImpl";
+import { CreateRoleUseCase } from "../domain/useCases/role/CreateRoleUseCase";
+import { GetRoleUseCase } from "../domain/useCases/role/GetRoleUseCase";
+import { GetAllRolesUseCase } from "../domain/useCases/role/GetAllRoleUseCase";
+import { DeleteRoleUseCase } from "../domain/useCases/role/DeleteRoleUseCase";
+import { UpdateRoleUseCase } from "../domain/useCases/role/UpdateRoleUseCase";
+import { GetAllActivitiesUseCase } from "../domain/useCases/role/GetAllActivitiesUseCase";
 
 const container = new Container();
 
@@ -30,6 +45,14 @@ container.bind<string>(TYPES.BaseUrl).toConstantValue("http://localhost:3000");
 container
   .bind<ICategoryRepository>(TYPES.ICategoryRepository)
   .to(CategoryRepositoryImpl)
+  .inSingletonScope();
+container
+  .bind<IUserRepository>(TYPES.IUserRepository)
+  .to(UserRepositoryImpl)
+  .inSingletonScope();
+container
+  .bind<IRoleRepository>(TYPES.IRoleRepository)
+  .to(RoleRepositoryImpl)
   .inSingletonScope();
 
 container
@@ -63,5 +86,36 @@ container
 container
   .bind<UpdateInventoryUseCase>(TYPES.UpdateInventoryUseCase)
   .to(UpdateInventoryUseCase);
+
+container
+  .bind<CreateUserUseCase>(TYPES.CreateUserUseCase)
+  .to(CreateUserUseCase);
+container.bind<GetUserUseCase>(TYPES.GetUserUseCase).to(GetUserUseCase);
+container
+  .bind<GetAllUserUseCase>(TYPES.GetAllUsersUseCase)
+  .to(GetAllUserUseCase);
+container
+  .bind<DeleteUserUseCase>(TYPES.DeleteUserUseCase)
+  .to(DeleteUserUseCase);
+container
+  .bind<UpdateUserUseCase>(TYPES.UpdateUserUseCase)
+  .to(UpdateUserUseCase);
+
+container
+  .bind<CreateRoleUseCase>(TYPES.CreateRoleUseCase)
+  .to(CreateRoleUseCase);
+container.bind<GetRoleUseCase>(TYPES.GetRoleUseCase).to(GetRoleUseCase);
+container
+  .bind<GetAllRolesUseCase>(TYPES.GetAllRolesUseCase)
+  .to(GetAllRolesUseCase);
+container
+  .bind<DeleteRoleUseCase>(TYPES.DeleteRoleUseCase)
+  .to(DeleteRoleUseCase);
+container
+  .bind<UpdateRoleUseCase>(TYPES.UpdateRoleUseCase)
+  .to(UpdateRoleUseCase);
+container
+  .bind<GetAllActivitiesUseCase>(TYPES.GetAllActivitiesUseCase)
+  .to(GetAllActivitiesUseCase);
 
 export { container };
