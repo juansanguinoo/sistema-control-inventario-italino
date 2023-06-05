@@ -1,9 +1,9 @@
 export interface CategoryModel {
-  createdAt?: string;
-  idCategory?: number;
+  id?: number;
   nameCategory: string;
   referenceCategory: string;
   statusCategory: string;
   descriptionCategory?: string;
+  createdAt?: string;
   updatedAt?: string;
 }

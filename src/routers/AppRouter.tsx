@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { selectedNavItem } from "../store/actions/navbarActions";
 import { Category } from "../Presentation/pages/category/Category";
+import { Users } from "../Presentation/pages/users/Users";
+import { Roles } from "../Presentation/pages/roles/Roles";
 
 export const AppRouter = () => {
   const dispatch = useDispatch<Dispatch<any>>();
@@ -24,6 +26,8 @@ export const AppRouter = () => {
         <Route path="customers" element={<MainHome title={"Clientes"} />} />
         <Route path="inventory" element={<MainHome title={"Inventario"} />} />
         <Route path="category" element={<Category />} />
+        <Route path="users" element={<Users />} />
+        <Route path="role" element={<Roles />} />
       </Routes>
     </>
   );
