@@ -4,7 +4,7 @@ import { CategoryModel } from "../../domain/models/CategoryModel";
 export const adaptCategory = (category: Category): CategoryModel => {
   return {
     createdAt: category.created_at,
-    idCategory: category.id_category,
+    id: category.id_category,
     nameCategory: category.name_category,
     referenceCategory: category.reference_category,
     statusCategory: category.status_category,
