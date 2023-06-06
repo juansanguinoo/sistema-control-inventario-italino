@@ -1,5 +1,5 @@
 export interface InventoryModel {
-  idInventory?: number;
+  id?: number;
   referenceInventory: string;
   nameInventory: string;
   descriptionInventory?: string;
@@ -8,7 +8,7 @@ export interface InventoryModel {
   sellingPriceInventory: number;
   costPriceInventory: number;
   imageInventory?: string;
-  publicatedInventory: string;
+  publicatedInventory: boolean;
   createdAt?: string;
   updatedAt?: string;
   category: number;

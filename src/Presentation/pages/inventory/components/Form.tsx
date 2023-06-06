@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */ // Esto debe de cambiar
 import "../styles.css";
-import { RichTextInput } from "../../../components/richtextinput/RichTextInput";
 import { FormImagesInventory } from "./FormImages";
 import {
   useState,
@@ -13,26 +13,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import { Dispatch } from "redux";
 import { getCategories } from "../../../../store/actions/categoryActions";
-import {
-  IFileData,
-  IFileName,
-  IFilesState,
-} from "../../../interfaces/interfaces";
+import { IFileData, IFilesState } from "../../../interfaces/interfaces";
 import axios from "axios";
-import { createInventory } from "../../../../store/actions/inventoryActions";
+import {
+  createInventory,
+  getInventory,
+} from "../../../../store/actions/inventoryActions";
+import { useParams } from "react-router-dom";
 
 export const FormInventory = () => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
+  const params = useParams();
   const [inventoryData, setInventoryData] = useState<InventoryModel>({
     referenceInventory: "",
     nameInventory: "",
     descriptionInventory: "",
     stockInventory: 0,
-    statusInventory: "",
+    statusInventory: "Inactive",
     sellingPriceInventory: 0,
     costPriceInventory: 0,
     imageInventory: "",
-    publicatedInventory: "",
+    publicatedInventory: false,
     category: 0,
   });
 
@@ -42,14 +43,30 @@ export const FormInventory = () => {
     file3: null,
   });
 
-  const [uploadedImages, setUploadedImages] = useState<string>("");
-
   const categories = useSelector(
     (state: RootState) => state.categoryReducer.categories
   );
 
+  const inventories = useSelector(
+    (state: RootState) => state.inventoryReducer.inventories
+  );
+
+  const getInventoryById = () => {
+    const inventory = inventories.find(
+      (inventory) => inventory.id === Number(params.id)
+    );
+    if (inventory) {
+      setInventoryData(inventory);
+    }
+  };
+
+  useEffect(() => {
+    getInventoryById();
+  }, [getInventoryById]);
+
   useEffect(() => {
     dispatch(getCategories());
+    dispatch(getInventory());
   }, [dispatch]);
 
   const handleCheckboxChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +81,7 @@ export const FormInventory = () => {
     const { checked } = e.target;
     setInventoryData((prevData: InventoryModel) => ({
       ...prevData,
-      publicatedInventory: checked ? "Active" : "Inactive",
+      publicatedInventory: checked ? true : false,
     }));
   };
 
@@ -103,6 +120,7 @@ export const FormInventory = () => {
         ...prevData,
         imageInventory: urlsList,
       }));
+      console.log("dentro de la funcion", inventoryData);
     } catch (error) {
       console.error("Error uploading images:", error);
     }
@@ -164,14 +182,14 @@ export const FormInventory = () => {
             >
               <option value="0">Seleccione una categoría</option>
               {categories.map((category) => (
-                <option key={category.idCategory} value={category.idCategory}>
+                <option key={category.id} value={category.id}>
                   {category.nameCategory}
                 </option>
               ))}
             </select>
           </div>
           <div className="form-group small-input">
-            <label htmlFor="salePrice">Costo de venta:</label>
+            <label htmlFor="salePrice">Venta:</label>
             <input
               type="number"
               id="salePrice"
@@ -186,7 +204,7 @@ export const FormInventory = () => {
             />
           </div>
           <div className="form-group small-input">
-            <label htmlFor="purchasePrice">Costo de compra:</label>
+            <label htmlFor="purchasePrice">Compra:</label>
             <input
               type="number"
               id="purchasePrice"
@@ -236,7 +254,7 @@ export const FormInventory = () => {
           </div>
           <div className="checkbox">
             <div className="form-group">
-              <label htmlFor="btn-switch-active">Activar producto</label>
+              <label htmlFor="btn-switch-active">Activar</label>
               <input
                 type="checkbox"
                 id="btn-switch-active"
@@ -249,11 +267,11 @@ export const FormInventory = () => {
               ></label>
             </div>
             <div className="form-group">
-              <label htmlFor="btn-switch-post">Publicar producto</label>
+              <label htmlFor="btn-switch-post">Publicar</label>
               <input
                 type="checkbox"
                 id="btn-switch-post"
-                checked={inventoryData.publicatedInventory === "Active"}
+                checked={inventoryData.publicatedInventory}
                 onChange={handleCheckboxChangePublicated}
               />
               <label
@@ -263,11 +281,14 @@ export const FormInventory = () => {
             </div>
           </div>
           <div className="form-group">
-            <button type="submit">Guardar</button>
+            <button type="submit">Crear</button>
           </div>
         </div>
       </div>
-      <FormImagesInventory handleFileDataChange={handleFileDataChange} />
+      <FormImagesInventory
+        handleFileDataChange={handleFileDataChange}
+        isEdit={true}
+      />
     </form>
   );
 };

@@ -1,14 +1,20 @@
 import { MdCloudUpload, MdDelete } from "react-icons/md";
-import { useState, useRef, ChangeEvent, RefObject } from "react";
+import { useState, useRef, ChangeEvent, RefObject, useEffect } from "react";
 import { IFileName, IFilesState } from "../../../interfaces/interfaces";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store/store";
+import { useParams } from "react-router-dom";
 
 interface IFormImagesProps {
-  handleFileDataChange: (fileKey: string, fileData: any) => void;
+  handleFileDataChange: (fileKey: string, fileData: any) => void; // eslint-disable-line
+  isEdit?: boolean;
 }
 
 export const FormImagesInventory = ({
   handleFileDataChange,
+  isEdit = false,
 }: IFormImagesProps) => {
+  const params = useParams();
   const [fileData, setFileData] = useState<IFilesState>({
     file1: null,
     file2: null,
@@ -19,6 +25,10 @@ export const FormImagesInventory = ({
     file2: "No selected file",
     file3: "No selected file",
   });
+
+  const inventories = useSelector(
+    (state: RootState) => state.inventoryReducer.inventories
+  );
 
   const fileInputRefs = [
     useRef<HTMLInputElement | null>(null),
@@ -80,6 +90,41 @@ export const FormImagesInventory = ({
       }));
     }
   };
+
+  useEffect(() => {
+    if (params.id) {
+      if (isEdit) {
+        const inventory = inventories.find(
+          (inventory) => inventory.id === Number(params.id)
+        );
+        if (inventory) {
+          const images = inventory.imageInventory?.split(", ");
+          if (images) {
+            images.forEach((image, index) => {
+              const fileData = {
+                file: null,
+                url: image,
+              };
+
+              const fileName = {
+                file: image.substring(0, 15) + "...",
+              };
+
+              setFileData((prevFiles: IFilesState) => ({
+                ...prevFiles,
+                [`file${index + 1}`]: fileData,
+              }));
+
+              setFileName((prevFiles: IFileName) => ({
+                ...prevFiles,
+                [`file${index + 1}`]: fileName.file,
+              }));
+            });
+          }
+        }
+      }
+    }
+  }, [isEdit, inventories, params]);
 
   return (
     <div className="image-column">

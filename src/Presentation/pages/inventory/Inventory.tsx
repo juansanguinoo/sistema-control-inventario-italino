@@ -1,17 +1,21 @@
+import "./styles.css";
 import { PageTitle } from "../../components/titles/PageTitle";
-import { HeaderButton } from "../../components/buttons/HeaderButton";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { CardInformation } from "../../components/cards/CardInformation";
-import { FormInventory } from "./components/Form";
 import { TableInformation } from "../../components/tables/TableInformation";
 import { Dispatch } from "redux";
 import { useEffect } from "react";
-import { getInventory } from "../../../store/actions/inventoryActions";
+import {
+  deleteInventory,
+  getInventory,
+} from "../../../store/actions/inventoryActions";
+import { inventoryColumns } from "../../utils/columnsDataTable";
+import { LinkButton } from "../../components/buttons/LinkButton";
 
 export const Inventory = () => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
-  const inventory = useSelector(
+  const inventories = useSelector(
     (state: RootState) => state.inventoryReducer.inventories
   );
   const navbarOpen = useSelector(
@@ -23,19 +27,21 @@ export const Inventory = () => {
     dispatch(getInventory());
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log(inventory);
-  }, [inventory]);
-
   return (
     <div className={`inventory-container ${navbarClass}`}>
       <div className="inventory-header">
         <PageTitle title="Inventario" />
-        <HeaderButton title="Crear un nuevo producto" />
+        <LinkButton title="Crear Producto" />
       </div>
       <div className="inventory-main">
         <CardInformation />
         <CardInformation />
+        <TableInformation
+          type="inventory"
+          categories={inventories}
+          columns={inventoryColumns}
+          deleteCategory={deleteInventory}
+        />
       </div>
     </div>
   );

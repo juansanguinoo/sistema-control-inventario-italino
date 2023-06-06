@@ -6,18 +6,22 @@ import { ModalCategory } from "../../pages/category/components/Modal";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface ITableInformationProps {
-  categories: any[] | [];
+  type?: string;
+  categories: any[] | []; // eslint-disable-line
   columns: IColumnsDataTable[];
   deleteCategory: (id: number) => void;
 }
 
 export const TableInformation = ({
+  type,
   categories,
   columns,
   deleteCategory,
 }: ITableInformationProps) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const [showModal, setShowModal] = useState<boolean>(false);
   const [actions, setActions] = useState<string>("");
@@ -40,17 +44,35 @@ export const TableInformation = ({
   };
 
   const handleWatch = (params: any) => {
-    setCategoryData(params.row);
-    openModal("watch");
+    switch (type) {
+      case "category":
+        setCategoryData(params.row);
+        openModal("watch");
+        break;
+      case "inventory":
+        navigate(`product/${params.row.id}`);
+        break;
+      default:
+        break;
+    }
   };
 
   const handleEdit = (params: any) => {
-    setCategoryData(params.row);
-    openModal("edit");
+    switch (type) {
+      case "category":
+        setCategoryData(params.row);
+        openModal("edit");
+        break;
+      case "inventory":
+        navigate(`edit-product/${params.row.id}`);
+        break;
+      default:
+        break;
+    }
   };
 
   const handleDelete = (params: any) => {
-    dispatch(deleteCategory(params.row.idCategory));
+    dispatch(deleteCategory(params.row.id));
   };
 
   const rowsWithId = categories.map((category) => {

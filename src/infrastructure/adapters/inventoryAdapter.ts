@@ -5,7 +5,7 @@ export const adaptInventory = (inventory: Inventory): InventoryModel => {
   return {
     createdAt: inventory.created_at,
     updatedAt: inventory.updated_at,
-    idInventory: inventory.id_inventory,
+    id: inventory.id_inventory,
     referenceInventory: inventory.reference_inventory,
     nameInventory: inventory.name_inventory,
     descriptionInventory: inventory.description_inventory,
