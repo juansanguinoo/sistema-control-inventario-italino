@@ -1,34 +1,13 @@
-import { Home } from "../Presentation/pages/home/Home";
-import { Routes, Route } from "react-router-dom";
-import { MainHome } from "../Presentation/pages/home/components/Main";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Dispatch } from "redux";
-import { selectedNavItem } from "../store/actions/navbarActions";
-import { Category } from "../Presentation/pages/category/Category";
-import { Users } from "../Presentation/pages/users/Users";
-import { Roles } from "../Presentation/pages/roles/Roles";
+import { Route, Routes } from "react-router-dom";
+import { DashboardRouter } from "./DashboardRouter";
+import { PublicRouter } from "./publicRouter";
 
 export const AppRouter = () => {
-  const dispatch = useDispatch<Dispatch<any>>();
-
-  useEffect(() => {
-    const currentUrl = window.location.pathname;
-    dispatch(selectedNavItem(currentUrl));
-  }, []);
-
   return (
-    <>
-      <Home />
-      <Routes>
-        <Route path="/" element={<MainHome title={"Dashboard"} />} />
-        <Route path="orders" element={<MainHome title={"Ordenes"} />} />
-        <Route path="customers" element={<MainHome title={"Clientes"} />} />
-        <Route path="inventory" element={<MainHome title={"Inventario"} />} />
-        <Route path="category" element={<Category />} />
-        <Route path="users" element={<Users />} />
-        <Route path="role" element={<Roles />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" element={<h1>Home</h1>} />
+      <Route path="/private/*" element={<DashboardRouter />} />
+      <Route path="/*" element={<PublicRouter />} />
+    </Routes>
   );
 };

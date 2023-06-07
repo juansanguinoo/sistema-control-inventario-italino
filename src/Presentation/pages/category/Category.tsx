@@ -13,8 +13,18 @@ import {
 } from "../../../store/actions/categoryActions";
 import { Dispatch } from "redux";
 import { categoryColumns } from "../../utils/columnsDataTable";
+import { CategoryModel } from "../../../domain/models/CategoryModel";
 
 export const Category = () => {
+  const [categoryData, setCategoryData] = useState<CategoryModel>({
+    nameCategory: "",
+    referenceCategory: "",
+    statusCategory: "Inactive",
+    descriptionCategory: "",
+  });
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [actions, setActions] = useState<string>("");
+
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const categories = useSelector(
     (state: RootState) => state.categoryReducer.categories
@@ -23,8 +33,6 @@ export const Category = () => {
     (state: RootState) => state.navbarReducer.stateOpen
   );
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
-
-  const [showModal, setShowModal] = useState<boolean>(false);
 
   const openModal = () => {
     setShowModal(true);
@@ -38,14 +46,23 @@ export const Category = () => {
     dispatch(getCategories());
   }, [dispatch]);
 
+  const handleEditAction = (params: any) => {
+    setCategoryData(params.row);
+    setActions("edit");
+    openModal();
+  };
+
+  const handlePreviewAction = (params: any) => {
+    setCategoryData(params.row);
+    setActions("preview");
+    openModal();
+  };
+
   return (
     <div className={`category-container ${navbarClass}`}>
       <div className="category-header">
         <PageTitle title="Categorías" />
-        <HeaderButton
-          title="Crear una nueva categoría"
-          handleFunction={openModal}
-        />
+        <HeaderButton title="Crear una nueva categoría" />
       </div>
       <div className="category-main">
         <CardInformation />
@@ -54,8 +71,16 @@ export const Category = () => {
           categories={categories}
           columns={categoryColumns}
           deleteCategory={deleteCategory}
+          handleEditAction={handleEditAction}
+          handlePreviewAction={handlePreviewAction}
         />
-        {showModal && <ModalCategory onCloseModal={closeModal} />}
+        {showModal && (
+          <ModalCategory
+            onCloseModal={closeModal}
+            initialState={categoryData}
+            action={actions}
+          />
+        )}
       </div>
     </div>
   );

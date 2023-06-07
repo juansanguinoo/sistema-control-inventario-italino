@@ -120,7 +120,7 @@ export const ModalCategory = ({
               >
                 Cancelar
               </button>
-              {action === "watch" ? null : (
+              {action === "preview" ? null : (
                 <button type="submit" className="add-button">
                   {action === "edit" ? "Guardar cambios" : "Agregar"}
                 </button>

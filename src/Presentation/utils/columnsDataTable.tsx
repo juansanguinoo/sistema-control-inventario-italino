@@ -221,3 +221,77 @@ export const roleColumns = [
     },
   },
 ];
+
+export const inventoryColumns = [
+  {
+    field: "imageInventory",
+    headerName: "Imagén",
+    width: 100,
+    renderCell: (params: any) => {
+      return (
+        <div className="cellWithImage">
+          {params.row.imageInventory.split(",")[0] === "" ? (
+            <img src={params.row.imageInventory} alt="" />
+          ) : (
+            <img src={params.row.imageInventory.split(",")[0]} alt="" />
+          )}
+        </div>
+      );
+    },
+  },
+  {
+    field: "nameInventory",
+    headerName: "Nombre",
+    width: 200,
+  },
+  {
+    field: "referenceInventory",
+    headerName: "Referencia",
+    width: 100,
+  },
+  {
+    field: "categoryInventory",
+    headerName: "Categoría",
+    width: 150,
+  },
+  {
+    field: "costPriceInventory",
+    headerName: "Costo",
+    width: 100,
+  },
+  {
+    field: "stockInventory",
+    headerName: "Stock",
+    width: 100,
+  },
+  {
+    field: "statusInventory",
+    headerName: "Status",
+    width: 150,
+    renderCell: (params: any) => {
+      return (
+        <div
+          className={`cellWithStatus ${params.row.statusInventory.toLowerCase()}`}
+        >
+          {params.row.statusInventory}
+        </div>
+      );
+    },
+  },
+  {
+    field: "publicatedInventory",
+    headerName: "Publicado",
+    width: 150,
+    renderCell: (params: any) => {
+      return (
+        <div
+          className={`cellWithStatus ${
+            params.row.publicatedInventory ? "active" : "inactive"
+          }`}
+        >
+          {params.row.publicatedInventory ? "Publicado" : "No publicado"}
+        </div>
+      );
+    },
+  },
+];
