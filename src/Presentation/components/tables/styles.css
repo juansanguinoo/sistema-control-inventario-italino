@@ -12,12 +12,22 @@
 }
 
 .active {
-  background-color: #b4c1ff;
-  color: #000;
+  background-color: #E6E7FC;
+  color: #5570F1;
 }
 
 .inactive {
   background-color: #ff9e9e;
+  color: #000;
+}
+
+.access {
+  background-color: #E3EDE8;
+  color: #519C66;
+}
+
+.noaccess {
+  background-color: #FFF2E2;
   color: #000;
 }
 

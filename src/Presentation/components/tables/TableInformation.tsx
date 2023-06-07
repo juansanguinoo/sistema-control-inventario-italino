@@ -8,6 +8,7 @@ interface ITableInformationProps {
   categories: any[] | [];
   columns: IColumnsDataTable[];
   deleteCategory: (id: number) => void;
+  showView?: boolean;
   handleEditAction?: (params: any) => void;
   handlePreviewAction?: (params: any) => void;
 }
@@ -16,6 +17,7 @@ export const TableInformation = ({
   categories,
   columns,
   deleteCategory,
+  showView = true,
   handleEditAction,
   handlePreviewAction,
 }: ITableInformationProps) => {
@@ -52,9 +54,11 @@ export const TableInformation = ({
       renderCell: (params: any) => {
         return (
           <div className="cellAction">
-            <div className="viewButton" onClick={() => handlePreview(params)}>
-              Ver
-            </div>
+            {showView && (
+              <div className="viewButton" onClick={() => handlePreview(params)}>
+                Ver
+              </div>
+            )}
             <div className="editButton" onClick={() => handleEdit(params)}>
               Editar
             </div>

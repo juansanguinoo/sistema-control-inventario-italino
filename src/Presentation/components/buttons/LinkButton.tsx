@@ -7,7 +7,7 @@ interface ILinkButtonProps {
 
 export const LinkButton = ({ title }: ILinkButtonProps) => {
   return (
-    <Link to="/inventory/create-product">
+    <Link to="/private/inventory/create-product">
       <button className="header-button">{title}</button>
     </Link>
   );

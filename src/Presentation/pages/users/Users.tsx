@@ -1,3 +1,4 @@
+import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { PageTitle } from "../../components/titles/PageTitle";
 import { RootState } from "../../../store/store";
@@ -8,8 +9,8 @@ import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
 import { deleteCategory } from "../../../store/actions/categoryActions";
 import { userColumns } from "../../utils/columnsDataTable";
-import { ModalCategory } from "../category/components/Modal";
 import { getAllUsers } from "../../../store/actions/userAction";
+import { ModalUsers } from "./components/Modal";
 
 export const Users = () => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
@@ -49,7 +50,7 @@ export const Users = () => {
           columns={userColumns}
           deleteCategory={deleteCategory}
         />
-        {showModal && <ModalCategory onCloseModal={closeModal} />}
+        {showModal && <ModalUsers onCloseModal={closeModal} />}
       </div>
     </div>
   );

@@ -5,5 +5,5 @@ export interface Role {
   status_role: string;
   created_at?: Date;
   updated_at?: Date;
-  activities?: any;
+  activityId?: any;
 }

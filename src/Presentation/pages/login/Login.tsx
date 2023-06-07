@@ -20,14 +20,6 @@ export const Login = () => {
                 <label htmlFor="password">Ingrese su contraseña</label>
                 <input type="password" id="password" />
               </div>
-              <div className="form-item">
-                <div className="checkbox">
-                  <input type="checkbox" id="rememberMe" checked />
-                  <label htmlFor="rememberMe" className="checkboxLabel">
-                    Guardar usuario
-                  </label>
-                </div>
-              </div>
               <button type="submit" className="form-login-button">
                 Iniciar sesión
               </button>

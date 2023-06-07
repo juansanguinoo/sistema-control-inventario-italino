@@ -51,7 +51,7 @@ export const userColumns = [
     headerName: "Rol del usuario",
     width: 270,
     renderCell: (params: any) => {
-      return <div>{params.row.rol.name_role}</div>;
+      return <div>{params.row.roleId.name_role}</div>;
     },
   },
   {
@@ -87,8 +87,8 @@ export const roleColumns = [
             params.row.activities.find(
               (activity: any) => activity.name_activity === "Dashboard"
             )
-              ? "active"
-              : "inactive"
+              ? "access"
+              : "noaccess"
           }`}
         >
           {params.row.activities.find(
@@ -113,8 +113,8 @@ export const roleColumns = [
             params.row.activities.find(
               (activity: any) => activity.name_activity === "Ordenes"
             )
-              ? "active"
-              : "inactive"
+              ? "access"
+              : "noaccess"
           }`}
         >
           {params.row.activities.find(
@@ -139,8 +139,8 @@ export const roleColumns = [
             params.row.activities.find(
               (activity: any) => activity.name_activity === "Clientes"
             )
-              ? "active"
-              : "inactive"
+              ? "access"
+              : "noaccess"
           }`}
         >
           {params.row.activities.find(
@@ -165,8 +165,8 @@ export const roleColumns = [
             params.row.activities.find(
               (activity: any) => activity.name_activity === "Productos"
             )
-              ? "active"
-              : "inactive"
+              ? "access"
+              : "noaccess"
           }`}
         >
           {params.row.activities.find(
@@ -191,8 +191,8 @@ export const roleColumns = [
             params.row.activities.find(
               (activity: any) => activity.name_activity === "Categorías"
             )
-              ? "active"
-              : "inactive"
+              ? "access"
+              : "noaccess"
           }`}
         >
           {params.row.activities.find(
