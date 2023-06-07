@@ -50,3 +50,15 @@
   border: 1px dotted #5570f1;
   cursor: pointer;
 }
+
+.cellWithImage {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cellWithImage img {
+  width: 50px;
+  height: 60px;
+  border-radius: 50%;
+}
