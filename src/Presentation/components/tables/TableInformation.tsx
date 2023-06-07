@@ -11,12 +11,14 @@ interface ITableInformationProps {
   categories: any[] | [];
   columns: IColumnsDataTable[];
   deleteCategory: (id: number) => void;
+  showView?: boolean;
 }
 
 export const TableInformation = ({
   categories,
   columns,
   deleteCategory,
+  showView = true,
 }: ITableInformationProps) => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -68,9 +70,11 @@ export const TableInformation = ({
       renderCell: (params: any) => {
         return (
           <div className="cellAction">
-            <div className="viewButton" onClick={() => handleWatch(params)}>
-              Ver
-            </div>
+            {showView && (
+              <div className="viewButton" onClick={() => handleWatch(params)}>
+                Ver
+              </div>
+            )}
             <div className="editButton" onClick={() => handleEdit(params)}>
               Editar
             </div>

@@ -5,5 +5,5 @@ export interface RoleModel {
   statusRole: string;
   createdAt?: Date;
   updatedAt?: Date;
-  activities?: any;
+  activityId?: any;
 }

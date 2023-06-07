@@ -11,7 +11,7 @@ export const adaptUser = (user: User): UserModel => {
     statusUser: user.status_user,
     createdAt: user.created_at,
     updatedAt: user.updated_at,
-    rol: user.rol,
+    roleId: user.rol,
   };
 };
 

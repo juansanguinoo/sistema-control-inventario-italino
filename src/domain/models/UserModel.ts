@@ -7,5 +7,5 @@ export interface UserModel {
   statusUser: string;
   createdAt?: string;
   updatedAt?: string;
-  rol?: any;
+  roleId?: number;
 }
