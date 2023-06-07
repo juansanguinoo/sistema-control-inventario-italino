@@ -1,73 +1,35 @@
 import "./styles.css";
-import { CategoryModel } from "../../../domain/models/CategoryModel";
 import { IColumnsDataTable } from "../../interfaces/interfaces";
 import { DataGrid } from "@mui/x-data-grid";
-import { ModalCategory } from "../../pages/category/components/Modal";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 interface ITableInformationProps {
-  type?: string;
-  categories: any[] | []; // eslint-disable-line
+  categories: any[] | [];
   columns: IColumnsDataTable[];
   deleteCategory: (id: number) => void;
+  handleEditAction?: (params: any) => void;
+  handlePreviewAction?: (params: any) => void;
 }
 
 export const TableInformation = ({
-  type,
   categories,
   columns,
   deleteCategory,
+  handleEditAction,
+  handlePreviewAction,
 }: ITableInformationProps) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [actions, setActions] = useState<string>("");
-  const [categoryData, setCategoryData] = useState<CategoryModel>({
-    nameCategory: "",
-    referenceCategory: "",
-    statusCategory: "Inactive",
-    descriptionCategory: "",
-  });
+  const dispatch = useDispatch<Dispatch<any>>();
 
-  const openModal = (props?: string) => {
-    if (props) {
-      setActions(props);
-    }
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
-  const handleWatch = (params: any) => {
-    switch (type) {
-      case "category":
-        setCategoryData(params.row);
-        openModal("watch");
-        break;
-      case "inventory":
-        navigate(`product/${params.row.id}`);
-        break;
-      default:
-        break;
+  const handlePreview = (params: any) => {
+    if (handlePreviewAction) {
+      handlePreviewAction(params);
     }
   };
 
   const handleEdit = (params: any) => {
-    switch (type) {
-      case "category":
-        setCategoryData(params.row);
-        openModal("edit");
-        break;
-      case "inventory":
-        navigate(`edit-product/${params.row.id}`);
-        break;
-      default:
-        break;
+    if (handleEditAction) {
+      handleEditAction(params);
     }
   };
 
@@ -90,7 +52,7 @@ export const TableInformation = ({
       renderCell: (params: any) => {
         return (
           <div className="cellAction">
-            <div className="viewButton" onClick={() => handleWatch(params)}>
+            <div className="viewButton" onClick={() => handlePreview(params)}>
               Ver
             </div>
             <div className="editButton" onClick={() => handleEdit(params)}>
@@ -104,16 +66,6 @@ export const TableInformation = ({
       },
     },
   ];
-
-  if (showModal) {
-    return (
-      <ModalCategory
-        onCloseModal={closeModal}
-        initialState={categoryData}
-        action={actions}
-      />
-    );
-  }
 
   return (
     <div className="datatable">
