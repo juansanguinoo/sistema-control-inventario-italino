@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { DashboardRouter } from "./DashboardRouter";
-import { PublicRouter } from "./publicRouter";
+import { PublicRouter } from "./PublicRouter";
 
 export const AppRouter = () => {
   return (
