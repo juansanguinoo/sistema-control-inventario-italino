@@ -1,13 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */ // Esto debe de cambiar
 import "../styles.css";
 import { FormImagesInventory } from "./FormImages";
-import {
-  useState,
-  ChangeEvent,
-  useEffect,
-  FormEvent,
-  useCallback,
-} from "react";
+import { useState, ChangeEvent, useEffect, FormEvent } from "react";
 import { InventoryModel } from "../../../../domain/models/InventoryModel";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
@@ -19,9 +13,10 @@ import {
   createInventory,
   getInventory,
 } from "../../../../store/actions/inventoryActions";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const FormInventory = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const params = useParams();
   const [inventoryData, setInventoryData] = useState<InventoryModel>({
@@ -92,7 +87,7 @@ export const FormInventory = () => {
     }));
   };
 
-  const handleUploadImages = useCallback(async () => {
+  const handleUploadImages = async () => {
     const cloudName = "dahcvsp9v";
     const unsignedUploadPreset = "ProductosItalino";
     const apiKey = "221939461327129";
@@ -116,20 +111,22 @@ export const FormInventory = () => {
       const imagesResponse = await Promise.all(imagesPromise);
       const imagesUrl = imagesResponse.map((image) => image?.data.url);
       const urlsList = imagesUrl.join(", ");
-      setInventoryData((prevData) => ({
-        ...prevData,
-        imageInventory: urlsList,
-      }));
-      console.log("dentro de la funcion", inventoryData);
+      if (urlsList) {
+        setInventoryData((prevData) => ({
+          ...prevData,
+          imageInventory: urlsList,
+        }));
+      }
     } catch (error) {
       console.error("Error uploading images:", error);
     }
-  }, [fileData]);
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await handleUploadImages();
     dispatch(createInventory(inventoryData));
+    navigate("/private/inventory");
   };
 
   return (
@@ -167,7 +164,7 @@ export const FormInventory = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="category">Seleccione la categoría</label>
+            <label htmlFor="category">Seleccione la categoría:</label>
             <select
               name="category"
               id="category"
@@ -236,12 +233,12 @@ export const FormInventory = () => {
         </div>
         <div className="column-2">
           <div className="form-group">
-            <label htmlFor="description">Descripción del producto</label>
+            <label htmlFor="description">Descripción del producto:</label>
             <textarea
               name="description"
               id="description"
-              cols={30}
-              rows={10}
+              cols={40}
+              rows={20}
               value={inventoryData.descriptionInventory}
               onChange={(event) =>
                 setInventoryData((prevData) => ({
@@ -280,8 +277,10 @@ export const FormInventory = () => {
               ></label>
             </div>
           </div>
-          <div className="form-group">
-            <button type="submit">Crear</button>
+          <div className="form-group-button">
+            <button type="submit" className="form-button">
+              Crear
+            </button>
           </div>
         </div>
       </div>

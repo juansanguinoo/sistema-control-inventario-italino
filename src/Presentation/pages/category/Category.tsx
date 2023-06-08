@@ -62,7 +62,10 @@ export const Category = () => {
     <div className={`category-container ${navbarClass}`}>
       <div className="category-header">
         <PageTitle title="Categorías" />
-        <HeaderButton title="Crear una nueva categoría" />
+        <HeaderButton
+          title="Crear una nueva categoría"
+          handleFunction={openModal}
+        />
       </div>
       <div className="category-main">
         <CardInformation />
