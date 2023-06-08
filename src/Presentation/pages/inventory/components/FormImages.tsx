@@ -93,6 +93,7 @@ export const FormImagesInventory = ({
 
   useEffect(() => {
     if (params.id) {
+      console.log("params.id", params.id);
       if (isEdit) {
         const inventory = inventories.find(
           (inventory) => inventory.id === Number(params.id)

@@ -1,6 +1,5 @@
-.body {
+.login {
   padding: 40px;
-  background-color: linear-gradient(45deg, #131086, #b621f3);
 }
 
 .login-container {
@@ -14,9 +13,9 @@
 .login-left {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: content;
   padding-left: 150px;
-  background-color: white;
+  background-color: #fff;
 }
 
 .login-header {
@@ -42,56 +41,44 @@
   gap: 35px;
 }
 
-.form-item label:not(.checkboxLabel) {
+.form-item label {
   display: inline-block;
-  background-color: white;
+  background-color: #fff;
   margin-bottom: 10px;
   position: absolute;
   transform: translate(30px, -10px);
-  font-size: 14px;
+  font-size: 15px;
+  padding: 0 5px;
 }
 
-input[type="text"],
-input[type="password"] {
+.login-email,
+.login-password {
   border: 1px solid black;
   height: 55px;
   padding: 0 2rem;
   width: 100%;
   outline: none;
-  transition: background 0.5;
   font-size: 18px;
   border-radius: 100px;
+  background-color: #fff;
 }
 
-.checkbox {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  accent-color: #131086;
-}
-
-.form-login-button {
-  border: none;
-  background-color: linear-gradient(45deg, #131086, #b621f3);
+.login-button {
+  width: 90%;
+  margin-right: 1rem !important;
+  border: 1px solid #fff;
+  background-color: #b621f3;
   color: white;
   padding: 1rem;
   border-radius: 100px;
   text-align: center;
-  text-transform: uppercase;
   font-size: 18px;
-  height: 55px;
   cursor: pointer;
 }
 
-.login-form-footer {
-  display: flex;
-  gap: 30px;
-  margin-top: 70px;
+.login-button:hover {
+  background-color: #a21ce0;
+  border: 1px solid #000;
 }
 
 .login-right {
@@ -119,8 +106,15 @@ input[type="checkbox"] {
   }
 }
 
+@media (max-width: 1000px) {
+  .login-header h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+}
+
 @media (max-width: 768px) {
-  .body {
+  .login {
     padding: 20px;
   }
 
@@ -130,5 +124,35 @@ input[type="checkbox"] {
 
   .login-right {
     display: none;
+  }
+}
+
+@media (max-width: 460px) {
+  .login-left {
+    padding: 20px !important;
+  }
+
+  .login-form-content {
+    gap: 20px;
+  }
+
+  .login-header h1 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 350px) {
+  .login-header h1 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .form-item label {
+    font-size: 10px;
+  }
+
+  .login-button {
+    font-size: 14px;
   }
 }

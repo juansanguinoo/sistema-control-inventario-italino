@@ -21,15 +21,17 @@
 
 .inventory-main {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
 .form {
   display: flex;
+  justify-content: center;
 }
 
 .data-column {
-  flex: 6;
+  width: 800px;
   background-color: #ffffff;
   margin: 1rem;
   padding: 1rem;
@@ -39,12 +41,7 @@
   justify-content: space-between;
 }
 
-.column-1 {
-  width: 50%;
-  display: inline-block;
-  margin: 1rem;
-}
-
+.column-1,
 .column-2 {
   width: 50%;
   display: inline-block;
@@ -64,7 +61,7 @@
 .form-group input[type="number"],
 .form-group select,
 .form-group textarea {
-  width: 90%;
+  width: 95%;
   padding: 0.75rem;
   background-color: #f2f2f2;
   border-radius: 5px;
@@ -72,18 +69,13 @@
 }
 
 .small-input {
-  width: 47%;
+  width: 48%;
   display: inline-block;
-}
-
-.custom-description {
-  height: 16.25rem;
-  background-color: #f2f2f2;
 }
 
 .checkbox {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .lbl-switch-active {
@@ -154,8 +146,26 @@
   display: none;
 }
 
+.form-group-button {
+  margin-top: 200px;
+}
+
+.form-group-button button {
+  width: 90%;
+  padding: 1rem;
+  background-color: #5570f1;
+  border-radius: 20px;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.form-group-button button:hover {
+  background-color: #3f55c3;
+}
+
 .image-column {
-  flex: 3;
+  width: 450px;
   background-color: #ffffff;
   margin: 1rem;
   padding: 1rem;
@@ -212,32 +222,90 @@
   align-items: center;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1300px) {
   .form {
     flex-direction: column;
-    height: auto;
+    align-items: center;
   }
+}
 
+@media screen and (max-width: 1250px) {
   .data-column {
+    width: 700px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .data-column {
+    width: 450px;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .column-1,
   .column-2 {
     width: 100%;
-    margin: 0;
   }
 
   .small-input {
     width: 100%;
   }
 
-  .image-column {
-    margin-top: 1rem;
+  .form-group input[type="text"],
+  .form-group input[type="number"],
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
   }
 
-  .image-group-2 {
+  .form-group-button {
+    margin-top: 50px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .data-column {
     width: 100%;
-    margin-top: 1rem;
+  }
+
+  .image-column {
+    width: 100%;
+  }
+
+  .small-images {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .form-group label {
+    font-size: 0.75rem;
+  }
+
+  .image-column .image-group-1 {
+    height: 12rem;
+  }
+
+  .image-column .image-group-1 p {
+    font-size: 0.7rem;
+  }
+
+  .image-column .image-group-2 {
+    height: 8rem;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .image-column .image-group-2 {
+    width: 60%;
+  }
+
+  .uploaded-row {
+    width: 100%;
+    padding: 0.3rem;
+    justify-content: center;
   }
 }
