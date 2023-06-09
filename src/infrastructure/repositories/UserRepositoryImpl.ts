@@ -19,6 +19,21 @@ export class UserRepositoryImpl implements IUserRepository {
     this.baseUrl = `${apiUrl}/users`;
   }
 
+  async checkLogin(): Promise<ResponseAPI<User>> {
+    const response = await this.httpClient.get<ResponseAPI<User>>(
+      `${this.baseUrl}/validate-token`
+    );
+    return response;
+  }
+
+  async loginUser(email: string, password: string): Promise<ResponseAPI<User>> {
+    const response = await this.httpClient.post<
+      ResponseAPI<User>,
+      { email: string; password: string }
+    >(`${this.baseUrl}/login`, { email, password });
+    return response;
+  }
+
   async getAllUsers(): Promise<ResponseAPI<User[]>> {
     const response = await this.httpClient.get<ResponseAPI<User[]>>(
       this.baseUrl

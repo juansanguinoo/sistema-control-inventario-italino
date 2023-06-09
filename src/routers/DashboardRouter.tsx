@@ -23,7 +23,7 @@ export const DashboardRouter = () => {
     <>
       <Home />
       <Routes>
-        <Route path="/" element={<MainHome title={"Dashboard"} />} />
+        <Route path="/dashboard" element={<MainHome title={"Dashboard"} />} />
         <Route path="orders" element={<MainHome title={"Ordenes"} />} />
         <Route path="customers" element={<MainHome title={"Clientes"} />} />
         <Route path="inventory" element={<Inventory />} />

@@ -9,6 +9,11 @@ export class AxiosHttpClient implements IHttpClient {
 
   constructor(@inject(TYPES.BaseUrl) baseUrl: string) {
     this.instance = axios.create({ baseURL: baseUrl });
+
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      this.instance.defaults.headers.common["x-token"] = token;
+    }
   }
 
   async get<T>(url: string): Promise<T> {
