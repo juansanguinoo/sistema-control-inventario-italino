@@ -4,6 +4,7 @@ import { navbarReducer } from "./navbarReducer";
 import { inventoryReducer } from "./inventoryReducer";
 import { userReducer } from "./userReducer";
 import { roleReducer } from "./roleReducer";
+import { customerReducer } from "./customerReducer";
 
 export default combineReducers({
   categoryReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   inventoryReducer,
   userReducer,
   roleReducer,
+  customerReducer,
 });

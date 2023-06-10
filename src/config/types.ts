@@ -6,6 +6,7 @@ const TYPES = {
   IInventoryRepository: Symbol.for("IInventoryRepository"),
   IUserRepository: Symbol.for("IUserRepository"),
   IRoleRepository: Symbol.for("IRoleRepository"),
+  ICustomerRepository: Symbol.for("ICustomerRepository"),
 
   CreateCategoryUseCase: Symbol.for("CreateCategoryUseCase"),
   GetCategoriesUseCase: Symbol.for("GetCategoriesUseCase"),
@@ -29,6 +30,13 @@ const TYPES = {
   UpdateRoleUseCase: Symbol.for("UpdateRoleUseCase"),
   DeleteRoleUseCase: Symbol.for("DeleteRoleUseCase"),
   GetAllActivitiesUseCase: Symbol.for("GetAllActivitiesUseCase"),
+
+  CreateCustomerUseCase: Symbol.for("CreateCustomerUseCase"),
+  GetAllCustomerUseCase: Symbol.for("GetAllCustomersUseCase"),
+  GetCustomerUseCase: Symbol.for("GetCustomerUseCase"),
+  UpdateCustomerUseCase: Symbol.for("UpdateCustomerUseCase"),
+  DeleteCustomerUseCase: Symbol.for("DeleteCustomerUseCase"),
+  GetCustomerByUserIdUseCase: Symbol.for("GetCustomerByUserIdUseCase"),
 };
 
 export { TYPES };
