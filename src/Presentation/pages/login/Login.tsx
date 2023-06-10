@@ -1,9 +1,19 @@
 import "./styles.css";
 import LoginImg from "../../assets/Login.svg";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "redux";
+import { loginUser } from "../../../store/actions/userAction";
 
 export const Login = () => {
+  const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const [smallScreen, setSmallScreen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // useEffect(() => {
+  //   dispatch(loginUser(email, password));
+  // }, [dispatch]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -23,6 +33,11 @@ export const Login = () => {
     };
   }, []);
 
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    dispatch(loginUser(email, password));
+  };
+
   return (
     <div className="login">
       <div className="login-container">
@@ -31,7 +46,7 @@ export const Login = () => {
             <h1>Bienvenido a nuestra aplicación</h1>
             <p>Por favor inicia sesión</p>
           </div>
-          <form className="login-form">
+          <form className="login-form" onSubmit={handleSubmit}>
             <div className="login-form-content">
               <div className="form-item">
                 {smallScreen ? (
@@ -40,11 +55,19 @@ export const Login = () => {
                     id="email"
                     className="login-email"
                     placeholder="Correo electrónico"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 ) : (
                   <>
                     <label htmlFor="email">Ingrese su correo electronico</label>
-                    <input type="text" id="email" className="login-email" />
+                    <input
+                      type="text"
+                      id="email"
+                      className="login-email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
                   </>
                 )}
               </div>
@@ -55,6 +78,8 @@ export const Login = () => {
                     id="password"
                     className="login-password"
                     placeholder="Contraseña"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 ) : (
                   <>
@@ -63,6 +88,8 @@ export const Login = () => {
                       type="password"
                       id="password"
                       className="login-password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </>
                 )}

@@ -1,5 +1,8 @@
 import { Dispatch } from "redux";
 import {
+  CheckLoginAction,
+  CheckLoginFailureAction,
+  CheckLoginSuccessAction,
   CreateUserAction,
   CreateUserFailureAction,
   CreateUserSuccessAction,
@@ -12,6 +15,9 @@ import {
   GetUserAction,
   GetUserFailureAction,
   GetUserSuccessAction,
+  LoginUserAction,
+  LoginUserFailureAction,
+  LoginUserSuccessAction,
   UpdateUserAction,
   UpdateUserFailureAction,
   UpdateUserSuccessAction,
@@ -28,6 +34,8 @@ import { UserModel } from "../../domain/models/UserModel";
 import { CreateUserUseCase } from "../../domain/useCases/user/CreateUserUseCase";
 import { UpdateUserUseCase } from "../../domain/useCases/user/UpdateUserUseCase";
 import { DeleteUserUseCase } from "../../domain/useCases/user/DeleteUserUseCase";
+import { LoginUserUseCase } from "../../domain/useCases/user/LoginUserUseCase";
+import { CheckLoginUserUseCase } from "../../domain/useCases/user/CheckLoginUserUseCase";
 
 export type UserAction =
   | GetAllUsersAction
@@ -44,7 +52,13 @@ export type UserAction =
   | UpdateUserFailureAction
   | DeleteUserAction
   | DeleteUserSuccessAction
-  | DeleteUserFailureAction;
+  | DeleteUserFailureAction
+  | LoginUserAction
+  | LoginUserSuccessAction
+  | LoginUserFailureAction
+  | CheckLoginAction
+  | CheckLoginSuccessAction
+  | CheckLoginFailureAction;
 
 export const getAllUsers = () => {
   return async (dispatch: Dispatch<UserAction>) => {
@@ -157,6 +171,71 @@ export const deleteUser = (idUser: number) => {
       );
       dispatch({
         type: UserActionsTypes.DELETE_USER_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const loginUser = (email: string, password: string) => {
+  return async (dispatch: Dispatch<UserAction>) => {
+    const useCase = container.get<LoginUserUseCase>(TYPES.LoginUserUseCase);
+
+    dispatch({ type: UserActionsTypes.LOGIN_USER });
+
+    try {
+      const response = await useCase.execute(email, password);
+
+      if (response.token) {
+        sessionStorage.setItem("token", response.token);
+      }
+
+      dispatch({
+        type: UserActionsTypes.LOGIN_USER_SUCCESS,
+        payload: {
+          UserModel: adaptUser(response.data!),
+          token: response.token,
+        },
+      });
+    } catch (error: any) {
+      const handleError = new AppError(
+        `Ocurrió un error al obtener el usuario ${error}`
+      );
+      dispatch({
+        type: UserActionsTypes.LOGIN_USER_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const checkLogin = () => {
+  return async (dispatch: Dispatch<UserAction>) => {
+    const useCase = container.get<CheckLoginUserUseCase>(
+      TYPES.CheckLoginUserUseCase
+    );
+
+    dispatch({ type: UserActionsTypes.CHECK_LOGIN });
+
+    try {
+      const response = await useCase.execute();
+
+      if (response.token) {
+        sessionStorage.setItem("token", response.token);
+      }
+      dispatch({
+        type: UserActionsTypes.CHECK_LOGIN_SUCCESS,
+        payload: {
+          UserModel: adaptUser(response.data!),
+          token: response.token,
+        },
+      });
+    } catch (error: any) {
+      const handleError = new AppError(
+        `Ocurrió un error al obtener el usuario ${error}`
+      );
+      dispatch({
+        type: UserActionsTypes.CHECK_LOGIN_FAILURE,
         payload: handleError,
       });
     }

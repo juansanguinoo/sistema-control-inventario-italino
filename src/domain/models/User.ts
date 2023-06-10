@@ -10,4 +10,5 @@ export interface User {
   created_at?: string;
   updated_at?: string;
   rol?: Role;
+  token?: string;
 }

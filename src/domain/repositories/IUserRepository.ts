@@ -8,4 +8,6 @@ export interface IUserRepository {
   createUser(user: UserModel): Promise<ResponseAPI<User>>;
   updateUser(idUser: number, user: UserModel): Promise<ResponseAPI<boolean>>;
   deleteUser(idUser: number): Promise<ResponseAPI<boolean>>;
+  loginUser(email: string, password: string): Promise<ResponseAPI<User>>;
+  checkLogin(): Promise<ResponseAPI<User>>;
 }
