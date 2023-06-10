@@ -71,3 +71,31 @@ export interface DeleteUserFailureAction {
   type: UserActionsTypes.DELETE_USER_FAILURE;
   payload: AppError;
 }
+
+export interface LoginUserAction {
+  type: UserActionsTypes.LOGIN_USER;
+}
+
+export interface LoginUserSuccessAction {
+  type: UserActionsTypes.LOGIN_USER_SUCCESS;
+  payload: { UserModel: UserModel; token?: string };
+}
+
+export interface LoginUserFailureAction {
+  type: UserActionsTypes.LOGIN_USER_FAILURE;
+  payload: AppError;
+}
+
+export interface CheckLoginAction {
+  type: UserActionsTypes.CHECK_LOGIN;
+}
+
+export interface CheckLoginSuccessAction {
+  type: UserActionsTypes.CHECK_LOGIN_SUCCESS;
+  payload: { UserModel: UserModel; token?: string };
+}
+
+export interface CheckLoginFailureAction {
+  type: UserActionsTypes.CHECK_LOGIN_FAILURE;
+  payload: AppError;
+}

@@ -6,12 +6,16 @@ export interface UserState {
   loading: boolean;
   users: UserModel[] | [];
   error: Error | null;
+  token?: string | null;
+  loggedIn: boolean;
 }
 
 const initialState: UserState = {
   loading: false,
   users: [],
   error: null,
+  token: null,
+  loggedIn: false,
 };
 
 export const userReducer = (
@@ -24,6 +28,8 @@ export const userReducer = (
     case UserActionsTypes.CREATE_USER:
     case UserActionsTypes.UPDATE_USER:
     case UserActionsTypes.DELETE_USER:
+    case UserActionsTypes.LOGIN_USER:
+    case UserActionsTypes.CHECK_LOGIN:
       return {
         ...state,
         loading: true,
@@ -43,11 +49,15 @@ export const userReducer = (
     case UserActionsTypes.GET_ALL_USERS_FAILURE:
     case UserActionsTypes.GET_USER_BY_ID_FAILURE:
     case UserActionsTypes.UPDATE_USER_FAILURE:
+    case UserActionsTypes.LOGIN_USER_FAILURE:
+    case UserActionsTypes.CHECK_LOGIN_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
         users: [],
+        token: null,
+        loggedIn: false,
       };
 
     case UserActionsTypes.CREATE_USER_SUCCESS:
@@ -80,6 +90,26 @@ export const userReducer = (
         loading: false,
         error: null,
         users: state.users,
+      };
+
+    case UserActionsTypes.LOGIN_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        users: [action.payload.UserModel],
+        token: action.payload.token,
+        loggedIn: true,
+      };
+
+    case UserActionsTypes.CHECK_LOGIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        users: [action.payload.UserModel],
+        token: action.payload.token,
+        loggedIn: true,
       };
 
     default:

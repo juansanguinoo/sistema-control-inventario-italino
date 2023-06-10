@@ -3,4 +3,5 @@ export interface ResponseAPI<T = any> {
   message: string;
   data?: T;
   error?: string;
+  token?: string;
 }

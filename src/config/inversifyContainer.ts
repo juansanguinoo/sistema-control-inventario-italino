@@ -37,6 +37,8 @@ import { GetAllCustomerUseCase } from "../domain/useCases/customer/GetAllCustome
 import { DeleteCustomerUseCase } from "../domain/useCases/customer/DeleteCustomerUseCase";
 import { UpdateCustomerUseCase } from "../domain/useCases/customer/UpdateCustomerUseCase";
 import { GetCustomerByUserIdUseCase } from "../domain/useCases/customer/GetCustomerByUserIdUseCase";
+import { LoginUserUseCase } from "../domain/useCases/user/LoginUserUseCase";
+import { CheckLoginUserUseCase } from "../domain/useCases/user/CheckLoginUserUseCase";
 
 const container = new Container();
 
@@ -110,6 +112,10 @@ container
 container
   .bind<UpdateUserUseCase>(TYPES.UpdateUserUseCase)
   .to(UpdateUserUseCase);
+container.bind<LoginUserUseCase>(TYPES.LoginUserUseCase).to(LoginUserUseCase);
+container
+  .bind<CheckLoginUserUseCase>(TYPES.CheckLoginUserUseCase)
+  .to(CheckLoginUserUseCase);
 
 container
   .bind<CreateRoleUseCase>(TYPES.CreateRoleUseCase)
