@@ -29,6 +29,14 @@ import { GetAllRolesUseCase } from "../domain/useCases/role/GetAllRoleUseCase";
 import { DeleteRoleUseCase } from "../domain/useCases/role/DeleteRoleUseCase";
 import { UpdateRoleUseCase } from "../domain/useCases/role/UpdateRoleUseCase";
 import { GetAllActivitiesUseCase } from "../domain/useCases/role/GetAllActivitiesUseCase";
+import { ICustomerRepository } from "../domain/repositories/ICustomerRepository";
+import { CustomerRepositoryImpl } from "../infrastructure/repositories/CustomerRepositoryImpl";
+import { CreateCustomerUseCase } from "../domain/useCases/customer/CreateCustomerUseCase";
+import { GetCustomerUseCase } from "../domain/useCases/customer/GetCustomerUseCase";
+import { GetAllCustomerUseCase } from "../domain/useCases/customer/GetAllCustomerUseCase";
+import { DeleteCustomerUseCase } from "../domain/useCases/customer/DeleteCustomerUseCase";
+import { UpdateCustomerUseCase } from "../domain/useCases/customer/UpdateCustomerUseCase";
+import { GetCustomerByUserIdUseCase } from "../domain/useCases/customer/GetCustomerByUserIdUseCase";
 import { LoginUserUseCase } from "../domain/useCases/user/LoginUserUseCase";
 import { CheckLoginUserUseCase } from "../domain/useCases/user/CheckLoginUserUseCase";
 
@@ -56,11 +64,13 @@ container
   .bind<IRoleRepository>(TYPES.IRoleRepository)
   .to(RoleRepositoryImpl)
   .inSingletonScope();
-
 container
   .bind<IInventoryRepository>(TYPES.IInventoryRepository)
   .to(InventoryRepositoryImpl)
   .inSingletonScope();
+container
+  .bind<ICustomerRepository>(TYPES.ICustomerRepository)
+  .to(CustomerRepositoryImpl);
 
 // UseCases
 container
@@ -123,5 +133,24 @@ container
 container
   .bind<GetAllActivitiesUseCase>(TYPES.GetAllActivitiesUseCase)
   .to(GetAllActivitiesUseCase);
+
+container
+  .bind<CreateCustomerUseCase>(TYPES.CreateCustomerUseCase)
+  .to(CreateCustomerUseCase);
+container
+  .bind<GetCustomerUseCase>(TYPES.GetCustomerUseCase)
+  .to(GetCustomerUseCase);
+container
+  .bind<GetAllCustomerUseCase>(TYPES.GetAllCustomerUseCase)
+  .to(GetAllCustomerUseCase);
+container
+  .bind<DeleteCustomerUseCase>(TYPES.DeleteCustomerUseCase)
+  .to(DeleteCustomerUseCase);
+container
+  .bind<UpdateCustomerUseCase>(TYPES.UpdateCustomerUseCase)
+  .to(UpdateCustomerUseCase);
+container
+  .bind<GetCustomerByUserIdUseCase>(TYPES.GetCustomerByUserIdUseCase)
+  .to(GetCustomerByUserIdUseCase);
 
 export { container };

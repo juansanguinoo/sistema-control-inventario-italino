@@ -28,6 +28,7 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
                 </div>
                 <div className="form-group">
                   <select name="client" id="client">
+                    <option value="">Selecciona un cliente</option>
                     <option value="1">Cliente 1</option>
                     <option value="2">Cliente 2</option>
                     <option value="3">Cliente 3</option>
