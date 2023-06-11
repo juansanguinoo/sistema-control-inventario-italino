@@ -1,4 +1,5 @@
 import "./styles.css";
+import Folder from "../../assets/Folder.svg";
 import { ModalCategory } from "./components/Modal";
 import { PageTitle } from "../../components/titles/PageTitle";
 import { HeaderButton } from "../../components/buttons/HeaderButton";
@@ -58,6 +59,16 @@ export const Category = () => {
     openModal();
   };
 
+  // get the active categories
+  const activeCategories = categories.filter(
+    (category) => category.statusCategory === "Active"
+  );
+
+  // get the inactive categories
+  const inactiveCategories = categories.filter(
+    (category) => category.statusCategory === "Inactive"
+  );
+
   return (
     <div className={`category-container ${navbarClass}`}>
       <div className="category-header">
@@ -68,8 +79,16 @@ export const Category = () => {
         />
       </div>
       <div className="category-main">
-        <CardInformation />
-        <CardInformation />
+        <CardInformation
+          icon={Folder}
+          titles={["Total de categorías"]}
+          data={[categories.length]}
+        />
+        <CardInformation
+          icon={Folder}
+          titles={["Categorías activas", "Categorías inactivas"]}
+          data={[activeCategories.length, inactiveCategories.length]}
+        />
         <TableInformation
           categories={categories}
           columns={categoryColumns}

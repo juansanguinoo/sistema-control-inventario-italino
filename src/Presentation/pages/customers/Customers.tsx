@@ -1,8 +1,9 @@
+import "./styles.css";
+import User from "../../assets/User.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { CardInformation } from "../../components/cards/CardInformation";
 import { PageTitle } from "../../components/titles/PageTitle";
-import "./styles.css";
 import { HeaderButton } from "../../components/buttons/HeaderButton";
 import { useEffect, useState } from "react";
 import { ModalCustomers } from "./components/Modal";
@@ -63,6 +64,33 @@ export const Customers = () => {
     openModal();
   };
 
+  // get the active customers
+  const activeCustomers = customers.filter(
+    (customer) => customer.statusCustomer === "Active"
+  );
+
+  // get the inactive customers
+  const inactiveCustomers = customers.filter(
+    (customer) => customer.statusCustomer === "Inactive"
+  );
+
+  // get the createdAt date of the customers reducer
+  const createdAt = customers.map((customer) => customer.createdAt);
+  console.log(createdAt);
+
+  // get the total of customers added in the last 30 days
+  const totalCustomers = createdAt.filter((date) => {
+    if (date === undefined) {
+      return false;
+    }
+
+    const today = new Date();
+    const dateCustomer = new Date(date);
+    const difference = today.getTime() - dateCustomer.getTime();
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    return days <= 30;
+  });
+
   return (
     <div className={`customer-container ${navbarClass}`}>
       <div className="customer-header">
@@ -73,8 +101,24 @@ export const Customers = () => {
         />
       </div>
       <div className="customer-main">
-        <CardInformation />
-        <CardInformation />
+        <CardInformation
+          icon={User}
+          titles={[
+            "Todos los clientes",
+            "Clientes activos",
+            "Clientes inactivos",
+          ]}
+          data={[
+            customers.length,
+            activeCustomers.length,
+            inactiveCustomers.length,
+          ]}
+        />
+        <CardInformation
+          icon={User}
+          titles={["Clientes agregados en el último mes"]}
+          data={[totalCustomers.length]}
+        />
         <TableInformation
           categories={customers}
           columns={customerColumns}

@@ -1,7 +1,8 @@
+import "./styles.css";
+import Bag from "../../assets/Bag.svg";
 import { useSelector } from "react-redux";
 import { CardInformation } from "../../components/cards/CardInformation";
 import { PageTitle } from "../../components/titles/PageTitle";
-import "./styles.css";
 import { RootState } from "../../../store/store";
 import { HeaderButton } from "../../components/buttons/HeaderButton";
 import { useState } from "react";
@@ -32,8 +33,8 @@ export const Orders = () => {
         />
       </div>
       <div className="orders-main">
-        <CardInformation />
-        <CardInformation />
+        <CardInformation icon={Bag} />
+        <CardInformation icon={Bag} />
         {showModal && <ModalOrders onCloseModal={closeModal} />}
       </div>
     </div>
