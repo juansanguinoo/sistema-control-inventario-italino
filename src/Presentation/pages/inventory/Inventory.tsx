@@ -1,4 +1,5 @@
 import "./styles.css";
+import Folder from "../../assets/Folder.svg";
 import { PageTitle } from "../../components/titles/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
@@ -37,6 +38,27 @@ export const Inventory = () => {
     navigate(`product/${params.id}`);
   };
 
+  // get the active products
+  const activeProducts = inventories.filter(
+    (inventory) => inventory.statusInventory === "Active"
+  );
+
+  // get the total stock of inventories
+  const totalStock = inventories.reduce(
+    (total, inventory) => total + inventory.stockInventory,
+    0
+  );
+
+  // get inactive products
+  const inactiveProducts = inventories.filter(
+    (inventory) => inventory.statusInventory === "Inactive"
+  );
+
+  // get the pubicated products
+  const publishedProducts = inventories.filter(
+    (inventory) => inventory.publicatedInventory === true
+  );
+
   return (
     <div className={`inventory-container ${navbarClass}`}>
       <div className="inventory-header">
@@ -44,8 +66,20 @@ export const Inventory = () => {
         <LinkButton title="Crear Producto" />
       </div>
       <div className="inventory-main">
-        <CardInformation />
-        <CardInformation />
+        <CardInformation
+          icon={Folder}
+          titles={["Todos los productos", "Productos activos"]}
+          data={[inventories.length, activeProducts.length]}
+        />
+        <CardInformation
+          icon={Folder}
+          titles={[
+            "Stock Total",
+            "Productos inactivos",
+            "Productos publicados",
+          ]}
+          data={[totalStock, inactiveProducts.length, publishedProducts.length]}
+        />
         <TableInformation
           categories={inventories}
           columns={inventoryColumns}
