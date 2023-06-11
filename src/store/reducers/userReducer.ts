@@ -5,6 +5,7 @@ import { UserActionsTypes } from "../enums/UserActionsEnum";
 export interface UserState {
   loading: boolean;
   users: UserModel[] | [];
+  user: UserModel | null;
   error: Error | null;
   token?: string | null;
   loggedIn: boolean;
@@ -13,6 +14,7 @@ export interface UserState {
 const initialState: UserState = {
   loading: false,
   users: [],
+  user: null,
   error: null,
   token: null,
   loggedIn: false,
@@ -97,7 +99,7 @@ export const userReducer = (
         ...state,
         loading: false,
         error: null,
-        users: [action.payload.UserModel],
+        user: action.payload.UserModel,
         token: action.payload.token,
         loggedIn: true,
       };
@@ -107,7 +109,7 @@ export const userReducer = (
         ...state,
         loading: false,
         error: null,
-        users: [action.payload.UserModel],
+        user: action.payload.UserModel,
         token: action.payload.token,
         loggedIn: true,
       };

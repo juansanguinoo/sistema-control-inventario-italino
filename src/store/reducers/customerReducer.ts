@@ -83,7 +83,7 @@ export const customerReducer = (
         ...state,
         loading: false,
         error: null,
-        customers: [action.payload],
+        customers: action.payload,
       };
 
     case CustomerActionsTypes.UPDATE_CUSTOMER_SUCCESS:

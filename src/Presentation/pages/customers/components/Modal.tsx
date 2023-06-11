@@ -3,26 +3,41 @@ import { CustomerModel } from "../../../../domain/models/CustomerModel";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import { Dispatch } from "redux";
+import { createCustomer } from "../../../../store/actions/customerActions";
 
 interface IModalCustomersProps {
   onCloseModal?: () => void;
+  initialState?: CustomerModel;
+  action?: string;
 }
 
-export const ModalCustomers = ({ onCloseModal }: IModalCustomersProps) => {
+export const ModalCustomers = ({
+  onCloseModal,
+  initialState,
+  action,
+}: IModalCustomersProps) => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const [customerData, setCustomerData] = useState<CustomerModel>({
-    nameCustomer: "",
-    nitCustomer: "",
-    addressCustomer: "",
-    phoneCustomer: "",
-    statusCustomer: "Inactive",
+    userId: initialState?.userId || 0,
+    nameCustomer: initialState?.nameCustomer || "",
+    nitCustomer: initialState?.nitCustomer || "",
+    addressCustomer: initialState?.addressCustomer || "",
+    phoneCustomer: initialState?.phoneCustomer || "",
+    statusCustomer: initialState?.statusCustomer || "Inactive",
   });
+
+  const getUser = useSelector((state: RootState) => state.userReducer.user);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(customerData);
+    customerData.userId = getUser?.id;
+    dispatch(createCustomer(customerData));
     onCloseModal && onCloseModal();
   };
+
+  useEffect(() => {
+    console.log("action", action);
+  }, [action]);
 
   return (
     <div>
@@ -120,9 +135,11 @@ export const ModalCustomers = ({ onCloseModal }: IModalCustomersProps) => {
                 Cancelar
               </button>
 
-              <button type="submit" className="add-button">
-                Agregar
-              </button>
+              {action === "preview" ? null : (
+                <button type="submit" className="add-button">
+                  {action === "edit" ? "Guardar cambios" : "Agregar"}
+                </button>
+              )}
             </div>
           </form>
         </div>

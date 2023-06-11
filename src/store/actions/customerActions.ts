@@ -33,6 +33,7 @@ import { CustomerModel } from "../../domain/models/CustomerModel";
 import { CreateCustomerUseCase } from "../../domain/useCases/customer/CreateCustomerUseCase";
 import { UpdateCustomerUseCase } from "../../domain/useCases/customer/UpdateCustomerUseCase";
 import { DeleteCustomerUseCase } from "../../domain/useCases/customer/DeleteCustomerUseCase";
+import { GetCustomerByUserIdUseCase } from "../../domain/useCases/customer/GetCustomerByUserIdUseCase";
 
 export type CustomerAction =
   | GetAllCustomersAction
@@ -106,7 +107,9 @@ export const getCustomerById = (idCustomer: number) => {
 
 export const getCustomerByUserId = (idUser: number) => {
   return async (dispatch: Dispatch<CustomerAction>) => {
-    const useCase = container.get<GetCustomerUseCase>(TYPES.GetCustomerUseCase);
+    const useCase = container.get<GetCustomerByUserIdUseCase>(
+      TYPES.GetCustomerByUserIdUseCase
+    );
 
     dispatch({ type: CustomerActionsTypes.GET_CUSTOMER_BY_USER_ID });
 
@@ -114,7 +117,7 @@ export const getCustomerByUserId = (idUser: number) => {
       const response = await useCase.execute(idUser);
       dispatch({
         type: CustomerActionsTypes.GET_CUSTOMER_BY_USER_ID_SUCCESS,
-        payload: adaptCustomer(response.data!),
+        payload: adaptCustomers(response.data!),
       });
     } catch (error) {
       const handleError = new AppError(
@@ -129,9 +132,10 @@ export const getCustomerByUserId = (idUser: number) => {
 };
 
 export const createCustomer = (customer: CustomerModel) => {
+  console.log(customer);
   return async (dispatch: Dispatch<CustomerAction>) => {
     const useCase = container.get<CreateCustomerUseCase>(
-      TYPES.CreateUserUseCase
+      TYPES.CreateCustomerUseCase
     );
     dispatch({ type: CustomerActionsTypes.CREATE_CUSTOMER });
 

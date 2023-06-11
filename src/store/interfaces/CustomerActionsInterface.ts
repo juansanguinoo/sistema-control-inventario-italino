@@ -78,7 +78,7 @@ export interface GetCustomerByUserIdAction {
 
 export interface GetCustomerByUserIdSuccessAction {
   type: CustomerActionsTypes.GET_CUSTOMER_BY_USER_ID_SUCCESS;
-  payload: CustomerModel;
+  payload: CustomerModel[];
 }
 
 export interface GetCustomerByUserIdFailureAction {

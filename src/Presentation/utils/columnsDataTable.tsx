@@ -295,3 +295,40 @@ export const inventoryColumns = [
     },
   },
 ];
+
+export const customerColumns = [
+  {
+    field: "nameCustomer",
+    headerName: "Nombre",
+    width: 200,
+  },
+  {
+    field: "nitCustomer",
+    headerName: "NIT o cédula",
+    width: 200,
+  },
+  {
+    field: "addressCustomer",
+    headerName: "Dirección",
+    width: 300,
+  },
+  {
+    field: "phoneCustomer",
+    headerName: "Teléfono",
+    width: 200,
+  },
+  {
+    field: "statusCustomer",
+    headerName: "Estado",
+    width: 200,
+    renderCell: (params: any) => {
+      return (
+        <div
+          className={`cellWithStatus ${params.row.statusCustomer.toLowerCase()}`}
+        >
+          {params.row.statusCustomer}
+        </div>
+      );
+    },
+  },
+];

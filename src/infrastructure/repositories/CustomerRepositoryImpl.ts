@@ -10,6 +10,7 @@ import { ResponseAPI } from "../api/models/ResponseApi";
 export class CustomerRepositoryImpl implements ICustomerRepository {
   private readonly httpClient: IHttpClient;
   private readonly baseUrl: string;
+  private readonly customUrl: string;
 
   constructor(
     @inject(TYPES.HttpClient) httpClient: IHttpClient,
@@ -17,6 +18,7 @@ export class CustomerRepositoryImpl implements ICustomerRepository {
   ) {
     this.httpClient = httpClient;
     this.baseUrl = `${apiUrl}/customers`;
+    this.customUrl = `${apiUrl}/customersBySaller`;
   }
 
   async getAllCustomers(): Promise<ResponseAPI<Customer[]>> {
@@ -62,7 +64,7 @@ export class CustomerRepositoryImpl implements ICustomerRepository {
   }
   async getCustomerByUserId(idUser: number): Promise<ResponseAPI<Customer[]>> {
     const response = await this.httpClient.get<ResponseAPI<Customer[]>>(
-      `${this.baseUrl}/user/${idUser}`
+      `${this.customUrl}/${idUser}`
     );
     return response;
   }

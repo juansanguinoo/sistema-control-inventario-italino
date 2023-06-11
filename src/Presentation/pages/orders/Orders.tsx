@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { CardInformation } from "../../components/cards/CardInformation";
-import { TableInformation } from "../../components/tables/TableInformation";
 import { PageTitle } from "../../components/titles/PageTitle";
 import "./styles.css";
 import { RootState } from "../../../store/store";
