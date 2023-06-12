@@ -7,6 +7,7 @@ const TYPES = {
   IUserRepository: Symbol.for("IUserRepository"),
   IRoleRepository: Symbol.for("IRoleRepository"),
   ICustomerRepository: Symbol.for("ICustomerRepository"),
+  IOrderRepository: Symbol.for("IOrderRepository"),
 
   CreateCategoryUseCase: Symbol.for("CreateCategoryUseCase"),
   GetCategoriesUseCase: Symbol.for("GetCategoriesUseCase"),

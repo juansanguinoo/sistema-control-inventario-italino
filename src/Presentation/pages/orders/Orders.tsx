@@ -28,7 +28,7 @@ export const Orders = () => {
       <div className="orders-header">
         <PageTitle title="Ordenes" />
         <HeaderButton
-          title="Crear una nueva ordén"
+          title="Crear una nueva orden"
           handleFunction={openModal}
         />
       </div>

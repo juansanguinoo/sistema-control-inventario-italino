@@ -39,6 +39,8 @@ import { UpdateCustomerUseCase } from "../domain/useCases/customer/UpdateCustome
 import { GetCustomerByUserIdUseCase } from "../domain/useCases/customer/GetCustomerByUserIdUseCase";
 import { LoginUserUseCase } from "../domain/useCases/user/LoginUserUseCase";
 import { CheckLoginUserUseCase } from "../domain/useCases/user/CheckLoginUserUseCase";
+import { IOrderRepository } from "../domain/repositories/IOrderRepository";
+import { OrderRepositoryImpl } from "../infrastructure/repositories/OrderRepositoryImpl";
 
 const container = new Container();
 
@@ -70,7 +72,12 @@ container
   .inSingletonScope();
 container
   .bind<ICustomerRepository>(TYPES.ICustomerRepository)
-  .to(CustomerRepositoryImpl);
+  .to(CustomerRepositoryImpl)
+  .inSingletonScope();
+container
+  .bind<IOrderRepository>(TYPES.IOrderRepository)
+  .to(OrderRepositoryImpl)
+  .inSingletonScope();
 
 // UseCases
 container
