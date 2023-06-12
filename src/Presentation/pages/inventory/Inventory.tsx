@@ -14,11 +14,12 @@ import {
 import { inventoryColumns } from "../../utils/columnsDataTable";
 import { LinkButton } from "../../components/buttons/LinkButton";
 import { useNavigate } from "react-router-dom";
+import { InventoryModel } from "../../../domain/models/InventoryModel";
 
 export const Inventory = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
-  const inventories = useSelector(
+  const inventories: InventoryModel[] = useSelector(
     (state: RootState) => state.inventoryReducer.inventories
   );
   const navbarOpen = useSelector(
@@ -43,7 +44,6 @@ export const Inventory = () => {
     (inventory) => inventory.statusInventory === "Active"
   );
 
-  // get the total stock of inventories
   const totalStock = inventories.reduce(
     (total, inventory) => total + inventory.stockInventory,
     0

@@ -131,15 +131,6 @@ textarea {
   margin-top: 1rem;
 }
 
-button {
-  width: 80%;
-  height: 100%;
-  padding: 1rem;
-  margin: 0.75rem;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
 .cancel-button {
   background-color: transparent;
   border: 1px solid #5570f1;
