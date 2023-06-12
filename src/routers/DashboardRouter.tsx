@@ -12,6 +12,7 @@ import { Roles } from "../Presentation/pages/roles/Roles";
 import { CreateInventory } from "../Presentation/pages/inventory/CreateInventory";
 import { Orders } from "../Presentation/pages/orders/Orders";
 import { Customers } from "../Presentation/pages/customers/Customers";
+import { PreviewInventory } from "../Presentation/pages/inventory/PreviewInventory";
 
 export const DashboardRouter = () => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
@@ -35,7 +36,7 @@ export const DashboardRouter = () => {
           path="inventory/edit-product/:id"
           element={<CreateInventory />}
         />
-        <Route path="inventory/product/:id" element={<CreateInventory />} />
+        <Route path="inventory/product/:id" element={<PreviewInventory />} />
         <Route path="category" element={<Category />} />
         <Route path="users" element={<Users />} />
         <Route path="role" element={<Roles />} />

@@ -5,9 +5,9 @@ import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 
 interface ITableInformationProps {
-  categories: any[] | [];
-  columns: IColumnsDataTable[];
-  deleteCategory: (id: number) => void;
+  categories?: any[] | [];
+  columns?: IColumnsDataTable[];
+  deleteCategory?: (id: number) => void;
   showView?: boolean;
   handleEditAction?: (params: any) => void;
   handlePreviewAction?: (params: any) => void;
@@ -36,14 +36,13 @@ export const TableInformation = ({
   };
 
   const handleDelete = (params: any) => {
-    dispatch(deleteCategory(params.row.id));
+    if (deleteCategory) {
+      dispatch(deleteCategory(params.row.id));
+    }
   };
 
-  const rowsWithId = categories.map((category) => {
-    return {
-      ...category,
-      id: category.id,
-    };
+  const rowsWithId = categories?.map((category, index) => {
+    return { ...category, id: index + 1 };
   });
 
   const actionsColumns = [
@@ -74,8 +73,8 @@ export const TableInformation = ({
   return (
     <div className="datatable">
       <DataGrid
-        rows={rowsWithId}
-        columns={columns.concat(actionsColumns)}
+        rows={rowsWithId || []}
+        columns={columns ? [...columns, ...actionsColumns] : []}
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 5 },
