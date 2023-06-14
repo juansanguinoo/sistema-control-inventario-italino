@@ -8,7 +8,7 @@ import { handleNavbar } from "../../../store/actions/navbarActions";
 
 export const Home = () => {
   const [navbarExpanded, setNavbarExpanded] = useState<boolean>(true);
-  const dispatch = useDispatch<Dispatch<any>>();
+  const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line @typescript-eslint/no-explicit-any
 
   const toggleNavbar = () => {
     setNavbarExpanded(!navbarExpanded);
