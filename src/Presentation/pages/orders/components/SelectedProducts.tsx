@@ -3,16 +3,18 @@ import { IInventoryModelSelected } from "../../../interfaces/IInventoryModelSele
 interface ISelectedProductsProps {
   selectedInventory: IInventoryModelSelected[];
   handleRemoveInventory: (inventory: IInventoryModelSelected) => void;
-  handleAddOrRemoveQuantity: (
+  handleAddOrRemoveQuantityByInput: (
     inventory: IInventoryModelSelected,
-    action: string
+    quantity: string
   ) => void;
+  handleQuantityInputFocus: (value: boolean) => void;
 }
 
 export const SelectedProducts = ({
   selectedInventory,
   handleRemoveInventory,
-  handleAddOrRemoveQuantity,
+  handleAddOrRemoveQuantityByInput,
+  handleQuantityInputFocus,
 }: ISelectedProductsProps) => {
   const moneyFormat = (value: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -52,23 +54,18 @@ export const SelectedProducts = ({
               </p>
             </div>
             <div className="modal-product-quantity-buttons">
-              <button
-                type="button"
-                className="modal-product-minus-button"
-                onClick={() => handleAddOrRemoveQuantity(inventory, "remove")}
-              >
-                -
-              </button>
-              <p className="modal-product-quantity-value">
-                {inventory.quantity}
-              </p>
-              <button
-                type="button"
-                className="modal-product-plus-button"
-                onClick={() => handleAddOrRemoveQuantity(inventory, "add")}
-              >
-                +
-              </button>
+              <input
+                className="modal-product-quantity-value-input"
+                type="text"
+                id={`quantityOrder ${inventory.inventoryId}`}
+                name="quantityOrder"
+                value={inventory.quantity || ""}
+                onFocus={() => handleQuantityInputFocus(true)}
+                onBlur={() => handleQuantityInputFocus(false)}
+                onChange={(e) =>
+                  handleAddOrRemoveQuantityByInput(inventory, e.target.value)
+                }
+              />
             </div>
             <div className="modal-product-quantity-subtotal">
               <p className="modal-product-quantity-subtotal-value">

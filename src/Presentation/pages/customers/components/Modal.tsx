@@ -1,5 +1,5 @@
 import "../styles.css";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { CustomerModel } from "../../../../domain/models/CustomerModel";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";

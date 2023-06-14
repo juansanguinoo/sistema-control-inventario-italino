@@ -41,6 +41,7 @@ import { LoginUserUseCase } from "../domain/useCases/user/LoginUserUseCase";
 import { CheckLoginUserUseCase } from "../domain/useCases/user/CheckLoginUserUseCase";
 import { IOrderRepository } from "../domain/repositories/IOrderRepository";
 import { OrderRepositoryImpl } from "../infrastructure/repositories/OrderRepositoryImpl";
+import { CreateOrderUseCase } from "../domain/useCases/order/CreateOrderUseCase";
 
 const container = new Container();
 
@@ -159,5 +160,9 @@ container
 container
   .bind<GetCustomerByUserIdUseCase>(TYPES.GetCustomerByUserIdUseCase)
   .to(GetCustomerByUserIdUseCase);
+
+container
+  .bind<CreateOrderUseCase>(TYPES.CreateOrderUseCase)
+  .to(CreateOrderUseCase);
 
 export { container };
