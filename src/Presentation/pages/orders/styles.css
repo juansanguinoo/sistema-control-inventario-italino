@@ -63,6 +63,7 @@ h4 {
 
 .form-modal-orders {
   margin-top: 20px;
+  padding: 1rem;
 }
 
 .modal-order-body {
@@ -78,10 +79,11 @@ h4 {
   margin-bottom: 25px;
 }
 
-.form-group input, .form-group select {
+.form-group input,
+.form-group select {
   width: 95%;
   padding: 10px;
-  background-color: #EFF1F9;
+  background-color: #eff1f9;
   border: none;
   border-radius: 4px;
 }
@@ -93,21 +95,24 @@ h4 {
   justify-content: space-between;
 }
 
-#date, #time, #paymentType, #orderType {
+#date,
+#time,
+#paymentType,
+#orderType {
   width: 48%;
-  color: #ABAFB1;
+  color: #abafb1;
 }
 
 .form-group textarea {
   width: 95%;
   height: 150px;
-  background-color: #EFF1F9;
+  background-color: #eff1f9;
   border-radius: 1rem;
   padding: 1rem;
 }
 
 .form-group textarea::placeholder {
-  color: #ABAFB1;
+  color: #abafb1;
 }
 
 .search-bar {
@@ -118,7 +123,7 @@ h4 {
 }
 
 .search-bar:focus {
-  border: 1px solid #ABAFB1;
+  border: 1px solid #abafb1;
 }
 
 .search-bar input {
@@ -171,28 +176,28 @@ h4 {
 }
 
 .form-modal-detail {
-  color: #8B8D97;
+  color: #8b8d97;
   font-size: 14px;
   padding-left: 1rem;
 }
 
 .form-modal-label-detail {
-  color: #8B8D97;
+  color: #8b8d97;
   font-size: 12px;
 }
 
 .modal-orders-client-select {
   width: 100%;
   padding: 10px;
-  background-color: #EFF1F9;
+  background-color: #eff1f9;
   border: none;
   border-radius: 4px;
-  color: #ABAFB1;
+  color: #abafb1;
 }
 
 .modal-orders-client-select option {
   color: #787a83;
-  background-color: #EFF1F9;
+  background-color: #eff1f9;
 }
 
 .modal-products {
@@ -206,7 +211,7 @@ h4 {
   border-radius: 0px 0px 5px 5px;
   border-width: 0px 1px 1px 1px;
   border-style: solid;
-  border-color: #ABAFB1;
+  border-color: #abafb1;
 }
 
 .modal-products::-webkit-scrollbar {
@@ -221,7 +226,7 @@ h4 {
   margin-bottom: 1rem;
   border-width: 0px 0px 1px 0px;
   border-style: solid;
-  border-color: #CFD3D4;
+  border-color: #cfd3d4;
   overflow-y: hidden;
 }
 
@@ -252,7 +257,7 @@ h4 {
 
 .modal-product-name {
   font-size: 13px;
-  color: #45464E;
+  color: #45464e;
   display: -webkit-box;
   -webkit-line-clamp: 2; /* Número de líneas máximas */
   -webkit-box-orient: vertical;
@@ -267,7 +272,7 @@ h4 {
 
 .modal-product-price {
   font-size: 14px;
-  color: #33343A;
+  color: #33343a;
   font-weight: bold;
 }
 
@@ -311,7 +316,7 @@ h4 {
 
 .add-product-paragraph {
   font-size: 12px;
-  color: #8B8D97;
+  color: #8b8d97;
   margin-top: 1rem;
 }
 
@@ -337,7 +342,7 @@ h4 {
   margin-bottom: 1rem;
   border-width: 0px 0px 1px 0px;
   border-style: solid;
-  border-color: #CFD3D4;
+  border-color: #cfd3d4;
   overflow-y: hidden;
 }
 
@@ -358,7 +363,7 @@ h4 {
 
 .subtotal-text-selected {
   font-size: 14px;
-  color: #8B8D97;
+  color: #8b8d97;
   margin-top: 1rem;
 }
 
@@ -410,7 +415,7 @@ h4 {
   border-radius: 6px;
   color: #393a41;
   font-size: 14px;
-  background-color: #F3F3F3;
+  background-color: #f3f3f3;
   cursor: pointer;
 }
 
@@ -420,13 +425,13 @@ h4 {
   border-radius: 6px;
   color: #393a41;
   font-size: 14px;
-  background-color: #F3F3F3;
+  background-color: #f3f3f3;
   cursor: pointer;
 }
 
 .modal-product-quantity-value {
   font-size: 16px;
-  color: #33343A;
+  color: #33343a;
   font-weight: bold;
   margin: 0 0.7rem;
   color: #5570f1;
@@ -455,7 +460,7 @@ h4 {
 
 .modal-product-quantity-subtotal-value {
   font-size: 14px;
-  color: #33343A;
+  color: #33343a;
   font-weight: bold;
   margin: 0 0.7rem;
 }
@@ -469,13 +474,13 @@ h4 {
 
 .modal-product-selected-total-text {
   font-size: 14px;
-  color: #8B8D97;
+  color: #8b8d97;
   font-weight: bold;
 }
 
 .modal-product-selected-total-price {
   font-size: 14px;
-  color: #33343A;
+  color: #33343a;
   font-weight: bold;
 }
 
@@ -496,4 +501,11 @@ h4 {
 .order-add-order {
   position: absolute;
   top: 21rem;
+}
+
+@media screen and (max-width: 500px) {
+  .orders-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

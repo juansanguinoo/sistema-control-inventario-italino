@@ -11,5 +11,17 @@
 
 .header-button:hover {
   background-color: #b4c1ff; /* Color hover del navbar */
-  color: #000;
+  color: #fff;
+}
+
+@media screen and (max-width: 360px) {
+  .header-button {
+    width: 180px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .header-button {
+    width: 150px;
+  }
 }

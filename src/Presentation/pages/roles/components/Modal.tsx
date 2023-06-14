@@ -67,20 +67,21 @@ export const ModalRoles = ({
 
   return (
     <div>
-      <div className="modal">
-        <div className="modal-content">
-          <div className="modal-header">
+      <div className="modal-rol">
+        <div className="modal-rol-content">
+          <div className="modal-rol-header">
             <h4>Agregar Rol</h4>
             <span className="close" onClick={onCloseModal}>
               &times;
             </span>
           </div>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="categoryName">Nombre del rol:</label>
+          <p className="form-modal-detail-rol">Detalles del rol</p>
+          <form className="form-modal-rol" onSubmit={handleSubmit}>
+            <div className="form-group-rol">
               <input
                 type="text"
-                id="categoryName"
+                id="rolName"
+                placeholder="Nombre del rol"
                 required
                 value={roleData.nameRole}
                 onChange={(event) =>
@@ -91,11 +92,11 @@ export const ModalRoles = ({
                 }
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="categoryReference">Descripción del rol:</label>
+            <div className="form-group-rol">
               <textarea
-                name=""
-                id=""
+                name="descriptionRol"
+                id="descriptionRol"
+                placeholder="Descripción del rol"
                 required
                 value={roleData.descriptionRole}
                 onChange={(event) =>
@@ -106,12 +107,15 @@ export const ModalRoles = ({
                 }
               ></textarea>
             </div>
-            <div className="form-group">
-              <label>Actividades:</label>
+            <div className="form-group-rol">
+              <label className="activities-rol-label">Actividades:</label>
               <div className="activity-checkboxes">
                 {activities.map((activity) => (
                   <div key={activity.id} className="activity-checkbox">
-                    <label htmlFor={`activity-${activity.id}`}>
+                    <label
+                      htmlFor={`activity-${activity.id}`}
+                      className="activities-rol"
+                    >
                       {activity.nameActivity}
                     </label>
                     <input
@@ -126,7 +130,10 @@ export const ModalRoles = ({
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="btn-switch-active-category">
+              <label
+                htmlFor="btn-switch-active-category"
+                className="form-modal-rol-status-label"
+              >
                 Status del rol:
               </label>
               <input
@@ -140,16 +147,16 @@ export const ModalRoles = ({
                 className="lbl-switch-active-category"
               ></label>
             </div>
-            <div className="modal-footer">
+            <div className="modal-rol-footer">
               <button
                 type="button"
-                className="cancel-button"
+                className="cancel-rol-button"
                 onClick={onCloseModal}
               >
                 Cancelar
               </button>
               {action === "watch" ? null : (
-                <button type="submit" className="add-button">
+                <button type="submit" className="add-rol-button">
                   {action === "edit" ? "Guardar cambios" : "Agregar"}
                 </button>
               )}

@@ -35,6 +35,14 @@ export const Customers = () => {
   };
 
   const closeModal = () => {
+    setCustomerData({
+      userId: 0,
+      nameCustomer: "",
+      nitCustomer: "",
+      addressCustomer: "",
+      phoneCustomer: "",
+      statusCustomer: "Inactive",
+    });
     setShowModal(false);
   };
 

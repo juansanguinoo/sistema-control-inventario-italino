@@ -42,7 +42,7 @@ export const TableInformation = ({
   };
 
   const rowsWithId = categories?.map((category, index) => {
-    return { ...category, id: index + 1 };
+    return { ...category, id: category.id || index };
   });
 
   const actionsColumns = [
