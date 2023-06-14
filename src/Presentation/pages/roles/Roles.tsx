@@ -1,4 +1,5 @@
 import "./styles.css";
+import Folder from "../../assets/Folder.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { RootState } from "../../../store/store";
@@ -33,15 +34,28 @@ export const Roles = () => {
     dispatch(getAllRoles());
   }, [dispatch]);
 
+  // get the active roles
+  // get the inactive roles
+  const activeRoles = roles.filter((role) => role.statusRole === "Active");
+  const inactiveRoles = roles.filter((role) => role.statusRole === "Inactive");
+
   return (
-    <div className={`category-container ${navbarClass}`}>
-      <div className="category-header">
+    <div className={`rol-container ${navbarClass}`}>
+      <div className="rol-header">
         <PageTitle title="Roles de usuarios" />
         <HeaderButton title="Crear un nuevo rol" handleFunction={openModal} />
       </div>
-      <div className="category-main">
-        <CardInformation />
-        <CardInformation />
+      <div className="rol-main">
+        <CardInformation
+          icon={Folder}
+          titles={["Total de roles"]}
+          data={[roles.length]}
+        />
+        <CardInformation
+          icon={Folder}
+          titles={["Roles activos", "Roles inactivos"]}
+          data={[activeRoles.length, inactiveRoles.length]}
+        />
         <TableInformation
           categories={roles}
           columns={roleColumns}

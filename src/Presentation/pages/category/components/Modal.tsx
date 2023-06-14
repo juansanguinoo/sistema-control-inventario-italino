@@ -39,20 +39,21 @@ export const ModalCategory = ({
 
   return (
     <div>
-      <div className="modal">
-        <div className="modal-content">
-          <div className="modal-header">
+      <div className="modal-category">
+        <div className="modal-category-content">
+          <div className="modal-category-header">
             <h4>Agregar Categoría</h4>
             <span className="close" onClick={onCloseModal}>
               &times;
             </span>
           </div>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="categoryName">Nombre de la categoría:</label>
+          <p className="form-modal-detail-category">Detalles de la categoría</p>
+          <form className="form-modal-category" onSubmit={handleSubmit}>
+            <div className="form-group-category">
               <input
                 type="text"
                 id="categoryName"
+                placeholder="Nombre de la categoría"
                 required
                 value={categoryData.nameCategory}
                 onChange={(event) =>
@@ -63,13 +64,11 @@ export const ModalCategory = ({
                 }
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="categoryReference">
-                Referencia de la categoría:
-              </label>
+            <div className="form-group-category">
               <input
                 type="text"
                 id="categoryReference"
+                placeholder="Referencia de la categoría"
                 required
                 value={categoryData.referenceCategory}
                 onChange={(event) =>
@@ -80,13 +79,11 @@ export const ModalCategory = ({
                 }
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="categoryReference">
-                Descripción de la categoría:
-              </label>
+            <div className="form-group-category">
               <textarea
-                name=""
-                id=""
+                name="categoryDescription"
+                id="categoryDescription"
+                placeholder="Descripción de la categoría"
                 required
                 value={categoryData.descriptionCategory}
                 onChange={(event) =>
@@ -98,7 +95,10 @@ export const ModalCategory = ({
               ></textarea>
             </div>
             <div className="form-group">
-              <label htmlFor="btn-switch-active-category">
+              <label
+                className="modal-label-category-status"
+                htmlFor="btn-switch-active-category"
+              >
                 Status de la categoría:
               </label>
               <input
@@ -112,16 +112,16 @@ export const ModalCategory = ({
                 className="lbl-switch-active-category"
               ></label>
             </div>
-            <div className="modal-footer">
+            <div className="modal-category-footer">
               <button
                 type="button"
-                className="cancel-button"
+                className="category-cancel-button"
                 onClick={onCloseModal}
               >
                 Cancelar
               </button>
               {action === "preview" ? null : (
-                <button type="submit" className="add-button">
+                <button type="submit" className="category-add-button">
                   {action === "edit" ? "Guardar cambios" : "Agregar"}
                 </button>
               )}

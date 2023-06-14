@@ -49,6 +49,14 @@ export const Customers = () => {
   };
 
   const closeModal = () => {
+    setCustomerData({
+      userId: 0,
+      nameCustomer: "",
+      nitCustomer: "",
+      addressCustomer: "",
+      phoneCustomer: "",
+      statusCustomer: "Inactive",
+    });
     setShowModal(false);
   };
 
@@ -76,7 +84,6 @@ export const Customers = () => {
 
   // get the createdAt date of the customers reducer
   const createdAt = customers.map((customer) => customer.createdAt);
-  console.log(createdAt);
 
   // get the total of customers added in the last 30 days
   const totalCustomers = createdAt.filter((date) => {

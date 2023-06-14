@@ -40,6 +40,12 @@ export const Category = () => {
   };
 
   const closeModal = () => {
+    setCategoryData({
+      nameCategory: "",
+      referenceCategory: "",
+      statusCategory: "Inactive",
+      descriptionCategory: "",
+    });
     setShowModal(false);
   };
 

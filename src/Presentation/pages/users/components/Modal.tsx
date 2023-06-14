@@ -66,63 +66,73 @@ export const ModalUsers = ({
 
   return (
     <div>
-      <div className="modal">
-        <div className="modal-content">
-          <div className="modal-header">
+      <div className="modal-user">
+        <div className="modal-user-content">
+          <div className="modal-user-header">
             <h4>Crear Usuario</h4>
             <span className="close" onClick={onCloseModal}>
               &times;
             </span>
           </div>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="userName">Nombre del usuario:</label>
+          <p className="form-modal-detail-user">Detalles del usuario</p>
+          <form className="form-modal-user" onSubmit={handleSubmit}>
+            <div className="form-group-user">
               <input
                 type="text"
                 id="userName"
                 name="nameUser"
+                placeholder="Nombre del usuario"
                 required
                 value={userData.nameUser}
                 onChange={handleInputChange}
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="userPhone">Teléfono del usuario:</label>
-              <div className="phone-input">
+            <div className="phone-form-group-user">
+              <div className="phone-select-user">
+                <select name="" id="">
+                  <option value="">+57</option>
+                  <option value="">+58</option>
+                  <option value="">+59</option>
+                </select>
+              </div>
+              <div className="phone-select-user">
                 <input
                   type="text"
                   id="userPhone"
                   name="phoneUser"
+                  placeholder="Teléfono del usuario"
                   required
                   value={userData.phoneUser}
                   onChange={handleInputChange}
                 />
               </div>
             </div>
-            <div className="form-group">
-              <label htmlFor="userEmail">Correo electrónico:</label>
+            <div className="form-group-user">
               <input
                 type="email"
                 id="userEmail"
                 name="emailUser"
+                placeholder="Correo electrónico del usuario"
                 required
                 value={userData.emailUser}
                 onChange={handleInputChange}
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="userPassword">Contraseña:</label>
+            <div className="form-group-user">
               <input
                 type="password"
                 id="userPassword"
                 name="passwordUser"
+                placeholder="Contraseña del usuario"
                 required
                 value={userData.passwordUser}
                 onChange={handleInputChange}
               />
             </div>
-            <div className="form-group select-container">
-              <label htmlFor="userRole">Rol del usuario:</label>
+            <div className="form-group-user">
+              <label className="form-modal-user-label-rol" htmlFor="userRole">
+                Rol del usuario:
+              </label>
               <select
                 id="userRole"
                 name="roleId"
@@ -138,30 +148,33 @@ export const ModalUsers = ({
               </select>
             </div>
             <div className="form-group">
-              <label htmlFor="btn-switch-active-category">
+              <label
+                className="form-modal-user-label-status"
+                htmlFor="btn-switch-active-user"
+              >
                 Status del usuario:
               </label>
               <input
                 type="checkbox"
-                id="btn-switch-active-category"
+                id="btn-switch-active-user"
                 checked={userData.statusUser === "Active"}
                 onChange={handleCheckboxChange}
               />
               <label
-                htmlFor="btn-switch-active-category"
-                className="lbl-switch-active-category"
+                htmlFor="btn-switch-active-user"
+                className="lbl-switch-active-user"
               ></label>
             </div>
-            <div className="modal-footer">
+            <div className="modal-user-footer">
               <button
                 type="button"
-                className="cancel-button"
+                className="cancel-user-button"
                 onClick={onCloseModal}
               >
                 Cancelar
               </button>
               {action === "watch" ? null : (
-                <button type="submit" className="add-button">
+                <button type="submit" className="add-user-button">
                   {action === "edit" ? "Guardar cambios" : "Agregar"}
                 </button>
               )}

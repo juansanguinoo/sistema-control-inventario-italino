@@ -23,7 +23,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .card-column {
@@ -41,8 +41,24 @@
   color: #000;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .card {
     width: calc(100% - 2rem);
+  }
+}
+
+@media (max-width: 700px) {
+  .card {
+    height: 18rem;
+  }
+
+  .card-columns {
+    flex-direction: column;
+    margin-top: 0.5rem;
+  }
+
+  .card-column {
+    margin-top: 10px;
+    width: 100%;
   }
 }
