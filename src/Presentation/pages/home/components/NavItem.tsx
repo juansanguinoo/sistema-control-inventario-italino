@@ -3,6 +3,7 @@ import { RootState } from "../../../../store/store";
 import { NavLink } from "react-router-dom";
 import { selectedNavItem } from "../../../../store/actions/navbarActions";
 import { Dispatch } from "redux";
+import { useIsMobile } from "../../../hooks/useIsMobile";
 
 interface NavItemProps {
   icon: string;
@@ -12,7 +13,7 @@ interface NavItemProps {
 }
 
 export const NavItemHome = ({ icon, iconWhite, label, to }: NavItemProps) => {
-  const dispatch = useDispatch<Dispatch<any>>();
+  const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const navbarOpen = useSelector(
     (state: RootState) => state.navbarReducer.stateOpen
   );
@@ -23,9 +24,10 @@ export const NavItemHome = ({ icon, iconWhite, label, to }: NavItemProps) => {
   const handleNavItemClick = () => {
     dispatch(selectedNavItem(to));
   };
-
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
   const navbarSelectedClass = navbarSelected === to ? "active" : "";
+
+  const { isMobile } = useIsMobile();
 
   return (
     <NavLink to={to}>
@@ -34,7 +36,7 @@ export const NavItemHome = ({ icon, iconWhite, label, to }: NavItemProps) => {
         onClick={handleNavItemClick}
       >
         <img src={navbarSelected === to ? iconWhite : icon} alt="My SVG" />
-        {navbarOpen ? label : ""}
+        {navbarOpen || isMobile ? label : ""}
       </li>
     </NavLink>
   );

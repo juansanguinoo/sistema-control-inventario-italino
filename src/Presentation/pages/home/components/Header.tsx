@@ -1,20 +1,41 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
+import Menu from "../../../assets/menu.svg";
+import { useEffect, useState } from "react";
+import { useIsMobile } from "../../../hooks/useIsMobile";
 
 interface IHeaderProps {
   title: string;
+  toggleMenu?: () => void;
 }
 
-export const HeaderHome = ({ title }: IHeaderProps) => {
+export const HeaderHome = ({ title, toggleMenu }: IHeaderProps) => {
   const navbarOpen = useSelector(
     (state: RootState) => state.navbarReducer.stateOpen
   );
 
+  const { isMobile } = useIsMobile();
+  const navbarClass = navbarOpen ? "expanded" : "collapsed";
+
+  const handleMenuClick = () => {
+    if (toggleMenu) {
+      toggleMenu();
+    }
+  };
+
   return (
-    <div className={`header ${navbarOpen ? "expanded" : "collapsed"}`}>
-      <div className="title">{title}</div>
-      <div className="circle green"></div>
-      <div className="circle red"></div>
+    <div className={`header ${navbarClass}`}>
+      {isMobile ? (
+        <div className="menu" onClick={handleMenuClick}>
+          <img src={Menu} alt="Menu" />
+        </div>
+      ) : (
+        <>
+          <div className="title">{title}</div>
+          <div className="circle green"></div>
+          <div className="circle red"></div>
+        </>
+      )}
     </div>
   );
 };

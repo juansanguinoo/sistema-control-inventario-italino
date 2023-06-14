@@ -166,6 +166,12 @@ h4 {
 }
 
 @media screen and (max-width: 600px) {
+  .category-container.collapsed {
+    margin-left: 0;
+  }
+  .category-container.expanded {
+    margin-left: 0;
+  }
   .modal-category-content {
     width: 90%;
   }
