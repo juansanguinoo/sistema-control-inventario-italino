@@ -24,7 +24,7 @@
   flex-wrap: wrap;
 }
 
-.modal {
+.modal-category {
   position: fixed;
   top: 0;
   left: 0;
@@ -36,14 +36,14 @@
   justify-content: center;
 }
 
-.modal-content {
+.modal-category-content {
   background-color: #fff;
   padding: 1rem;
   border-radius: 5px;
-  width: 520px;
+  width: 450px;
 }
 
-.modal-header {
+.modal-category-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -60,26 +60,45 @@ h4 {
   margin: 0;
 }
 
-form {
+.form-modal-detail-category {
+  color: #8b8d97;
+  font-size: 14px;
+  padding-left: 1rem;
+}
+
+.form-modal-category {
   margin-top: 20px;
   padding: 1rem;
 }
 
-.form-group {
-  margin-bottom: 20px;
+.form-group-category {
+  margin-bottom: 25px;
 }
 
-label {
-  display: block;
-  margin-bottom: 10px;
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  background-color: #f2f2f2;
+.form-group-category input {
+  width: 95%;
+  padding: 12px;
+  background-color: #eff1f9;
   border: none;
   border-radius: 4px;
+}
+
+.form-group-category textarea {
+  width: 95%;
+  height: 150px;
+  background-color: #eff1f9;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.form-group-category input::placeholder,
+.form-group-category textarea::placeholder {
+  color: #abafb1;
+}
+
+.modal-label-category-status {
+  color: #8b8d97;
+  font-size: 12px;
 }
 
 .lbl-switch-active-category {
@@ -116,39 +135,51 @@ input {
   display: none;
 }
 
-textarea {
-  width: 100%;
-  height: 150px;
-  background-color: #f2f2f2;
-  border-radius: 1rem;
-  padding: 1rem;
-}
-
-.modal-footer {
+.modal-category-footer {
+  width: 95%;
+  height: 60px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   margin-top: 1rem;
 }
 
-/* button {
-  width: 80%;
-  height: 100%;
-  padding: 1rem;
-  margin: 0.75rem;
-  border-radius: 5px;
-  cursor: pointer;
-} */
-
-.cancel-button {
+.category-cancel-button {
   background-color: transparent;
   border: 1px solid #5570f1;
   color: #5570f1;
+  border-radius: 1rem;
+  cursor: pointer;
 
-  background-color: #f2f2f2;
+  width: 40%;
+  height: 100%;
 }
 
-.add-button {
+.category-add-button {
   background-color: #5570f1;
   border: 1px solid #5570f1;
   color: #ffffff;
+  border-radius: 1rem;
+  cursor: pointer;
+
+  width: 40%;
+  height: 100%;
+}
+
+@media screen and (max-width: 600px) {
+  .modal-category-content {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .category-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .modal-category-content {
+    height: 95vh;
+  }
 }

@@ -1,4 +1,5 @@
 import "./styles.css";
+import Folder from "../../assets/Folder.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { PageTitle } from "../../components/titles/PageTitle";
 import { RootState } from "../../../store/store";
@@ -33,18 +34,32 @@ export const Users = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
+  // get the active users
+  const activeUsers = users.filter((user) => user.statusUser === "Active");
+
+  // get the inactive users
+  const inactiveUsers = users.filter((user) => user.statusUser === "Inactive");
+
   return (
-    <div className={`category-container ${navbarClass}`}>
-      <div className="category-header">
+    <div className={`user-container ${navbarClass}`}>
+      <div className="user-header">
         <PageTitle title="Usuarios" />
         <HeaderButton
           title="Crear un nuevo usuario"
           handleFunction={openModal}
         />
       </div>
-      <div className="category-main">
-        <CardInformation />
-        <CardInformation />
+      <div className="user-main">
+        <CardInformation
+          icon={Folder}
+          titles={["Total de usuarios"]}
+          data={[users.length]}
+        />
+        <CardInformation
+          icon={Folder}
+          titles={["Usuarios activos", "Usuarios inactivos"]}
+          data={[activeUsers.length, inactiveUsers.length]}
+        />
         <TableInformation
           categories={users}
           columns={userColumns}

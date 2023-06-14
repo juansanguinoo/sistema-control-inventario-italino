@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import { getInventory } from "../../../../store/actions/inventoryActions";
 import { useParams } from "react-router-dom";
+import { Slide } from "react-slideshow-image";
+import "react-slideshow-image/dist/styles.css";
 
 export const DetailInventory = () => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
@@ -66,10 +68,33 @@ export const DetailInventory = () => {
     };
   }, [isResponsive]);
 
+  const images = inventoryData.imageInventory?.split(", ");
+
+  const divStyle = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundSize: "cover",
+    height: "200px",
+  };
+
   return (
     <>
       <div className="detail">
-        <div className="detail-img"></div>
+        <div className="detail-img">
+          <Slide>
+            {images?.map((slideImage, index) => (
+              <div key={index}>
+                <div
+                  style={{
+                    ...divStyle,
+                    backgroundImage: `url(${slideImage})`,
+                  }}
+                ></div>
+              </div>
+            ))}
+          </Slide>
+        </div>
         <div className="detail-info">
           <div className="info">
             <div className="info-name">

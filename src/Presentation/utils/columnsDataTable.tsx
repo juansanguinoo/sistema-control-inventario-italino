@@ -226,7 +226,7 @@ export const inventoryColumns = [
   {
     field: "imageInventory",
     headerName: "Imagén",
-    width: 100,
+    width: 150,
     renderCell: (params: any) => {
       return (
         <div className="cellWithImage">

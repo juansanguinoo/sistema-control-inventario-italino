@@ -131,7 +131,6 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(selectedInventory);
     const total = selectedInventory.reduce(
       (acc, inventory) => acc + inventory.subTotal,
       0

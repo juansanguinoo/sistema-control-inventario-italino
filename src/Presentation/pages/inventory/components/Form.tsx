@@ -31,6 +31,7 @@ export const FormInventory = () => {
     publicatedInventory: false,
     category: 0,
   });
+  const [send, setSend] = useState(false);
 
   const [fileData, setFileData] = useState<IFilesState>({
     file1: null,
@@ -63,6 +64,18 @@ export const FormInventory = () => {
     dispatch(getCategories());
     dispatch(getInventory());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (send && inventoryData.imageInventory !== "") {
+      if (inventoryData.imageInventory !== "") {
+        dispatch(createInventory(inventoryData));
+        navigate("/private/inventory");
+      }
+      setSend(false);
+    } else if (send && inventoryData.imageInventory === "") {
+      console.log("No se ha enviado el formulario");
+    }
+  }, [send, inventoryData]);
 
   const handleCheckboxChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
@@ -122,11 +135,10 @@ export const FormInventory = () => {
     }
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await handleUploadImages();
-    dispatch(createInventory(inventoryData));
-    navigate("/private/inventory");
+    handleUploadImages();
+    setSend(true);
   };
 
   return (
@@ -190,7 +202,7 @@ export const FormInventory = () => {
             <input
               type="number"
               id="salePrice"
-              value={inventoryData.sellingPriceInventory || 0}
+              value={inventoryData.sellingPriceInventory || ""}
               onChange={(event) =>
                 setInventoryData((prevData) => ({
                   ...prevData,
@@ -205,7 +217,7 @@ export const FormInventory = () => {
             <input
               type="number"
               id="purchasePrice"
-              value={inventoryData.costPriceInventory || 0}
+              value={inventoryData.costPriceInventory || ""}
               onChange={(event) =>
                 setInventoryData((prevData) => ({
                   ...prevData,
@@ -220,7 +232,7 @@ export const FormInventory = () => {
             <input
               type="number"
               id="stock"
-              value={inventoryData.stockInventory}
+              value={inventoryData.stockInventory || ""}
               onChange={(event) =>
                 setInventoryData((prevData) => ({
                   ...prevData,

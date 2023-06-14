@@ -1,3 +1,4 @@
+import "../styles.css";
 import { FormEvent, useEffect, useState } from "react";
 import { CustomerModel } from "../../../../domain/models/CustomerModel";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,22 +36,19 @@ export const ModalCustomers = ({
     onCloseModal && onCloseModal();
   };
 
-  useEffect(() => {
-    console.log("action", action);
-  }, [action]);
-
   return (
     <div>
-      <div className="modal">
-        <div className="modal-content">
-          <div className="modal-header">
+      <div className="modal-customers">
+        <div className="modal-customers-content">
+          <div className="modal-customers-header">
             <h4>Agregar un nuevo cliente</h4>
             <span className="close" onClick={onCloseModal}>
               &times;
             </span>
           </div>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
+          <p className="form-modal-detail-customers">Detalles del cliente</p>
+          <form className="form-modal-customers" onSubmit={handleSubmit}>
+            <div className="form-group-customers">
               <input
                 type="text"
                 id="customerName"
@@ -65,7 +63,7 @@ export const ModalCustomers = ({
                 required
               />
             </div>
-            <div className="form-group">
+            <div className="form-group-customers">
               <input
                 type="text"
                 id="customerNit"
@@ -80,7 +78,7 @@ export const ModalCustomers = ({
                 required
               />
             </div>
-            <div className="form-group">
+            <div className="form-group-customers">
               <input
                 type="text"
                 id="customerAddress"
@@ -95,22 +93,37 @@ export const ModalCustomers = ({
                 required
               />
             </div>
-            <div className="form-group">
-              <input
-                type="text"
-                id="customerPhone"
-                placeholder="Agregar teléfono"
-                value={customerData.phoneCustomer}
-                onChange={(event) =>
-                  setCustomerData((prevData) => ({
-                    ...prevData,
-                    phoneCustomer: event.target.value,
-                  }))
-                }
-                required
-              />
+            <div className="phone-form-group">
+              <div className="phone-form-group-customers">
+                <select name="" id="">
+                  <option value="">+57</option>
+                  <option value="">+58</option>
+                  <option value="">+59</option>
+                </select>
+              </div>
+              <div className="phone-form-group-customers">
+                <input
+                  type="text"
+                  id="customerPhone"
+                  placeholder="Agregar teléfono"
+                  value={customerData.phoneCustomer}
+                  onChange={(event) =>
+                    setCustomerData((prevData) => ({
+                      ...prevData,
+                      phoneCustomer: event.target.value,
+                    }))
+                  }
+                  required
+                />
+              </div>
             </div>
-            <div className="form-group">
+            <div className="form-group-customers">
+              <label
+                className="form-modal-label-customers"
+                htmlFor="customerStatus"
+              >
+                Estado del cliente
+              </label>
               <select
                 id="customerStatus"
                 onChange={(event) =>
@@ -121,22 +134,21 @@ export const ModalCustomers = ({
                 }
                 required
               >
-                <option value="">Selecciona el status del cliente</option>
                 <option value="Active">Activo</option>
                 <option value="Inactive">Inactivo</option>
               </select>
             </div>
-            <div className="modal-footer">
+            <div className="modal-customers-footer">
               <button
                 type="button"
-                className="cancel-button"
+                className="cancel-button-customers"
                 onClick={onCloseModal}
               >
                 Cancelar
               </button>
 
               {action === "preview" ? null : (
-                <button type="submit" className="add-button">
+                <button type="submit" className="add-button-customers">
                   {action === "edit" ? "Guardar cambios" : "Agregar"}
                 </button>
               )}
