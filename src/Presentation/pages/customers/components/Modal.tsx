@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { CustomerModel } from "../../../../domain/models/CustomerModel";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
@@ -34,10 +34,6 @@ export const ModalCustomers = ({
     dispatch(createCustomer(customerData));
     onCloseModal && onCloseModal();
   };
-
-  useEffect(() => {
-    console.log("action", action);
-  }, [action]);
 
   return (
     <div>

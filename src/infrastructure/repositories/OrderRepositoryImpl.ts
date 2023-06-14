@@ -16,12 +16,12 @@ export class OrderRepositoryImpl implements IOrderRepository {
     apiUrl = "http://localhost:3000"
   ) {
     this.httpClient = httpClient;
-    this.baseUrl = `${apiUrl}/users`;
+    this.baseUrl = `${apiUrl}`;
   }
 
   async getOrderById(idOrder: number): Promise<ResponseAPI<OrderResponse>> {
     const response = await this.httpClient.get<ResponseAPI<OrderResponse>>(
-      `${this.baseUrl}/orders/${idOrder}`
+      `${this.baseUrl}/order/${idOrder}`
     );
     return response;
   }
@@ -29,14 +29,14 @@ export class OrderRepositoryImpl implements IOrderRepository {
     const response = await this.httpClient.post<
       ResponseAPI<OrderResponse>,
       OrderRequest
-    >(`${this.baseUrl}/orders`, order);
+    >(`${this.baseUrl}/order`, order);
     return response;
   }
   async updateOrder(order: OrderRequest): Promise<ResponseAPI<OrderResponse>> {
     const response = await this.httpClient.put<
       ResponseAPI<OrderResponse>,
       OrderRequest
-    >(`${this.baseUrl}/orders`, order);
+    >(`${this.baseUrl}/order`, order);
     return response;
   }
 }

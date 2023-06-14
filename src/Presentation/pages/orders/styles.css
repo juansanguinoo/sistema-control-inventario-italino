@@ -405,7 +405,7 @@ h4 {
 }
 
 .modal-product-minus-button {
-  width: 36px;
+  width: 26px;
   height: 26px;
   border-radius: 6px;
   color: #393a41;
@@ -415,7 +415,7 @@ h4 {
 }
 
 .modal-product-plus-button {
-  width: 36px;
+  width: 26px;
   height: 26px;
   border-radius: 6px;
   color: #393a41;
@@ -430,6 +430,19 @@ h4 {
   font-weight: bold;
   margin: 0 0.7rem;
   color: #5570f1;
+}
+
+.modal-product-quantity-value-input {
+  width: 60px;
+  height: 28px;
+  border-radius: 6px;
+  color: #5570f1;
+  font-size: 12px;
+  background-color: #EFF1F9;
+  border: none;
+  text-align: center;
+  font-weight: bold;
+  outline: none;
 }
 
 .modal-product-quantity-subtotal {
@@ -464,4 +477,23 @@ h4 {
   font-size: 14px;
   color: #33343A;
   font-weight: bold;
+}
+
+
+.orders-noorders {
+  width: 100%;
+  height: 450px;
+  padding: 10px;
+  margin: 0 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.order-add-order {
+  position: absolute;
+  top: 21rem;
 }

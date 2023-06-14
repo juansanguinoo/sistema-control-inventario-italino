@@ -4,6 +4,6 @@ export interface IInventoryModelSelected {
   imageInventory: string;
   sellingPriceInventory: number;
   stockInventory: number;
-  quantity: number;
+  quantity: any;
   subTotal: number;
 }

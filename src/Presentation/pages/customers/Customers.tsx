@@ -1,22 +1,20 @@
 import "./styles.css";
 import User from "../../assets/User.svg";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { CardInformation } from "../../components/cards/CardInformation";
 import { PageTitle } from "../../components/titles/PageTitle";
 import { HeaderButton } from "../../components/buttons/HeaderButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ModalCustomers } from "./components/Modal";
-import { Dispatch } from "redux";
-import {
-  getCustomerByUserId,
-  deleteCustomer,
-} from "../../../store/actions/customerActions";
+import { deleteCustomer } from "../../../store/actions/customerActions";
 import { TableInformation } from "../../components/tables/TableInformation";
 import { customerColumns } from "../../utils/columnsDataTable";
 import { CustomerModel } from "../../../domain/models/CustomerModel";
+import { useGetCustomerByUser } from "../../hooks/useGetCustomerByUser";
 
 export const Customers = () => {
+  const { customers } = useGetCustomerByUser();
   const [customerData, setCustomerData] = useState<CustomerModel>({
     userId: 0,
     nameCustomer: "",
@@ -26,23 +24,11 @@ export const Customers = () => {
     statusCustomer: "Inactive",
   });
   const [actions, setActions] = useState<string>("");
-  const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const [showModal, setShowModal] = useState<boolean>(false);
   const navbarOpen = useSelector(
     (state: RootState) => state.navbarReducer.stateOpen
   );
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
-
-  const getUser = useSelector((state: RootState) => state.userReducer.user);
-  const customers = useSelector(
-    (state: RootState) => state.customerReducer.customers
-  );
-
-  useEffect(() => {
-    if (getUser?.id) {
-      dispatch(getCustomerByUserId(getUser.id));
-    }
-  }, []);
 
   const openModal = () => {
     setShowModal(true);
@@ -76,7 +62,6 @@ export const Customers = () => {
 
   // get the createdAt date of the customers reducer
   const createdAt = customers.map((customer) => customer.createdAt);
-  console.log(createdAt);
 
   // get the total of customers added in the last 30 days
   const totalCustomers = createdAt.filter((date) => {

@@ -132,7 +132,6 @@ export const getCustomerByUserId = (idUser: number) => {
 };
 
 export const createCustomer = (customer: CustomerModel) => {
-  console.log(customer);
   return async (dispatch: Dispatch<CustomerAction>) => {
     const useCase = container.get<CreateCustomerUseCase>(
       TYPES.CreateCustomerUseCase

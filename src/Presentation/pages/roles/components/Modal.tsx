@@ -62,7 +62,6 @@ export const ModalRoles = ({
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(createRole(roleData));
-    console.log(roleData);
     onCloseModal && onCloseModal();
   };
 
