@@ -155,6 +155,162 @@
   flex-wrap: wrap;
 }
 
+.dashboard {
+  display: flex;
+}
+
+.dashboard-cards {
+  width: auto;
+  height: auto;
+  display: flex;
+}
+
+.dashboard-sales,
+.dashboard-customers {
+  width: 360px;
+  height: 145px;
+  margin: 0 1rem;
+  padding: 1rem;
+
+  background-color: #fff;
+  border-radius: 1rem;
+}
+
+.sales-content,
+.customers-content,
+.orders-content,
+.products-content {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.sales,
+.volume,
+.customers,
+.customers-active,
+.products,
+.products-active {
+  width: 40%;
+}
+
+.sales h3,
+.volume h3,
+.customers h3,
+.customers-active h3,
+.orders h3,
+.pending h3,
+.completed h3,
+.products h3,
+.products-active h3,
+.recent-orders h3 {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: gray;
+}
+
+.sales h4,
+.volume h4,
+.customers h4,
+.customers-active h4,
+.orders h4,
+.pending h4,
+.completed h4,
+.products h4,
+.products-active h4 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.dashboard-diagrams {
+  width: auto;
+  height: auto;
+  display: flex;
+}
+
+.dashboard-cake-diagram {
+  width: 360px;
+  height: 340px;
+  margin: 1rem;
+
+  background-color: #fff;
+  border-radius: 1rem;
+}
+
+.dashboard-cards-2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-products {
+  width: 360px;
+  height: 160px;
+  margin: 1rem;
+  padding: 1rem;
+
+  background-color: #fff;
+  border-radius: 1rem;
+}
+
+.dashboard-cart {
+  width: 360px;
+  height: 160px;
+  margin: 0 1rem;
+
+  background-color: #fff;
+  border-radius: 1rem;
+}
+
+.dashboard-table {
+  width: 750px;
+  height: 180px;
+  margin: 0 1rem;
+
+  background-color: #fff;
+  border-radius: 1rem;
+}
+
+.dashboard-orders {
+  width: 450px;
+  height: 145px;
+  margin: 0 1rem;
+  padding: 1rem;
+
+  background-color: #fff;
+  border-radius: 1rem;
+}
+
+.orders,
+.pending,
+.completed {
+  width: 30%;
+}
+
+.dashboard-recent-orders {
+  width: 450px;
+  height: 540px;
+  margin: 1rem;
+  padding: 1rem;
+
+  background-color: #fff;
+  border-radius: 1rem;
+}
+
+.recent-orders-noorders {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-dashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
 @media (max-width: 768px) {
   .main-container {
     flex-direction: column;
