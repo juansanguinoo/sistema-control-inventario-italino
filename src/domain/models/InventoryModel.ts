@@ -11,5 +11,5 @@ export interface InventoryModel {
   publicatedInventory: boolean;
   createdAt?: string;
   updatedAt?: string;
-  category: number;
+  category: any;
 }

@@ -266,7 +266,7 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
                     onChange={handleSelectChange}
                   >
                     <option value="Pendiente">Pendiente</option>
-                    <option value="En proceso">En proceso</option>
+                    <option value="En proceso">En-proceso</option>
                     <option value="Entregado">Entregado</option>
                   </select>
                 </div>

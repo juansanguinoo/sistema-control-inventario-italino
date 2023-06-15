@@ -18,6 +18,21 @@ export class OrderRepositoryImpl implements IOrderRepository {
     this.httpClient = httpClient;
     this.baseUrl = `${apiUrl}`;
   }
+  async getAllOrders(): Promise<ResponseAPI<OrderResponse[]>> {
+    const response = await this.httpClient.get<ResponseAPI<OrderResponse[]>>(
+      `${this.baseUrl}/order`
+    );
+    return response;
+  }
+  async getOrdersByUserId(
+    idUser: number
+  ): Promise<ResponseAPI<OrderResponse[]>> {
+    const response = await this.httpClient.get<ResponseAPI<OrderResponse[]>>(
+      `${this.baseUrl}/order/byUser/${idUser}`
+    );
+    console.log(response);
+    return response;
+  }
 
   async getOrderById(idOrder: number): Promise<ResponseAPI<OrderResponse>> {
     const response = await this.httpClient.get<ResponseAPI<OrderResponse>>(

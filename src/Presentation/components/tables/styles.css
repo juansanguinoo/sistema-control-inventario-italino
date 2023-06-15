@@ -12,7 +12,7 @@
   border-radius: 5px;
 }
 
-.active {
+.active, .en-proceso {
   background-color: #e6e7fc;
   color: #5570f1;
 }
@@ -22,12 +22,12 @@
   color: #000;
 }
 
-.access {
+.access, .entregado {
   background-color: #e3ede8;
   color: #519c66;
 }
 
-.noaccess {
+.noaccess, .pendiente {
   background-color: #fff2e2;
   color: #000;
 }
@@ -69,7 +69,16 @@
 }
 
 .cellWithImage img {
-  width: 50px;
-  height: 60px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
+}
+
+.cellWithSelect {
+  width: 100%;
+  height: 60%;
+  padding: 10px;
+  background-color: #abafb11f;
+  border: none;
+  border-radius: 4px;
 }
