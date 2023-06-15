@@ -1,6 +1,5 @@
 import { Home } from "../Presentation/pages/home/Home";
 import { Routes, Route } from "react-router-dom";
-import { MainHome } from "../Presentation/pages/home/components/Main";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
@@ -13,6 +12,7 @@ import { CreateInventory } from "../Presentation/pages/inventory/CreateInventory
 import { Orders } from "../Presentation/pages/orders/Orders";
 import { Customers } from "../Presentation/pages/customers/Customers";
 import { PreviewInventory } from "../Presentation/pages/inventory/PreviewInventory";
+import { Dashboard } from "../Presentation/pages/home/Dashboard";
 
 export const DashboardRouter = () => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
@@ -26,8 +26,7 @@ export const DashboardRouter = () => {
     <>
       <Home />
       <Routes>
-        {/* <Route path="/dashboard" element={<MainHome title={"Dashboard"} />} /> */}
-        <Route path="/" element={<MainHome title={"Dashboard"} />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="orders" element={<Orders />} />
         <Route path="customers" element={<Customers />} />
         <Route path="inventory" element={<Inventory />} />

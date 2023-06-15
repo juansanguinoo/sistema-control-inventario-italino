@@ -4,11 +4,13 @@ import { NavbarActionTypes } from "../enums/NavbarActionsEnum";
 export interface NavbarState {
   stateOpen: boolean;
   selectedNavItem: string;
+  isMobileClicked?: boolean;
 }
 
 const initialState: NavbarState = {
   stateOpen: true,
   selectedNavItem: "/",
+  isMobileClicked: false,
 };
 
 export const navbarReducer = (
@@ -25,6 +27,11 @@ export const navbarReducer = (
       return {
         ...state,
         selectedNavItem: action.payload,
+      };
+    case NavbarActionTypes.IS_MOBILE_CLICKED:
+      return {
+        ...state,
+        isMobileClicked: action.payload,
       };
     default:
       return state;

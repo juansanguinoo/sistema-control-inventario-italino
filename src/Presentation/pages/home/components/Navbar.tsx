@@ -9,9 +9,7 @@ import FolderWhite from "../../../assets/FolderWhite.svg";
 import { NavItemHome } from "./NavItem";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
-import { useState, useEffect } from "react";
-import { selectedNavItem } from "../../../../store/actions/navbarActions";
-import Menu from "../../../assets/menu.svg";
+import { useIsMobile } from "../../../hooks/useIsMobile";
 
 interface INavbarProps {
   toggleNavbar: () => void;
@@ -21,13 +19,24 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
   const navbarOpen = useSelector(
     (state: RootState) => state.navbarReducer.stateOpen
   );
+  const isMobileClicked = useSelector(
+    (state: RootState) => state.navbarReducer.isMobileClicked
+  );
+
+  const { isMobile } = useIsMobile();
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
 
   return (
-    <div className={`navbar ${navbarClass}`}>
-      <div className="logo" onClick={toggleNavbar}>
-        LOGO
-      </div>
+    <div
+      className={`navbar ${navbarClass} ${
+        isMobile ? "navbar-responsive" : ""
+      } ${isMobileClicked ? "navbar-mobile-clicked" : ""}`}
+    >
+      {isMobile ? null : (
+        <div className="logo" onClick={toggleNavbar}>
+          LOGO
+        </div>
+      )}
       <ul className={`navigation`}>
         <NavItemHome
           icon={Dashboard}

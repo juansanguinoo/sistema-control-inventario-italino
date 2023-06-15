@@ -199,6 +199,12 @@ h4 {
 }
 
 @media screen and (max-width: 600px) {
+  .rol-container.collapsed {
+    margin-left: 0;
+  }
+  .rol-container.expanded {
+    margin-left: 0;
+  }
   .modal-rol-content {
     width: 90%;
   }

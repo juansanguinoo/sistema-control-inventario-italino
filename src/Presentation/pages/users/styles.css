@@ -183,6 +183,12 @@ h4 {
 }
 
 @media screen and (max-width: 600px) {
+  .user-container.collapsed {
+    margin-left: 0;
+  }
+  .user-container.expanded {
+    margin-left: 0;
+  }
   .modal-user-content {
     width: 90%;
   }
@@ -193,9 +199,7 @@ h4 {
     flex-direction: column;
     align-items: flex-start;
   }
-}
 
-@media screen and (max-width: 400px) {
   .phone-form-group-user {
     flex-direction: column;
   }
