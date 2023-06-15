@@ -21,15 +21,24 @@
   width: 17.5rem;
 }
 
+.navbar.navbar-responsive {
+  position: absolute;
+  top: 0;
+  left: -2000px;
+  transition: width 0.1s ease;
+}
+
+.navbar.navbar-mobile-clicked {
+  z-index: 1;
+  left: 0;
+  width: 17.5rem;
+  transition: width 0.1s ease;
+}
+
 .logo {
   font-size: 1.5rem;
   margin-bottom: 1rem;
   cursor: pointer;
-}
-
-.menu {
-  width: 40px;
-  height: 40px;
 }
 
 .navigation {
@@ -96,6 +105,11 @@
   margin-left: 17.5rem;
 }
 
+.menu {
+  width: 40px;
+  height: 40px;
+}
+
 .circle {
   width: 24px;
   height: 24px;
@@ -145,5 +159,25 @@
   .main-container {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    justify-content: flex-end;
+  }
+  .header.expanded {
+    width: 100%;
+    margin-left: 0;
+  }
+  .header.collapsed {
+    width: 100%;
+    margin-left: 0;
+  }
+  .main.expanded {
+    margin-left: 0;
+  }
+  .main.collapsed {
+    margin-left: 0;
   }
 }

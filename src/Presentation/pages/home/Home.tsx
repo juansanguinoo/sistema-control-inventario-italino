@@ -4,11 +4,15 @@ import { HeaderHome } from "./components/Header";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import "./styles.css";
-import { handleNavbar } from "../../../store/actions/navbarActions";
+import {
+  handleMobileClicked,
+  handleNavbar,
+} from "../../../store/actions/navbarActions";
 
 export const Home = () => {
   const [navbarExpanded, setNavbarExpanded] = useState<boolean>(true);
-  const dispatch = useDispatch<Dispatch<any>>();
+  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
 
   const toggleNavbar = () => {
     setNavbarExpanded(!navbarExpanded);
@@ -16,12 +20,19 @@ export const Home = () => {
 
   useEffect(() => {
     dispatch(handleNavbar(navbarExpanded));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navbarExpanded]);
+  }, [navbarExpanded, dispatch]);
+
+  const toggleMenuResponsive = () => {
+    setIsClicked(!isClicked);
+  };
+
+  useEffect(() => {
+    dispatch(handleMobileClicked(isClicked));
+  }, [isClicked, dispatch]);
 
   return (
     <div className="app">
-      <HeaderHome title={"Inventory"} />
+      <HeaderHome title={"Inventory"} toggleMenu={toggleMenuResponsive} />
       <NavbarHome toggleNavbar={toggleNavbar} />
     </div>
   );

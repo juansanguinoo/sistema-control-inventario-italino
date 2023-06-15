@@ -513,6 +513,15 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+  .inventory-container.collapsed {
+    margin-left: 0;
+  }
+  .inventory-container.expanded {
+    margin-left: 0;
+  }
+}
+
 @media screen and (max-width: 500px) {
   .inventory-header {
     flex-direction: column;
