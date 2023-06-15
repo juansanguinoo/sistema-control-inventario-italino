@@ -26,7 +26,7 @@ export const DetailInventory = () => {
     costPriceInventory: 0,
     imageInventory: "",
     publicatedInventory: false,
-    category: 0,
+    category: "",
   });
 
   const inventories = useSelector(
@@ -112,7 +112,9 @@ export const DetailInventory = () => {
             <div className="info-category">
               <h4>Categoría</h4>
               <p>
-                {inventoryData.category ? inventoryData.category : "No tiene"}
+                {inventoryData.category
+                  ? inventoryData.category.name_category
+                  : "No tiene"}
               </p>
             </div>
           </div>

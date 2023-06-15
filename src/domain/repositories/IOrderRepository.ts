@@ -6,4 +6,7 @@ export interface IOrderRepository {
   getOrderById(idOrder: number): Promise<ResponseAPI<OrderResponse>>;
   createOrder(order: OrderRequest): Promise<ResponseAPI<OrderResponse>>;
   updateOrder(order: OrderRequest): Promise<ResponseAPI<OrderResponse>>;
+  getOrderById(idOrder: number): Promise<ResponseAPI<OrderResponse>>;
+  getAllOrders(): Promise<ResponseAPI<OrderResponse[]>>;
+  getOrdersByUserId(idUser: number): Promise<ResponseAPI<OrderResponse[]>>;
 }

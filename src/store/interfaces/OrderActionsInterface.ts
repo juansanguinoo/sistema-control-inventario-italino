@@ -30,6 +30,20 @@ export interface GetOrderFailureAction {
   payload: AppError;
 }
 
+export interface GetOrdersByUserAction {
+  type: OrderActionsTypes.GET_ORDERS_BY_USER;
+}
+
+export interface GetOrdersByUserSuccessAction {
+  type: OrderActionsTypes.GET_ORDERS_BY_USER_SUCCESS;
+  payload: OrderResponseModel[];
+}
+
+export interface GetOrdersByUserFailureAction {
+  type: OrderActionsTypes.GET_ORDERS_BY_USER_FAILURE;
+  payload: AppError;
+}
+
 export interface CreateOrderAction {
   type: OrderActionsTypes.CREATE_ORDER;
 }
