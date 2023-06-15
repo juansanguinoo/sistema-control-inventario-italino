@@ -4,7 +4,7 @@ import Bag from "../../assets/Bag.svg";
 interface ICardInformationProps {
   icon?: string;
   titles?: string[];
-  data?: number[];
+  data?: any[];
 }
 
 export const CardInformation = ({

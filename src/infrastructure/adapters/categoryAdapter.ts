@@ -7,6 +7,7 @@ export const adaptCategory = (category: Category): CategoryModel => {
     id: category.id_category,
     nameCategory: category.name_category,
     referenceCategory: category.reference_category,
+    descriptionCategory: category.description_category,
     statusCategory: category.status_category,
     updatedAt: category.updated_at,
   };

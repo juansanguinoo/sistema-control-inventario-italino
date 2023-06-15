@@ -1,3 +1,12 @@
+import moment from "moment";
+
+const moneyFormat = (value: number) => {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(value);
+};
+
 export const categoryColumns = [
   {
     field: "nameCategory",
@@ -12,7 +21,7 @@ export const categoryColumns = [
   {
     field: "descriptionCategory",
     headerName: "Descripción de la categoría",
-    width: 270,
+    width: 300,
   },
   {
     field: "statusCategory",
@@ -225,7 +234,7 @@ export const roleColumns = [
 export const inventoryColumns = [
   {
     field: "imageInventory",
-    headerName: "Imagén",
+    headerName: "Imagen",
     width: 150,
     renderCell: (params: any) => {
       return (
@@ -242,7 +251,7 @@ export const inventoryColumns = [
   {
     field: "nameInventory",
     headerName: "Nombre",
-    width: 200,
+    width: 240,
   },
   {
     field: "referenceInventory",
@@ -252,22 +261,29 @@ export const inventoryColumns = [
   {
     field: "categoryInventory",
     headerName: "Categoría",
-    width: 150,
+    width: 170,
+    renderCell: (params: any) => {
+      return (
+        <div className="cellWithStatus">
+          {params.row.category.name_category}
+        </div>
+      );
+    },
   },
   {
     field: "costPriceInventory",
     headerName: "Costo",
-    width: 100,
+    width: 80,
   },
   {
     field: "stockInventory",
     headerName: "Stock",
-    width: 100,
+    width: 80,
   },
   {
     field: "statusInventory",
     headerName: "Status",
-    width: 150,
+    width: 100,
     renderCell: (params: any) => {
       return (
         <div
@@ -281,7 +297,7 @@ export const inventoryColumns = [
   {
     field: "publicatedInventory",
     headerName: "Publicado",
-    width: 150,
+    width: 130,
     renderCell: (params: any) => {
       return (
         <div
@@ -327,6 +343,153 @@ export const customerColumns = [
           className={`cellWithStatus ${params.row.statusCustomer.toLowerCase()}`}
         >
           {params.row.statusCustomer}
+        </div>
+      );
+    },
+  },
+];
+
+export const orderColumns = [
+  {
+    field: "Customer",
+    headerName: "Nombre del cliente",
+    width: 260,
+    renderCell: (params: any) => {
+      return <div>{params.row.customer.name_customer}</div>;
+    },
+  },
+  {
+    field: "User",
+    headerName: "Nombre del vendedor",
+    width: 260,
+    renderCell: (params: any) => {
+      return <div>{params.row.user.name_user}</div>;
+    },
+  },
+  {
+    field: "createdAt",
+    headerName: "Fecha de la orden",
+    width: 200,
+    renderCell: (params: any) => {
+      return (
+        <div>{moment(params.row.createdAt).format("DD MMM YYYY - h:mm a")}</div>
+      );
+    },
+  },
+  {
+    field: "typeOrder",
+    headerName: "Tipo de orden",
+    width: 130,
+  },
+  {
+    field: "totalOrder",
+    headerName: "Total de la orden",
+    width: 160,
+    // format to money
+    renderCell: (params: any) => {
+      return <div>{moneyFormat(params.row.totalOrder)}</div>;
+    },
+  },
+  {
+    field: "ActionOrder",
+    headerName: "Acciones",
+    width: 180,
+    renderCell: (params: any) => {
+      // show a select to the next options: "Pendiente", "En proceso", "Entregado"
+      return (
+        <div className="cellWithStatus">
+          <select
+            name="statusOrder"
+            id={`statusOrder${params.row.id}`}
+            className="cellWithSelect"
+            value={params.row.statusOrder}
+            onChange={(e) => params.changeStatus(e, params.row._id)}
+          >
+            <option value="Pendiente">Pendiente</option>
+            <option value="En proceso">En-proceso</option>
+            <option value="Entregado">Entregado</option>
+          </select>
+        </div>
+      );
+    },
+  },
+  {
+    field: "statusOrder",
+    headerName: "Estado de la orden",
+    width: 170,
+    renderCell: (params: any) => {
+      return (
+        <div
+          className={`cellWithStatus ${params.row.statusOrder.toLowerCase()}`}
+        >
+          {params.row.statusOrder}
+        </div>
+      );
+    },
+  },
+];
+
+export const orderDetailColumns = [
+  {
+    field: "imageInventory",
+    headerName: "Imagen",
+    width: 140,
+    renderCell: (params: any) => {
+      return (
+        <div className="cellWithImage">
+          {params.row.inventory.image_inventory.split(",")[0] === "" ? (
+            <img src={params.row.inventory.image_inventory} alt="" />
+          ) : (
+            <img
+              src={params.row.inventory.image_inventory.split(",")[0]}
+              alt=""
+            />
+          )}
+        </div>
+      );
+    },
+  },
+  {
+    field: "name_inventory",
+    headerName: "Nombre del producto",
+    width: 400,
+    renderCell: (params: any) => {
+      return <div>{params.row.inventory.name_inventory}</div>;
+    },
+  },
+  {
+    field: "reference_inventory",
+    headerName: "Referencia",
+    width: 200,
+    renderCell: (params: any) => {
+      return <div>{params.row.inventory.reference_inventory}</div>;
+    },
+  },
+  {
+    field: "selling_price_inventory",
+    headerName: "Precio unitario",
+    width: 200,
+    renderCell: (params: any) => {
+      return (
+        <div>{moneyFormat(params.row.inventory.selling_price_inventory)}</div>
+      );
+    },
+  },
+  {
+    field: "quantity",
+    headerName: "Cantidad",
+    width: 150,
+  },
+  {
+    field: "subtotal",
+    headerName: "Subtotal",
+    width: 180,
+    renderCell: (params: any) => {
+      return (
+        <div>
+          {moneyFormat(
+            params.row.inventory.selling_price_inventory * params.row.quantity
+          )}
         </div>
       );
     },

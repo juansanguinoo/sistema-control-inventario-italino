@@ -9,8 +9,10 @@ interface ITableInformationProps {
   columns?: IColumnsDataTable[];
   deleteCategory?: (id: number) => void;
   showView?: boolean;
+  showDelete?: boolean;
   handleEditAction?: (params: any) => void;
   handlePreviewAction?: (params: any) => void;
+  showActions?: boolean;
 }
 
 export const TableInformation = ({
@@ -18,8 +20,10 @@ export const TableInformation = ({
   columns,
   deleteCategory,
   showView = true,
+  showDelete = true,
   handleEditAction,
   handlePreviewAction,
+  showActions = true,
 }: ITableInformationProps) => {
   const dispatch = useDispatch<Dispatch<any>>();
 
@@ -61,9 +65,14 @@ export const TableInformation = ({
             <div className="editButton" onClick={() => handleEdit(params)}>
               Editar
             </div>
-            <div className="deleteButton" onClick={() => handleDelete(params)}>
-              Eliminar
-            </div>
+            {showDelete && (
+              <div
+                className="deleteButton"
+                onClick={() => handleDelete(params)}
+              >
+                Eliminar
+              </div>
+            )}
           </div>
         );
       },
@@ -74,13 +83,15 @@ export const TableInformation = ({
     <div className="datatable">
       <DataGrid
         rows={rowsWithId || []}
-        columns={columns ? [...columns, ...actionsColumns] : []}
+        columns={
+          showActions ? (columns || []).concat(actionsColumns) : columns || []
+        }
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0, pageSize: 10 },
           },
         }}
-        pageSizeOptions={[5, 10]}
+        pageSizeOptions={[10, 20]}
       />
     </div>
   );

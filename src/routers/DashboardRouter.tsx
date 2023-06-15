@@ -12,6 +12,7 @@ import { CreateInventory } from "../Presentation/pages/inventory/CreateInventory
 import { Orders } from "../Presentation/pages/orders/Orders";
 import { Customers } from "../Presentation/pages/customers/Customers";
 import { PreviewInventory } from "../Presentation/pages/inventory/PreviewInventory";
+import { ViewOrderDetails } from "../Presentation/pages/orders/ViewOrderDetails";
 import { Dashboard } from "../Presentation/pages/home/Dashboard";
 
 export const DashboardRouter = () => {
@@ -28,6 +29,7 @@ export const DashboardRouter = () => {
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="orders" element={<Orders />} />
+        <Route path="orders/orderDetail/:id" element={<ViewOrderDetails />} />
         <Route path="customers" element={<Customers />} />
         <Route path="inventory" element={<Inventory />} />
         <Route path="inventory/create-product" element={<CreateInventory />} />

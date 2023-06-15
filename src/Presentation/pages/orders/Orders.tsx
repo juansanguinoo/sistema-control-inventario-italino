@@ -9,12 +9,17 @@ import { useState } from "react";
 import { ModalOrders } from "./components/Modal";
 import { useGetOrders } from "../../hooks/useGetOrders";
 import { FilterMessage } from "./components/FilterMessage";
+import { TableInformation } from "../../components/tables/TableInformation";
+import { orderColumns } from "../../utils/columnsDataTable";
+import { deleteCategory } from "../../../store/actions/categoryActions";
+import { useNavigate } from "react-router-dom";
 
 export const Orders = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const navbarOpen = useSelector(
     (state: RootState) => state.navbarReducer.stateOpen
   );
+  const navigate = useNavigate();
   const { orders } = useGetOrders();
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
 
@@ -24,6 +29,10 @@ export const Orders = () => {
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const handlePreviewAction = (params: any) => {
+    navigate(`orderDetail/${params.id}`);
   };
 
   return (
@@ -39,7 +48,13 @@ export const Orders = () => {
         <CardInformation icon={Bag} />
         <CardInformation icon={Bag} />
         {orders.length > 0 ? (
-          <div>Tabla</div>
+          <TableInformation
+            categories={orders}
+            columns={orderColumns}
+            deleteCategory={deleteCategory}
+            showDelete={false}
+            handlePreviewAction={handlePreviewAction}
+          />
         ) : (
           <div className="orders-noorders">
             <FilterMessage

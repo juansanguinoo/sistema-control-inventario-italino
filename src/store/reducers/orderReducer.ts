@@ -24,6 +24,7 @@ export const orderReducer = (
     case OrderActionsTypes.CREATE_ORDER:
     case OrderActionsTypes.UPDATE_ORDER:
     case OrderActionsTypes.DELETE_ORDER:
+    case OrderActionsTypes.GET_ORDERS_BY_USER:
       return {
         ...state,
         loading: true,
@@ -31,6 +32,14 @@ export const orderReducer = (
       };
 
     case OrderActionsTypes.GET_ALL_ORDERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        orders: action.payload,
+        error: null,
+      };
+
+    case OrderActionsTypes.GET_ORDERS_BY_USER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -67,6 +76,7 @@ export const orderReducer = (
     case OrderActionsTypes.CREATE_ORDER_FAILURE:
     case OrderActionsTypes.UPDATE_ORDER_FAILURE:
     case OrderActionsTypes.DELETE_ORDER_FAILURE:
+    case OrderActionsTypes.GET_ORDERS_BY_USER_FAILURE:
       return {
         ...state,
         loading: false,
