@@ -15,6 +15,7 @@ import { inventoryColumns } from "../../utils/columnsDataTable";
 import { LinkButton } from "../../components/buttons/LinkButton";
 import { useNavigate } from "react-router-dom";
 import { InventoryModel } from "../../../domain/models/InventoryModel";
+import { useGetInventoryInformation } from "../../hooks/useGetInventoryInformation";
 
 export const Inventory = () => {
   const navigate = useNavigate();
@@ -39,25 +40,8 @@ export const Inventory = () => {
     navigate(`product/${params.id}`);
   };
 
-  // get the active products
-  const activeProducts = inventories.filter(
-    (inventory) => inventory.statusInventory === "Active"
-  );
-
-  const totalStock = inventories.reduce(
-    (total, inventory) => total + inventory.stockInventory,
-    0
-  );
-
-  // get inactive products
-  const inactiveProducts = inventories.filter(
-    (inventory) => inventory.statusInventory === "Inactive"
-  );
-
-  // get the pubicated products
-  const publishedProducts = inventories.filter(
-    (inventory) => inventory.publicatedInventory === true
-  );
+  const { activeProducts, inactiveProducts, publishedProducts, totalStock } =
+    useGetInventoryInformation();
 
   return (
     <div className={`inventory-container ${navbarClass}`}>

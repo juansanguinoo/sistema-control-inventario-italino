@@ -1,3 +1,4 @@
+import "./styles.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { MainHome } from "./components/Main";
@@ -9,8 +10,7 @@ export const Dashboard = () => {
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
   return (
     <div className={`main ${navbarClass}`}>
-      <div className="main-header"></div>
-      <div className="main-container">
+      <div className="main-dashboard">
         <MainHome />
       </div>
     </div>
