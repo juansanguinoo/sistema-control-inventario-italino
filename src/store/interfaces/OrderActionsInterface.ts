@@ -64,7 +64,7 @@ export interface UpdateOrderAction {
 
 export interface UpdateOrderSuccessAction {
   type: OrderActionsTypes.UPDATE_ORDER_SUCCESS;
-  payload: number;
+  payload: OrderResponseModel;
 }
 
 export interface UpdateOrderFailureAction {

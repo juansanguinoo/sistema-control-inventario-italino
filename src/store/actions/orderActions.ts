@@ -32,6 +32,7 @@ import {
 import { GetAllOrdersUseCase } from "../../domain/useCases/order/GetAllOrdersUseCase";
 import { GetOrderByUserIdUseCase } from "../../domain/useCases/order/GetOrderByUserIdUseCase";
 import { GetOrderByIdUseCase } from "../../domain/useCases/order/GetOrderByIdUseCase";
+import { UpdateOrderUseCase } from "../../domain/useCases/order/UpdateOrderUseCase";
 
 export type OrderAction =
   | GetAllOrdersAction
@@ -153,6 +154,31 @@ export const getOrderById = (orderId: number) => {
       );
       dispatch({
         type: OrderActionsTypes.GET_ORDER_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const updateOrder = (order: OrderRequest) => {
+  return async (dispatch: Dispatch<OrderAction>) => {
+    const useCase = container.get<UpdateOrderUseCase>(TYPES.UpdateOrderUseCase);
+
+    dispatch({ type: OrderActionsTypes.UPDATE_ORDER });
+
+    try {
+      const result = await useCase.execute(order);
+
+      dispatch({
+        type: OrderActionsTypes.UPDATE_ORDER_SUCCESS,
+        payload: adaptOrder(result.data!),
+      });
+    } catch (error) {
+      const handleError = new AppError(
+        `Ocurrió un error al actualizar la orden ${error}`
+      );
+      dispatch({
+        type: OrderActionsTypes.UPDATE_ORDER_FAILURE,
         payload: handleError,
       });
     }

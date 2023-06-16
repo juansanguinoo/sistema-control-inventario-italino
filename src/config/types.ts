@@ -45,6 +45,7 @@ const TYPES = {
   GetAllOrdersUseCase: Symbol.for("GetAllOrdersUseCase"),
   GetOrderByUserIdUseCase: Symbol.for("GetOrderByUserIdUseCase"),
   GetOrderByIdUseCase: Symbol.for("GetOrderByIdUseCase"),
+  UpdateOrderUseCase: Symbol.for("UpdateOrderUseCase"),
 };
 
 export { TYPES };

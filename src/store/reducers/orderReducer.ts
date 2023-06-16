@@ -71,6 +71,16 @@ export const orderReducer = (
         error: null,
       };
 
+    case OrderActionsTypes.UPDATE_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        orders: state.orders.map((order) =>
+          order.id === action.payload.id ? action.payload : order
+        ),
+        error: null,
+      };
+
     case OrderActionsTypes.GET_ALL_ORDERS_FAILURE:
     case OrderActionsTypes.GET_ORDER_FAILURE:
     case OrderActionsTypes.CREATE_ORDER_FAILURE:
