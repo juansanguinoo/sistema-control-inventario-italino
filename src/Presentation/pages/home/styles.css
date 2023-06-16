@@ -159,16 +159,20 @@
   display: flex;
 }
 
+.dashboard-column-1 {
+  width: 62%;
+}
+
 .dashboard-cards {
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 20%;
   display: flex;
 }
 
 .dashboard-sales,
 .dashboard-customers {
-  width: 360px;
-  height: 145px;
+  width: 52%;
+  height: 100%;
   margin: 0 1rem;
   padding: 1rem;
 
@@ -224,23 +228,18 @@
 }
 
 .dashboard-diagrams {
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 52%;
   display: flex;
 }
 
 .dashboard-cake-diagram {
-  width: 360px;
-  height: 340px;
+  width: 46%;
+  height: calc(100% - 2rem);
   margin: 1rem;
 
   background-color: #fff;
   border-radius: 1rem;
-}
-
-.dashboard-cards-2 {
-  display: flex;
-  flex-direction: column;
 }
 
 .dashboard-products {
@@ -257,22 +256,27 @@
   width: 360px;
   height: 160px;
   margin: 0 1rem;
+  padding: 1rem;
 
   background-color: #fff;
   border-radius: 1rem;
 }
 
 .dashboard-table {
-  width: 750px;
-  height: 180px;
+  width: 96%;
+  height: 26%;
   margin: 0 1rem;
 
   background-color: #fff;
   border-radius: 1rem;
 }
 
+.dashboard-column-2 {
+  width: 38%;
+}
+
 .dashboard-orders {
-  width: 450px;
+  width: 95%;
   height: 145px;
   margin: 0 1rem;
   padding: 1rem;
@@ -309,6 +313,132 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+
+@media (max-width: 1400px) {
+  .dashboard {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dashboard-column-1,
+  .dashboard-column-2 {
+    width: 80%;
+  }
+
+  .dashboard-cards {
+    height: 30%;
+  }
+
+  .dashboard-cards-2 {
+    width: 50%;
+  }
+
+  .dashboard-products,
+  .dashboard-cart {
+    width: 92%;
+    height: 42%;
+  }
+
+  .dashboard-table {
+    height: 320px;
+    margin-bottom: 1rem;
+  }
+
+  .dashboard-orders {
+    width: 96%;
+  }
+
+  .dashboard-recent-orders {
+    width: 96%;
+    height: 500px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .dashboard-column-1,
+  .dashboard-column-2 {
+    width: 90%;
+  }
+}
+
+@media (max-width: 1100px) {
+  .dashboard-column-1,
+  .dashboard-column-2 {
+    width: 100%;
+  }
+}
+
+@media (max-width: 950px) {
+  .dashboard-cards {
+    height: 40%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dashboard-sales,
+  .dashboard-customers {
+    width: 80%;
+  }
+
+  .dashboard-sales {
+    margin-bottom: 1rem;
+  }
+
+  .dashboard-diagrams {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dashboard-cake-diagram {
+    width: 55%;
+    height: 350px;
+  }
+
+  .dashboard-cards-2 {
+    width: 80%;
+  }
+
+  .dashboard-cart {
+    margin: 1rem;
+  }
+
+  .dashboard-table {
+    width: 96%;
+    height: auto;
+  }
+
+  .dashboard-column-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dashboard-orders,
+  .dashboard-recent-orders {
+    width: 80%;
+  }
+}
+
+@media (max-width: 800px) {
+  .dashboard-sales,
+  .dashboard-customers,
+  .dashboard-cards-2,
+  .dashboard-orders,
+  .dashboard-recent-orders {
+    width: 90%;
+  }
+
+  .dashboard-products,
+  .dashboard-cart {
+    width: 96%;
+  }
+
+  .dashboard-cake-diagram {
+    width: 65%;
+    height: 300px;
+  }
 }
 
 @media (max-width: 768px) {
