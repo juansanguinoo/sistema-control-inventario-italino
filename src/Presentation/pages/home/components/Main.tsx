@@ -22,6 +22,8 @@ import { Pie } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
 import { useState, useEffect } from "react";
+import { TableInformation } from "../../../components/tables/TableInformation";
+import { orderColumns } from "../../../utils/columnsDataTable";
 
 ChartJS.register(
   ArcElement,
@@ -227,22 +229,14 @@ export const MainHome = () => {
               </div>
             </div>
           </div>
-          <div className="dashboard-orders">
-            <div className="orders-img">
+          <div className="dashboard-custom">
+            <div className="custom-img">
               <img src={Bag} alt="" />
             </div>
-            <div className="orders-content">
-              <div className="orders">
+            <div className="custom-content">
+              <div className="custom">
                 <h3>Total ordenes</h3>
                 <h4>{orders.length}</h4>
-              </div>
-              <div className="pending">
-                <h3>Pendientes</h3>
-                <h4>{pendingOrders.length}</h4>
-              </div>
-              <div className="completed">
-                <h3>Completadas</h3>
-                <h4>{completedOrders.length}</h4>
               </div>
             </div>
           </div>
@@ -271,17 +265,49 @@ export const MainHome = () => {
             <div className="recent-orders">
               <h3>Ordenes recientes</h3>
             </div>
-            <div className="recent-orders-noorders">
-              <FilterMessage
-                messageTitle={"¿No tienes ordenes aún?"}
-                messageParagraph={
-                  "Agrega productos a tu tienda y crea ordenes."
-                }
-              />
-              <div className="recent-orders-add-products">
-                <LinkButton title="Agregar productos" />
-              </div>
-            </div>
+            {orders.length > 0 ? (
+              <>
+                <ul>
+                  {orders.map((order) => (
+                    <li key={order.id}>
+                      <div className="recent-orders-content">
+                        <div className="column-recent-order">
+                          <div className="recent-orders-name">
+                            <h3>{order.user.name_user}</h3>
+                          </div>
+                          <div className="recent-orders-total">
+                            <h4>Total $ {order.totalOrder}</h4>
+                          </div>
+                        </div>
+                        <div
+                          className={`recent-orders-status ${
+                            order.statusOrder === "Completada"
+                              ? "complete-order"
+                              : "in-proccess"
+                          }`}
+                        >
+                          <h5>{order.statusOrder}</h5>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <>
+                <div className="recent-orders-noorders">
+                  <FilterMessage
+                    messageTitle={"¿No tienes ordenes aún?"}
+                    messageParagraph={
+                      "Agrega productos a tu tienda y crea ordenes."
+                    }
+                  />
+                  <div className="recent-orders-add-products">
+                    <LinkButton title="Agregar productos" />
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
