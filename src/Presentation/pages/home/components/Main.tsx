@@ -21,6 +21,7 @@ import {
 import { Pie } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
+import { useState, useEffect } from "react";
 
 ChartJS.register(
   ArcElement,
@@ -119,117 +120,176 @@ export const MainHome = () => {
     (order) => order.statusOrder === "Pendiente"
   );
 
+  const months = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+
+  // Obtenemos el total de órdenes por mes
+  const ordersPerMonth = months.map((month) => {
+    const filteredOrders = pendingOrders.filter((order) => {
+      const date = new Date(order.createdAt);
+      return date.toLocaleString("es-MX", { month: "long" }) === month;
+    });
+
+    return {
+      month,
+      totalOrders: filteredOrders.length,
+    };
+  });
+
+  // Imprimimos los resultados
+  console.log("Total de órdenes por mes:");
+  ordersPerMonth.forEach((data) => {
+    console.log(`${data.month}: ${data.totalOrders} órdenes`);
+  });
+
   return (
-    <div className="dashboard">
-      <div className="dashboard-column-1">
-        <div className="dashboard-cards">
-          <div className="dashboard-sales">
-            <div className="sales-img">
-              <img src={User} alt="" />
-            </div>
-            <div className="sales-content">
-              <div className="sales">
-                <h3>Ventas</h3>
-                <h4>0.00</h4>
+    <>
+      <div className="dashboard">
+        <div className="dashboard-column-1">
+          <div className="dashboard-cards">
+            <div className="dashboard-sales">
+              <div className="sales-img">
+                <img src={User} alt="" />
               </div>
-              <div className="volume">
-                <h3>Volumén</h3>
-                <h4>0.00</h4>
+              <div className="sales-content">
+                <div className="sales">
+                  <h3>Ventas</h3>
+                  <h4>0.00</h4>
+                </div>
+                <div className="volume">
+                  <h3>Volumén</h3>
+                  <h4>0.00</h4>
+                </div>
+              </div>
+            </div>
+            <div className="dashboard-customers">
+              <div className="customers-img">
+                <img src={User} alt="" />
+              </div>
+              <div className="customers-content">
+                <div className="customers">
+                  <h3>Clientes</h3>
+                  <h4>{customers.length}</h4>
+                </div>
+                <div className="customers-active">
+                  <h3>Activos</h3>
+                  <h4>{activeCustomers.length}</h4>
+                </div>
               </div>
             </div>
           </div>
-          <div className="dashboard-customers">
-            <div className="customers-img">
-              <img src={User} alt="" />
+          <div className="dashboard-diagrams">
+            <div className="dashboard-cake-diagram">
+              <Pie data={data} />
             </div>
-            <div className="customers-content">
-              <div className="customers">
-                <h3>Clientes</h3>
-                <h4>{customers.length}</h4>
+            <div className="dashboard-cards-2">
+              <div className="dashboard-products">
+                <div className="products-img">
+                  <img src={Folder} alt="" />
+                </div>
+                <div className="products-content">
+                  <div className="products">
+                    <h3>Total productos</h3>
+                    <h4>{inventories.length}</h4>
+                  </div>
+                  <div className="products-active">
+                    <h3>Activos</h3>
+                    <h4>{activeProducts.length}</h4>
+                  </div>
+                </div>
               </div>
-              <div className="customers-active">
-                <h3>Activos</h3>
-                <h4>{activeCustomers.length}</h4>
+              <div className="dashboard-cart">
+                <div className="products-img">
+                  <img src={Folder} alt="" />
+                </div>
+                <div className="products-content">
+                  <div className="products">
+                    <h3>Total productos</h3>
+                    <h4>{inventories.length}</h4>
+                  </div>
+                  <div className="products-active">
+                    <h3>Activos</h3>
+                    <h4>{activeProducts.length}</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="dashboard-orders">
+            <div className="orders-img">
+              <img src={Bag} alt="" />
+            </div>
+            <div className="orders-content">
+              <div className="orders">
+                <h3>Total ordenes</h3>
+                <h4>{orders.length}</h4>
+              </div>
+              <div className="pending">
+                <h3>Pendientes</h3>
+                <h4>{pendingOrders.length}</h4>
+              </div>
+              <div className="completed">
+                <h3>Completadas</h3>
+                <h4>{completedOrders.length}</h4>
               </div>
             </div>
           </div>
         </div>
-        <div className="dashboard-diagrams">
-          <div className="dashboard-cake-diagram">
-            <Pie data={data} />
-          </div>
-          <div className="dashboard-cards-2">
-            <div className="dashboard-products">
-              <div className="products-img">
-                <img src={Folder} alt="" />
+        <div className="dashboard-column-2">
+          <div className="dashboard-orders">
+            <div className="orders-img">
+              <img src={Bag} alt="" />
+            </div>
+            <div className="orders-content">
+              <div className="orders">
+                <h3>Total ordenes</h3>
+                <h4>{orders.length}</h4>
               </div>
-              <div className="products-content">
-                <div className="products">
-                  <h3>Total productos</h3>
-                  <h4>{inventories.length}</h4>
-                </div>
-                <div className="products-active">
-                  <h3>Activos</h3>
-                  <h4>{activeProducts.length}</h4>
-                </div>
+              <div className="pending">
+                <h3>Pendientes</h3>
+                <h4>{pendingOrders.length}</h4>
+              </div>
+              <div className="completed">
+                <h3>Completadas</h3>
+                <h4>{completedOrders.length}</h4>
               </div>
             </div>
-            <div className="dashboard-cart">
-              <div className="products-img">
-                <img src={Folder} alt="" />
-              </div>
-              <div className="products-content">
-                <div className="products">
-                  <h3>Total productos</h3>
-                  <h4>{inventories.length}</h4>
-                </div>
-                <div className="products-active">
-                  <h3>Activos</h3>
-                  <h4>{activeProducts.length}</h4>
-                </div>
+          </div>
+          <div className="dashboard-recent-orders">
+            <div className="recent-orders">
+              <h3>Ordenes recientes</h3>
+            </div>
+            <div className="recent-orders-noorders">
+              <FilterMessage
+                messageTitle={"¿No tienes ordenes aún?"}
+                messageParagraph={
+                  "Agrega productos a tu tienda y crea ordenes."
+                }
+              />
+              <div className="recent-orders-add-products">
+                <LinkButton title="Agregar productos" />
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div className="dashboard-table-container">
         <div className="dashboard-table">
           <Bar options={options} data={dataTable} />;
         </div>
       </div>
-      <div className="dashboard-column-2">
-        <div className="dashboard-orders">
-          <div className="orders-img">
-            <img src={Bag} alt="" />
-          </div>
-          <div className="orders-content">
-            <div className="orders">
-              <h3>Total ordenes</h3>
-              <h4>{orders.length}</h4>
-            </div>
-            <div className="pending">
-              <h3>Pendientes</h3>
-              <h4>{pendingOrders.length}</h4>
-            </div>
-            <div className="completed">
-              <h3>Completadas</h3>
-              <h4>{completedOrders.length}</h4>
-            </div>
-          </div>
-        </div>
-        <div className="dashboard-recent-orders">
-          <div className="recent-orders">
-            <h3>Ordenes recientes</h3>
-          </div>
-          <div className="recent-orders-noorders">
-            <FilterMessage
-              messageTitle={"¿No tienes ordenes aún?"}
-              messageParagraph={"Agrega productos a tu tienda y crea ordenes."}
-            />
-            <div className="recent-orders-add-products">
-              <LinkButton title="Agregar productos" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
