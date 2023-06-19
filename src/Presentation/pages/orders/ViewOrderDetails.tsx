@@ -18,6 +18,7 @@ import Swal from "sweetalert2";
 import { Dispatch } from "redux";
 import { updateOrder } from "../../../store/actions/orderActions";
 import { OrderRequest } from "../../../domain/models/OrderRequest";
+import { ModalReturns } from "./components/ModalReturns";
 
 const moneyFormat = (value: number) => {
   return new Intl.NumberFormat("en-US", {
@@ -35,6 +36,7 @@ export const ViewOrderDetails = () => {
   const params = useParams();
   const [orderData, setOrderData] = useState<OrderResponseModel>();
   const [customer, setCustomer] = useState<Customer>();
+  const [returnModal, setReturnModal] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
@@ -80,6 +82,14 @@ export const ViewOrderDetails = () => {
     });
   };
 
+  const openModal = () => {
+    setReturnModal(true);
+  };
+
+  const closeModal = () => {
+    setReturnModal(false);
+  };
+
   useEffect(() => {
     if (params.id) {
       getOrderById();
@@ -97,7 +107,7 @@ export const ViewOrderDetails = () => {
         <div className="orders-header-buttons">
           <HeaderButton
             title="Devoluciones"
-            handleFunction={() => console.log("hola")}
+            handleFunction={openModal}
             typeButton={HeaderButtonEnum.update}
           />
           <HeaderButton
@@ -132,6 +142,9 @@ export const ViewOrderDetails = () => {
           deleteCategory={deleteCategory}
           showActions={false}
         />
+        {returnModal && (
+          <ModalReturns onCloseModal={closeModal} orderData={orderData!} />
+        )}
       </div>
     </div>
   );
