@@ -240,7 +240,7 @@
 }
 
 .dashboard-cake-diagram {
-  width: 380px;
+  width: 46%;
   height: 340px;
   margin: 1rem;
 
@@ -248,8 +248,12 @@
   border-radius: 1rem;
 }
 
+.dashboard-cards-2 {
+  width: 50%;
+}
+
 .dashboard-products {
-  width: 380px;
+  width: 92%;
   height: 160px;
   margin: 1rem;
   padding: 1rem;
@@ -259,7 +263,7 @@
 }
 
 .dashboard-cart {
-  width: 380px;
+  width: 92%;
   height: 160px;
   margin: 0 1rem;
   padding: 1rem;
@@ -269,7 +273,7 @@
 }
 
 .dashboard-custom {
-  width: 790px;
+  width: 96%;
   height: 160px;
   margin: 0 1rem;
   padding: 1rem;
@@ -394,17 +398,13 @@
     width: 80%;
   }
 
-  .dashboard-cards-2 {
-    width: 50%;
-  }
-
   .dashboard-cake-diagram {
-    width: 360px;
+    width: 48%;
   }
 
   .dashboard-products,
   .dashboard-cart {
-    width: 90%;
+    width: 92%;
     height: 42%;
   }
 
@@ -416,7 +416,7 @@
 
   .dashboard-orders {
     width: 96%;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
   }
 
   .dashboard-recent-orders {
@@ -499,6 +499,11 @@
   .dashboard-recent-orders {
     width: 80%;
   }
+
+  .dashboard-table {
+    width: 90%;
+    height: 340px;
+  }
 }
 
 @media (max-width: 800px) {
@@ -522,6 +527,11 @@
 
   .dashboard-custom {
     width: 90%;
+  }
+
+  .dashboard-table {
+    width: 90%;
+    height: 300px;
   }
 }
 
