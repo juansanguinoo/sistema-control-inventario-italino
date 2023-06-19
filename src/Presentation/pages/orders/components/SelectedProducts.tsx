@@ -8,6 +8,7 @@ interface ISelectedProductsProps {
     quantity: string
   ) => void;
   handleQuantityInputFocus: (value: boolean) => void;
+  isEdit?: boolean;
 }
 
 export const SelectedProducts = ({
@@ -15,6 +16,7 @@ export const SelectedProducts = ({
   handleRemoveInventory,
   handleAddOrRemoveQuantityByInput,
   handleQuantityInputFocus,
+  isEdit = false,
 }: ISelectedProductsProps) => {
   const moneyFormat = (value: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -46,12 +48,14 @@ export const SelectedProducts = ({
           </div>
           <div className="modal-product-quantity">
             <div className="modal-product-quantity-space">
-              <p
-                className="modal-product-quantity-remove"
-                onClick={() => handleRemoveInventory(inventory)}
-              >
-                Eliminar
-              </p>
+              {!isEdit ? (
+                <p
+                  className="modal-product-quantity-remove"
+                  onClick={() => handleRemoveInventory(inventory)}
+                >
+                  Eliminar
+                </p>
+              ) : null}
             </div>
             <div className="modal-product-quantity-buttons">
               <input
@@ -65,6 +69,7 @@ export const SelectedProducts = ({
                 onChange={(e) =>
                   handleAddOrRemoveQuantityByInput(inventory, e.target.value)
                 }
+                readOnly={isEdit}
               />
             </div>
             <div className="modal-product-quantity-subtotal">

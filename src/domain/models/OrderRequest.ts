@@ -2,6 +2,7 @@ import { OrderDetailRequest } from "./OrderDetailRequest";
 
 export interface OrderRequest {
   orderId?: number;
+  id?: number;
   customerId: number;
   userId: number;
   statusOrder: string;
