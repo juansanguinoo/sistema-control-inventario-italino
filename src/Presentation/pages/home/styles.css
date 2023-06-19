@@ -240,7 +240,7 @@
 }
 
 .dashboard-cake-diagram {
-  width: 46%;
+  width: 48%;
   height: 340px;
   margin: 1rem;
 
@@ -314,6 +314,10 @@
   border-radius: 1rem;
 }
 
+.dashboard-recent-orders ul {
+  list-style: none;
+}
+
 .recent-orders-content {
   display: flex;
   justify-content: space-between;
@@ -335,20 +339,30 @@
   align-items: center;
 }
 
-.in-proccess {
+.pending-order {
   background-color: #fff2e2;
 }
 
-.in-proccess h5 {
-  color: #f5a623;
+.pending-order h5 {
+  color: #fca311;
 }
 
-.completed-order {
+.in-progress-order {
   background-color: #5570f1;
 }
 
-.completed-order h5 {
+.in-progress-order h5,
+.completed-order h5,
+.canceled-order h5 {
   color: #fff;
+}
+
+.complete-order {
+  background-color: #519c66;
+}
+
+.canceled-order {
+  background-color: #ff9e9e;
 }
 
 .recent-orders-content h4 {

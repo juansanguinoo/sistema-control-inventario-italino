@@ -283,7 +283,11 @@ export const MainHome = () => {
                           className={`recent-orders-status ${
                             order.statusOrder === "Completada"
                               ? "complete-order"
-                              : "in-proccess"
+                              : order.statusOrder === "En proceso"
+                              ? "in-progress-order"
+                              : order.statusOrder === "Cancelada"
+                              ? "canceled-order"
+                              : "pending-order"
                           }`}
                         >
                           <h5>{order.statusOrder}</h5>
