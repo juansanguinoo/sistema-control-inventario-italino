@@ -3,6 +3,7 @@ import { createCategory } from "../../../../store/actions/categoryActions";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { CategoryModel } from "../../../../domain/models/CategoryModel";
+import Swal from "sweetalert2";
 
 interface IModalCategoryProps {
   onCloseModal?: () => void;
@@ -19,7 +20,7 @@ export const ModalCategory = ({
   const [categoryData, setCategoryData] = useState<CategoryModel>({
     nameCategory: initialState?.nameCategory || "",
     referenceCategory: initialState?.referenceCategory || "",
-    statusCategory: initialState?.statusCategory || "Inactive",
+    statusCategory: initialState?.statusCategory || "Inactivo",
     descriptionCategory: initialState?.descriptionCategory || "",
   });
 
@@ -27,14 +28,27 @@ export const ModalCategory = ({
     const { checked } = e.target;
     setCategoryData((prevData: CategoryModel) => ({
       ...prevData,
-      statusCategory: checked ? "Active" : "Inactive",
+      statusCategory: checked ? "Activo" : "Inactivo",
     }));
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(createCategory(categoryData));
-    onCloseModal && onCloseModal();
+    if (
+      categoryData.nameCategory === "" ||
+      categoryData.referenceCategory === "" ||
+      categoryData.descriptionCategory === ""
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor completa todos los campos",
+      });
+    } else {
+      dispatch(createCategory(categoryData));
+      Swal.fire("Buen trabajo!", "Categoría creada correctamente!", "success");
+      onCloseModal && onCloseModal();
+    }
   };
 
   return (
@@ -54,7 +68,6 @@ export const ModalCategory = ({
                 type="text"
                 id="categoryName"
                 placeholder="Nombre de la categoría"
-                required
                 value={categoryData.nameCategory}
                 onChange={(event) =>
                   setCategoryData((prevData) => ({
@@ -69,7 +82,6 @@ export const ModalCategory = ({
                 type="text"
                 id="categoryReference"
                 placeholder="Referencia de la categoría"
-                required
                 value={categoryData.referenceCategory}
                 onChange={(event) =>
                   setCategoryData((prevData) => ({
@@ -84,7 +96,6 @@ export const ModalCategory = ({
                 name="categoryDescription"
                 id="categoryDescription"
                 placeholder="Descripción de la categoría"
-                required
                 value={categoryData.descriptionCategory}
                 onChange={(event) =>
                   setCategoryData((prevData) => ({
@@ -104,7 +115,7 @@ export const ModalCategory = ({
               <input
                 type="checkbox"
                 id="btn-switch-active-category"
-                checked={categoryData.statusCategory === "Active"}
+                checked={categoryData.statusCategory === "Activo"}
                 onChange={handleCheckboxChange}
               />
               <label

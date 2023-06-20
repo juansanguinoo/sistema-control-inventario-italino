@@ -43,9 +43,10 @@ export const Category = () => {
     setCategoryData({
       nameCategory: "",
       referenceCategory: "",
-      statusCategory: "Inactive",
+      statusCategory: "Inactivo",
       descriptionCategory: "",
     });
+    setActions("");
     setShowModal(false);
   };
 
@@ -67,12 +68,12 @@ export const Category = () => {
 
   // get the active categories
   const activeCategories = categories.filter(
-    (category) => category.statusCategory === "Active"
+    (category) => category.statusCategory === "Activo"
   );
 
   // get the inactive categories
   const inactiveCategories = categories.filter(
-    (category) => category.statusCategory === "Inactive"
+    (category) => category.statusCategory === "Inactivo"
   );
 
   return (

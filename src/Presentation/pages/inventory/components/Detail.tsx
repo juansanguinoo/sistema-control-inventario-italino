@@ -15,6 +15,7 @@ import "react-slideshow-image/dist/styles.css";
 export const DetailInventory = () => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const params = useParams();
+  const [addStock, setAddStock] = useState(false); // eslint-disable-line
   const [isResponsive, setIsResponsive] = useState(false);
   const [inventoryData, setInventoryData] = useState<InventoryModel>({
     referenceInventory: "",
@@ -71,12 +72,17 @@ export const DetailInventory = () => {
   const images = inventoryData.imageInventory?.split(", ");
 
   const divStyle = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundSize: "cover",
-    height: "200px",
+    maxWidth: "260px",
+    minWidth: "260px",
+    maxHeight: "200px",
+    minHeight: "200px",
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
   };
+
+  useEffect(() => {
+    console.log(addStock);
+  }, [addStock]);
 
   return (
     <>
@@ -84,7 +90,14 @@ export const DetailInventory = () => {
         <div className="detail-img">
           <Slide>
             {images?.map((slideImage, index) => (
-              <div key={index}>
+              <div
+                key={index}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <div
                   style={{
                     ...divStyle,
@@ -169,6 +182,35 @@ export const DetailInventory = () => {
               <h4>Stock</h4>
               <h3>{inventoryData.stockInventory}</h3>
             </div>
+          </div>
+        )}
+      </div>
+      <div className="product-entries">
+        <label
+          className="label-detail-add-stock"
+          htmlFor="btn-switch-add-stock"
+        >
+          Desea agregar mas stock:
+        </label>
+        <input
+          type="checkbox"
+          id="btn-switch-add-stock"
+          checked={addStock}
+          onChange={() => setAddStock(!addStock)}
+        />
+        <label
+          htmlFor="btn-switch-add-stock"
+          className="lbl-switch-add-stock"
+        ></label>
+        {addStock && (
+          <div className="product-entries-input">
+            <input
+              id="productEntries"
+              className="product-entries-value-input"
+              placeholder="Agregar stock"
+              type="text"
+            />
+            <button>Agregar</button>
           </div>
         )}
       </div>

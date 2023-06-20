@@ -12,22 +12,25 @@
   border-radius: 5px;
 }
 
-.active, .en-proceso {
+.activo,
+.en-proceso {
   background-color: #e6e7fc;
   color: #5570f1;
 }
 
-.inactive {
+.inactivo {
   background-color: #ff9e9e;
   color: #000;
 }
 
-.access, .entregado {
+.access,
+.entregado {
   background-color: #e3ede8;
   color: #519c66;
 }
 
-.noaccess, .pendiente {
+.noaccess,
+.pendiente {
   background-color: #fff2e2;
   color: #000;
 }

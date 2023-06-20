@@ -7,6 +7,7 @@ import {
   createRole,
   getAllActivities,
 } from "../../../../store/actions/roleActions";
+import Swal from "sweetalert2";
 
 interface IModalRoleProps {
   onCloseModal?: () => void;
@@ -22,7 +23,7 @@ export const ModalRoles = ({
   const [roleData, setRoleData] = useState<RoleModel>({
     nameRole: initialState?.nameRole || "",
     descriptionRole: initialState?.descriptionRole || "",
-    statusRole: initialState?.statusRole || "Inactive",
+    statusRole: initialState?.statusRole || "Inactivo",
     activityId: initialState?.activityId || [],
   });
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
@@ -38,7 +39,7 @@ export const ModalRoles = ({
     const { checked } = e.target;
     setRoleData((prevData: RoleModel) => ({
       ...prevData,
-      statusRole: checked ? "Active" : "Inactive",
+      statusRole: checked ? "Activo" : "Inactivo",
     }));
   };
 
@@ -61,8 +62,23 @@ export const ModalRoles = ({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(createRole(roleData));
-    onCloseModal && onCloseModal();
+    if (roleData.nameRole === "" || roleData.descriptionRole === "") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor completa todos los campos",
+      });
+    } else if (roleData.activityId.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor selecciona al menos una actividad",
+      });
+    } else {
+      dispatch(createRole(roleData));
+      Swal.fire("Buen trabajo!", "Rol creado correctamente!", "success");
+      onCloseModal && onCloseModal();
+    }
   };
 
   return (
@@ -82,7 +98,6 @@ export const ModalRoles = ({
                 type="text"
                 id="rolName"
                 placeholder="Nombre del rol"
-                required
                 value={roleData.nameRole}
                 onChange={(event) =>
                   setRoleData((prevData) => ({
@@ -97,7 +112,6 @@ export const ModalRoles = ({
                 name="descriptionRol"
                 id="descriptionRol"
                 placeholder="Descripción del rol"
-                required
                 value={roleData.descriptionRole}
                 onChange={(event) =>
                   setRoleData((prevData) => ({
@@ -139,7 +153,7 @@ export const ModalRoles = ({
               <input
                 type="checkbox"
                 id="btn-switch-active-category"
-                checked={roleData.statusRole === "Active"}
+                checked={roleData.statusRole === "Activo"}
                 onChange={handleCheckboxChange}
               />
               <label
@@ -155,7 +169,7 @@ export const ModalRoles = ({
               >
                 Cancelar
               </button>
-              {action === "watch" ? null : (
+              {action === "preview" ? null : (
                 <button type="submit" className="add-rol-button">
                   {action === "edit" ? "Guardar cambios" : "Agregar"}
                 </button>

@@ -18,12 +18,12 @@ export const useGetInventoryInformation = () => {
 
   // get the active products
   const activeProducts = inventories.filter(
-    (inventory) => inventory.statusInventory === "Active"
+    (inventory) => inventory.statusInventory === "Activo"
   );
 
   // get inactive products
   const inactiveProducts = inventories.filter(
-    (inventory) => inventory.statusInventory === "Inactive"
+    (inventory) => inventory.statusInventory === "Inactivo"
   );
 
   // get the pubicated products
