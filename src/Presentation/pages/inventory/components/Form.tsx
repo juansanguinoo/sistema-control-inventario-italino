@@ -14,6 +14,7 @@ import {
   getInventory,
 } from "../../../../store/actions/inventoryActions";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export const FormInventory = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export const FormInventory = () => {
     nameInventory: "",
     descriptionInventory: "",
     stockInventory: 0,
-    statusInventory: "Inactive",
+    statusInventory: "Inactivo",
     sellingPriceInventory: 0,
     costPriceInventory: 0,
     imageInventory: "",
@@ -66,22 +67,65 @@ export const FormInventory = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (send && inventoryData.imageInventory !== "") {
-      if (inventoryData.imageInventory !== "") {
+    if (send) {
+      if (
+        inventoryData.referenceInventory === "" ||
+        inventoryData.nameInventory === "" ||
+        inventoryData.descriptionInventory === ""
+      ) {
+        setSend(false);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "¡Debes llenar todos los campos!",
+        });
+      } else if (
+        inventoryData.stockInventory <= 0 ||
+        isNaN(inventoryData.stockInventory)
+      ) {
+        setSend(false);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "¡Debes agregar un valor válido para el stock!",
+        });
+      } else if (inventoryData.category === 0) {
+        setSend(false);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "¡Por favor selecciona una categoría!",
+        });
+      } else if (
+        Object.values(fileData).some((value) => value !== null) === false
+      ) {
+        setSend(false);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "¡Debes subir al menos una imagen!",
+        });
+      } else if (
+        inventoryData.imageInventory !== "" &&
+        inventoryData.nameInventory !== "" &&
+        inventoryData.referenceInventory !== "" &&
+        inventoryData.descriptionInventory !== "" &&
+        inventoryData.stockInventory > 0 &&
+        inventoryData.category !== 0
+      ) {
         dispatch(createInventory(inventoryData));
         navigate("/private/inventory");
+        Swal.fire("¡Buen trabajo!", "¡Producto agregado con éxito!", "success");
       }
-      setSend(false);
-    } else if (send && inventoryData.imageInventory === "") {
-      console.log("No se ha enviado el formulario");
     }
+    setSend(false);
   }, [send, inventoryData]);
 
   const handleCheckboxChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
     setInventoryData((prevData: InventoryModel) => ({
       ...prevData,
-      statusInventory: checked ? "Active" : "Inactive",
+      statusInventory: checked ? "Activo" : "Inactivo",
     }));
   };
 
@@ -157,7 +201,6 @@ export const FormInventory = () => {
                   nameInventory: event.target.value,
                 }))
               }
-              required
             />
           </div>
           <div className="form-group">
@@ -172,11 +215,9 @@ export const FormInventory = () => {
                   referenceInventory: event.target.value,
                 }))
               }
-              required
             />
           </div>
           <div className="form-group">
-            <label htmlFor="category">Seleccione la categoría:</label>
             <select
               name="category"
               id="category"
@@ -187,7 +228,6 @@ export const FormInventory = () => {
                   category: parseInt(event.target.value),
                 }))
               }
-              required
             >
               <option value="0">Seleccione una categoría</option>
               {categories.map((category) => (
@@ -209,7 +249,6 @@ export const FormInventory = () => {
                   sellingPriceInventory: parseInt(event.target.value),
                 }))
               }
-              required
             />
           </div>
           <div className="form-group small-input">
@@ -224,7 +263,6 @@ export const FormInventory = () => {
                   costPriceInventory: parseInt(event.target.value),
                 }))
               }
-              required
             />
           </div>
           <div className="form-group">
@@ -239,7 +277,6 @@ export const FormInventory = () => {
                   stockInventory: parseInt(event.target.value),
                 }))
               }
-              required
             />
           </div>
         </div>
@@ -258,7 +295,6 @@ export const FormInventory = () => {
                   descriptionInventory: event.target.value,
                 }))
               }
-              required
             ></textarea>
           </div>
           <div className="checkbox">
@@ -267,7 +303,7 @@ export const FormInventory = () => {
               <input
                 type="checkbox"
                 id="btn-switch-active"
-                checked={inventoryData.statusInventory === "Active"}
+                checked={inventoryData.statusInventory === "Activo"}
                 onChange={handleCheckboxChangeStatus}
               />
               <label
@@ -290,9 +326,11 @@ export const FormInventory = () => {
             </div>
           </div>
           <div className="form-group-button">
-            <button type="submit" className="form-button">
-              Crear
-            </button>
+            {params.id ? null : (
+              <button type="submit" className="form-button">
+                Crear
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -11,6 +11,7 @@ import { OrderRequest } from "../../../../domain/models/OrderRequest";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { createOrder } from "../../../../store/actions/orderActions";
+import Swal from "sweetalert2";
 
 interface IModalOrdersProps {
   onCloseModal?: () => void;
@@ -137,8 +138,52 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
 
   const handleSendOrder = (e: any) => {
     e.preventDefault();
-    dispatch(createOrder(dataToSend));
-    onCloseModal!();
+    console.log(
+      selectedInventory.some(
+        (inventory) => inventory.quantity > inventory.stockInventory
+      )
+    );
+    if (
+      dataToSend.customerId === 0 ||
+      dataToSend.paymentOrder === "" ||
+      dataToSend.typeOrder === ""
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor completa todos los campos",
+      });
+    } else if (dataToSend.orderDetails.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor agrega al menos un producto",
+      });
+    } else if (
+      selectedInventory.some(
+        (inventory) => inventory.quantity > inventory.stockInventory
+      )
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "La cantidad de productos no puede ser mayor al stock",
+      });
+    } else {
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Una vez confirmado no podrás modificar la orden",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(createOrder(dataToSend));
+          onCloseModal!();
+        }
+      });
+    }
   };
 
   useEffect(() => {
@@ -154,7 +199,7 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
   }, [search]);
 
   useEffect(() => {
-    console.log(selectedInventory);
+    console.log("selected", selectedInventory);
     const total = selectedInventory.reduce(
       (acc, inventory) => acc + inventory.subTotal,
       0

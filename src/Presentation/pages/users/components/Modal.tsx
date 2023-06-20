@@ -5,6 +5,7 @@ import { RootState } from "../../../../store/store";
 import { getAllRoles } from "../../../../store/actions/roleActions";
 import { Dispatch } from "redux";
 import { createUser } from "../../../../store/actions/userAction";
+import Swal from "sweetalert2";
 
 interface IModalUserProps {
   onCloseModal?: () => void;
@@ -23,7 +24,7 @@ export const ModalUsers = ({
     phoneUser: initialState?.phoneUser || "",
     emailUser: initialState?.emailUser || "",
     passwordUser: initialState?.passwordUser || "",
-    statusUser: initialState?.statusUser || "Inactive",
+    statusUser: initialState?.statusUser || "Inactivo",
     roleId: initialState?.roleId || 0,
   });
 
@@ -31,15 +32,45 @@ export const ModalUsers = ({
     const { checked } = e.target;
     setUserData((prevData: UserModel) => ({
       ...prevData,
-      statusUser: checked ? "Active" : "Inactive",
+      statusUser: checked ? "Activo" : "Inactivo",
     }));
   };
   const roles = useSelector((state: RootState) => state.roleReducer.roles);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(createUser(userData));
-    onCloseModal && onCloseModal();
+    if (
+      userData.nameUser === "" ||
+      userData.phoneUser === "" ||
+      userData.emailUser === "" ||
+      userData.passwordUser === ""
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor completa todos los campos",
+      });
+    } else if (userData.roleId === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor selecciona un rol",
+      });
+    } else if (userData.emailUser !== "") {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      const isValidEmail = emailRegex.test(userData.emailUser);
+      if (!isValidEmail) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Por favor ingresa un correo válido",
+        });
+      } else {
+        dispatch(createUser(userData));
+        Swal.fire("Buen trabajo!", "Usuario creado correctamente!", "success");
+        onCloseModal && onCloseModal();
+      }
+    }
   };
 
   useEffect(() => {
@@ -82,7 +113,6 @@ export const ModalUsers = ({
                 id="userName"
                 name="nameUser"
                 placeholder="Nombre del usuario"
-                required
                 value={userData.nameUser}
                 onChange={handleInputChange}
               />
@@ -101,7 +131,6 @@ export const ModalUsers = ({
                   id="userPhone"
                   name="phoneUser"
                   placeholder="Teléfono del usuario"
-                  required
                   value={userData.phoneUser}
                   onChange={handleInputChange}
                 />
@@ -109,11 +138,10 @@ export const ModalUsers = ({
             </div>
             <div className="form-group-user">
               <input
-                type="email"
+                type="text"
                 id="userEmail"
                 name="emailUser"
                 placeholder="Correo electrónico del usuario"
-                required
                 value={userData.emailUser}
                 onChange={handleInputChange}
               />
@@ -124,7 +152,6 @@ export const ModalUsers = ({
                 id="userPassword"
                 name="passwordUser"
                 placeholder="Contraseña del usuario"
-                required
                 value={userData.passwordUser}
                 onChange={handleInputChange}
               />
@@ -157,7 +184,7 @@ export const ModalUsers = ({
               <input
                 type="checkbox"
                 id="btn-switch-active-user"
-                checked={userData.statusUser === "Active"}
+                checked={userData.statusUser === "Activo"}
                 onChange={handleCheckboxChange}
               />
               <label
@@ -173,7 +200,7 @@ export const ModalUsers = ({
               >
                 Cancelar
               </button>
-              {action === "watch" ? null : (
+              {action === "preview" ? null : (
                 <button type="submit" className="add-user-button">
                   {action === "edit" ? "Guardar cambios" : "Agregar"}
                 </button>

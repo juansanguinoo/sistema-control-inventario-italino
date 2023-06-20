@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import { Dispatch } from "redux";
 import { createCustomer } from "../../../../store/actions/customerActions";
+import Swal from "sweetalert2";
 
 interface IModalCustomersProps {
   onCloseModal?: () => void;
@@ -24,7 +25,7 @@ export const ModalCustomers = ({
     nitCustomer: initialState?.nitCustomer || "",
     addressCustomer: initialState?.addressCustomer || "",
     phoneCustomer: initialState?.phoneCustomer || "",
-    statusCustomer: initialState?.statusCustomer || "Inactive",
+    statusCustomer: initialState?.statusCustomer || "Activo",
   });
 
   const getUser = useSelector((state: RootState) => state.userReducer.user);
@@ -32,8 +33,24 @@ export const ModalCustomers = ({
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     customerData.userId = getUser?.id;
-    dispatch(createCustomer(customerData));
-    onCloseModal && onCloseModal();
+    if (
+      customerData.userId === undefined ||
+      customerData.nameCustomer === "" ||
+      customerData.nitCustomer === "" ||
+      customerData.addressCustomer === "" ||
+      customerData.phoneCustomer === "" ||
+      customerData.statusCustomer === ""
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor completa todos los campos",
+      });
+    } else {
+      dispatch(createCustomer(customerData));
+      Swal.fire("Buen trabajo!", "Cliente creado correctamente!", "success");
+      onCloseModal && onCloseModal();
+    }
   };
 
   return (
@@ -60,7 +77,6 @@ export const ModalCustomers = ({
                     nameCustomer: event.target.value,
                   }))
                 }
-                required
               />
             </div>
             <div className="form-group-customers">
@@ -75,7 +91,6 @@ export const ModalCustomers = ({
                     nitCustomer: event.target.value,
                   }))
                 }
-                required
               />
             </div>
             <div className="form-group-customers">
@@ -90,7 +105,6 @@ export const ModalCustomers = ({
                     addressCustomer: event.target.value,
                   }))
                 }
-                required
               />
             </div>
             <div className="phone-form-group">
@@ -113,7 +127,6 @@ export const ModalCustomers = ({
                       phoneCustomer: event.target.value,
                     }))
                   }
-                  required
                 />
               </div>
             </div>
@@ -132,10 +145,9 @@ export const ModalCustomers = ({
                     statusCustomer: event.target.value,
                   }))
                 }
-                required
               >
-                <option value="Active">Activo</option>
-                <option value="Inactive">Inactivo</option>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
               </select>
             </div>
             <div className="modal-customers-footer">
