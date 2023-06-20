@@ -64,7 +64,7 @@ export interface UpdateOrderAction {
 
 export interface UpdateOrderSuccessAction {
   type: OrderActionsTypes.UPDATE_ORDER_SUCCESS;
-  payload: number;
+  payload: OrderResponseModel;
 }
 
 export interface UpdateOrderFailureAction {
@@ -83,5 +83,19 @@ export interface DeleteOrderSuccessAction {
 
 export interface DeleteOrderFailureAction {
   type: OrderActionsTypes.DELETE_ORDER_FAILURE;
+  payload: AppError;
+}
+
+export interface CreateOrderReturnAction {
+  type: OrderActionsTypes.CREATE_ORDER_RETURN;
+}
+
+export interface CreateOrderReturnSuccessAction {
+  type: OrderActionsTypes.CREATE_ORDER_RETURN_SUCCESS;
+  payload: OrderResponseModel;
+}
+
+export interface CreateOrderReturnFailureAction {
+  type: OrderActionsTypes.CREATE_ORDER_RETURN_FAILURE;
   payload: AppError;
 }

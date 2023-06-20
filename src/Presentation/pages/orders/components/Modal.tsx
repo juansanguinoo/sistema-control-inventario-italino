@@ -10,14 +10,25 @@ import { useGetCustomerByUser } from "../../../hooks/useGetCustomerByUser";
 import { OrderRequest } from "../../../../domain/models/OrderRequest";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
-import { createOrder } from "../../../../store/actions/orderActions";
+import {
+  createOrder,
+  updateOrder,
+} from "../../../../store/actions/orderActions";
 import Swal from "sweetalert2";
 
 interface IModalOrdersProps {
   onCloseModal?: () => void;
+  initialData?: OrderRequest;
+  initialSelectedValues?: IInventoryModelSelected[];
+  isEdit?: boolean;
 }
 
-export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
+export const ModalOrders = ({
+  onCloseModal,
+  initialData,
+  initialSelectedValues = [],
+  isEdit = false,
+}: IModalOrdersProps) => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const { inventories } = useGetInventory();
   const { customers, getUser } = useGetCustomerByUser();
@@ -27,16 +38,17 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
   >([]);
   const [selectedInventory, setSelectedInventory] = useState<
     IInventoryModelSelected[]
-  >([]);
+  >(initialSelectedValues);
   const [isQuantityInputFocused, setIsQuantityInputFocused] = useState(false);
   const [dataToSend, setDataToSend] = useState<OrderRequest>({
-    customerId: 0,
-    userId: getUser?.id!,
-    statusOrder: "Pendiente",
-    paymentOrder: "",
-    typeOrder: "",
-    totalOrder: 0,
-    orderDetails: [],
+    id: initialData?.id || 0,
+    customerId: initialData?.customerId || 0,
+    userId: initialData?.userId || getUser?.id!,
+    statusOrder: initialData?.statusOrder || "Pendiente",
+    paymentOrder: initialData?.paymentOrder || "",
+    typeOrder: initialData?.typeOrder || "",
+    totalOrder: initialData?.totalOrder || 0,
+    orderDetails: initialData?.orderDetails || [],
   });
 
   const moneyFormat = (value: number) => {
@@ -138,11 +150,6 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
 
   const handleSendOrder = (e: any) => {
     e.preventDefault();
-    console.log(
-      selectedInventory.some(
-        (inventory) => inventory.quantity > inventory.stockInventory
-      )
-    );
     if (
       dataToSend.customerId === 0 ||
       dataToSend.paymentOrder === "" ||
@@ -179,7 +186,11 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
         cancelButtonColor: "#d33",
       }).then((result) => {
         if (result.isConfirmed) {
-          dispatch(createOrder(dataToSend));
+          if (isEdit) {
+            dispatch(updateOrder(dataToSend));
+          } else {
+            dispatch(createOrder(dataToSend));
+          }
           onCloseModal!();
         }
       });
@@ -199,7 +210,6 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
   }, [search]);
 
   useEffect(() => {
-    console.log("selected", selectedInventory);
     const total = selectedInventory.reduce(
       (acc, inventory) => acc + inventory.subTotal,
       0
@@ -223,10 +233,6 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
     }
   }, [isQuantityInputFocused]);
 
-  useEffect(() => {
-    console.log(dataToSend);
-  }, [dataToSend]);
-
   return (
     <>
       <div className="modal-orders">
@@ -247,6 +253,7 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
                     id="client"
                     className="modal-orders-client-select"
                     onChange={handleSelectChange}
+                    value={dataToSend.customerId}
                   >
                     <option value="">Selecciona un cliente</option>
                     {customers.map((customer) => (
@@ -263,6 +270,7 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
                       id="paymentType"
                       className="modal-orders-client-select"
                       onChange={handleSelectChange}
+                      value={dataToSend.paymentOrder}
                     >
                       <option value="">Tipo de pago</option>
                       <option value="Efectivo">Efectivo</option>
@@ -280,6 +288,7 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
                       id="orderType"
                       className="modal-orders-client-select"
                       onChange={handleSelectChange}
+                      value={dataToSend.typeOrder}
                     >
                       <option value="">Tipo de orden</option>
                       <option value="Entrega a domicilio">
@@ -309,9 +318,10 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
                     id="status"
                     className="modal-orders-client-select"
                     onChange={handleSelectChange}
+                    value={dataToSend.statusOrder}
                   >
                     <option value="Pendiente">Pendiente</option>
-                    <option value="En proceso">En-proceso</option>
+                    <option value="En-proceso">En-proceso</option>
                     <option value="Entregado">Entregado</option>
                   </select>
                 </div>
@@ -332,6 +342,7 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
                     placeholder="Buscar producto..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
+                    readOnly={isEdit}
                   />
                   <div className="search-button">
                     <img src={SearchIcon} alt="" />
@@ -354,6 +365,7 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
                         handleAddOrRemoveQuantityByInput
                       }
                       handleQuantityInputFocus={handleQuantityInputFocus}
+                      isEdit={isEdit}
                     />
                     <div className="modal-product-selected-total">
                       <p className="modal-product-selected-total-text">Total</p>
@@ -383,9 +395,11 @@ export const ModalOrders = ({ onCloseModal }: IModalOrdersProps) => {
               >
                 Cancelar
               </button>
-              <button type="submit" className="add-button">
-                Crear Orden
-              </button>
+              {initialData?.statusOrder === "Cancelado" ? null : (
+                <button type="submit" className="add-button">
+                  {isEdit ? "Editar orden" : "Crear orden"}
+                </button>
+              )}
             </div>
           </form>
         </div>

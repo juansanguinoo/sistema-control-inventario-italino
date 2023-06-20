@@ -392,7 +392,7 @@ export const orderColumns = [
   },
   {
     field: "ActionOrder",
-    headerName: "Acciones",
+    headerName: "Acciones de estado",
     width: 180,
     renderCell: (params: any) => {
       // show a select to the next options: "Pendiente", "En proceso", "Entregado"

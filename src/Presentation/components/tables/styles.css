@@ -18,7 +18,7 @@
   color: #5570f1;
 }
 
-.inactivo {
+.inactive, .cancelado, .inactivo {
   background-color: #ff9e9e;
   color: #000;
 }

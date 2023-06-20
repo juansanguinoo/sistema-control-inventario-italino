@@ -2,6 +2,9 @@ import { Dispatch } from "redux";
 import {
   CreateOrderAction,
   CreateOrderFailureAction,
+  CreateOrderReturnAction,
+  CreateOrderReturnFailureAction,
+  CreateOrderReturnSuccessAction,
   CreateOrderSuccessAction,
   DeleteOrderAction,
   DeleteOrderFailureAction,
@@ -32,6 +35,9 @@ import {
 import { GetAllOrdersUseCase } from "../../domain/useCases/order/GetAllOrdersUseCase";
 import { GetOrderByUserIdUseCase } from "../../domain/useCases/order/GetOrderByUserIdUseCase";
 import { GetOrderByIdUseCase } from "../../domain/useCases/order/GetOrderByIdUseCase";
+import { UpdateOrderUseCase } from "../../domain/useCases/order/UpdateOrderUseCase";
+import { OrderReturnRequest } from "../../domain/models/OrderReturnRequest";
+import { CreateOrderReturnUseCase } from "../../domain/useCases/order/CreateOrderReturnUseCase";
 
 export type OrderAction =
   | GetAllOrdersAction
@@ -51,7 +57,10 @@ export type OrderAction =
   | UpdateOrderFailureAction
   | DeleteOrderAction
   | DeleteOrderSuccessAction
-  | DeleteOrderFailureAction;
+  | DeleteOrderFailureAction
+  | CreateOrderReturnAction
+  | CreateOrderReturnSuccessAction
+  | CreateOrderReturnFailureAction;
 
 export const createOrder = (order: OrderRequest) => {
   return async (dispatch: Dispatch<OrderAction>) => {
@@ -153,6 +162,58 @@ export const getOrderById = (orderId: number) => {
       );
       dispatch({
         type: OrderActionsTypes.GET_ORDER_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const updateOrder = (order: OrderRequest) => {
+  return async (dispatch: Dispatch<OrderAction>) => {
+    const useCase = container.get<UpdateOrderUseCase>(TYPES.UpdateOrderUseCase);
+
+    dispatch({ type: OrderActionsTypes.UPDATE_ORDER });
+
+    try {
+      const result = await useCase.execute(order);
+
+      dispatch({
+        type: OrderActionsTypes.UPDATE_ORDER_SUCCESS,
+        payload: adaptOrder(result.data!),
+      });
+    } catch (error) {
+      const handleError = new AppError(
+        `Ocurrió un error al actualizar la orden ${error}`
+      );
+      dispatch({
+        type: OrderActionsTypes.UPDATE_ORDER_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const createOrderReturn = (order: OrderReturnRequest) => {
+  return async (dispatch: Dispatch<OrderAction>) => {
+    const useCase = container.get<CreateOrderReturnUseCase>(
+      TYPES.CreateOrderReturnUseCase
+    );
+
+    dispatch({ type: OrderActionsTypes.CREATE_ORDER_RETURN });
+
+    try {
+      const result = await useCase.execute(order);
+
+      dispatch({
+        type: OrderActionsTypes.CREATE_ORDER_RETURN_SUCCESS,
+        payload: adaptOrder(result.data!),
+      });
+    } catch (error) {
+      const handleError = new AppError(
+        `Ocurrió un error al crear la orden de devolución ${error}`
+      );
+      dispatch({
+        type: OrderActionsTypes.CREATE_ORDER_RETURN_FAILURE,
         payload: handleError,
       });
     }
