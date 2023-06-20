@@ -2,6 +2,13 @@ import SearchIcon from "../../../assets/icons8-search.svg";
 import { useState, useEffect } from "react";
 import "./stylesModalReturns.css";
 import { OrderResponseModel } from "../../../../domain/models/OrderResponseModel";
+import {
+  OrderReturn,
+  OrderReturnRequest,
+} from "../../../../domain/models/OrderReturnRequest";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "redux";
+import { createOrderReturn } from "../../../../store/actions/orderActions";
 
 interface ModalReturnsProps {
   onCloseModal?: () => void;
@@ -12,11 +19,49 @@ export const ModalReturns = ({
   onCloseModal,
   orderData,
 }: ModalReturnsProps) => {
+  const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const [search, setSearch] = useState<string>("");
+  const [returnProducts, setReturnProducts] = useState<OrderReturn[]>([]);
+  const [dataToSend, setDataToSend] = useState<OrderReturnRequest>({
+    id: orderData.id,
+    orderDetails: orderData.orderDetails.map((orderDetail: any) => ({
+      inventoryId: orderDetail.inventory.id_inventory,
+    })),
+    OrderReturns: [],
+  });
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    dispatch(createOrderReturn(dataToSend));
+    onCloseModal && onCloseModal();
+  };
 
   useEffect(() => {
-    console.log(orderData);
+    const initialReturnProducts = orderData.orderDetails.map(
+      (orderDetail: any) => ({
+        inventoryId: orderDetail.inventory.id_inventory,
+        quantity: 0,
+      })
+    );
+    setReturnProducts(initialReturnProducts);
   }, [orderData]);
+
+  useEffect(() => {
+    setDataToSend({ ...dataToSend, OrderReturns: returnProducts });
+  }, [returnProducts]);
+
+  const handleReturnQuantityChange = (
+    inventoryId: number,
+    quantity: number
+  ) => {
+    const updatedReturnProducts = returnProducts.map((returnProduct) => {
+      if (returnProduct.inventoryId === inventoryId) {
+        return { ...returnProduct, quantity };
+      }
+      return returnProduct;
+    });
+    setReturnProducts(updatedReturnProducts);
+  };
 
   return (
     <>
@@ -82,8 +127,19 @@ export const ModalReturns = ({
                         type="text"
                         id={`quantityOrder ${orderDetail.inventory.id_inventory}`}
                         name="quantityOrder"
-                        value={orderDetail.quantity || ""}
-                        onChange={(e) => console.log(e.target.value)}
+                        value={
+                          returnProducts.find(
+                            (returnProduct) =>
+                              returnProduct.inventoryId ===
+                              orderDetail.inventory.id_inventory
+                          )?.quantity || ""
+                        }
+                        onChange={(e) =>
+                          handleReturnQuantityChange(
+                            orderDetail.inventory.id_inventory,
+                            parseInt(e.target.value, 10)
+                          )
+                        }
                       />
                     </div>
                   </div>
@@ -99,7 +155,7 @@ export const ModalReturns = ({
             >
               Cancelar
             </button>
-            <button type="submit" className="add-button">
+            <button type="button" className="add-button" onClick={handleSubmit}>
               Editar orden
             </button>
           </div>

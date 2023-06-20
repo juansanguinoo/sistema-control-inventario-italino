@@ -1,6 +1,7 @@
 import { TYPES } from "../../config/types";
 import { OrderRequest } from "../../domain/models/OrderRequest";
 import { OrderResponse } from "../../domain/models/OrderResponse";
+import { OrderReturnRequest } from "../../domain/models/OrderReturnRequest";
 import { IOrderRepository } from "../../domain/repositories/IOrderRepository";
 import type { IHttpClient } from "../api/interfaces/IHttpClient";
 import { ResponseAPI } from "../api/models/ResponseApi";
@@ -18,6 +19,16 @@ export class OrderRepositoryImpl implements IOrderRepository {
     this.httpClient = httpClient;
     this.baseUrl = `${apiUrl}`;
   }
+
+  async createOrderReturn(
+    order: OrderReturnRequest
+  ): Promise<ResponseAPI<OrderResponse>> {
+    const response = await this.httpClient.post<
+      ResponseAPI<OrderResponse>,
+      OrderReturnRequest
+    >(`${this.baseUrl}/order/return`, order);
+    return response;
+  }
   async getAllOrders(): Promise<ResponseAPI<OrderResponse[]>> {
     const response = await this.httpClient.get<ResponseAPI<OrderResponse[]>>(
       `${this.baseUrl}/order`
@@ -30,7 +41,6 @@ export class OrderRepositoryImpl implements IOrderRepository {
     const response = await this.httpClient.get<ResponseAPI<OrderResponse[]>>(
       `${this.baseUrl}/order/byUser/${idUser}`
     );
-    console.log(response);
     return response;
   }
 

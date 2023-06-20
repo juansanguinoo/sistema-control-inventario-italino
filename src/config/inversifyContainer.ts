@@ -46,6 +46,7 @@ import { GetAllOrdersUseCase } from "../domain/useCases/order/GetAllOrdersUseCas
 import { GetOrderByUserIdUseCase } from "../domain/useCases/order/GetOrderByUserIdUseCase";
 import { GetOrderByIdUseCase } from "../domain/useCases/order/GetOrderByIdUseCase";
 import { UpdateOrderUseCase } from "../domain/useCases/order/UpdateOrderUseCase";
+import { CreateOrderReturnUseCase } from "../domain/useCases/order/CreateOrderReturnUseCase";
 
 const container = new Container();
 
@@ -180,5 +181,8 @@ container
 container
   .bind<UpdateOrderUseCase>(TYPES.UpdateOrderUseCase)
   .to(UpdateOrderUseCase);
+container
+  .bind<CreateOrderReturnUseCase>(TYPES.CreateOrderReturnUseCase)
+  .to(CreateOrderReturnUseCase);
 
 export { container };

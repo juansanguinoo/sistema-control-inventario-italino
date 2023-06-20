@@ -25,6 +25,7 @@ export const orderReducer = (
     case OrderActionsTypes.UPDATE_ORDER:
     case OrderActionsTypes.DELETE_ORDER:
     case OrderActionsTypes.GET_ORDERS_BY_USER:
+    case OrderActionsTypes.CREATE_ORDER_RETURN:
       return {
         ...state,
         loading: true,
@@ -81,12 +82,23 @@ export const orderReducer = (
         error: null,
       };
 
+    case OrderActionsTypes.CREATE_ORDER_RETURN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        orders: state.orders.map((order) =>
+          order.id === action.payload.id ? action.payload : order
+        ),
+        error: null,
+      };
+
     case OrderActionsTypes.GET_ALL_ORDERS_FAILURE:
     case OrderActionsTypes.GET_ORDER_FAILURE:
     case OrderActionsTypes.CREATE_ORDER_FAILURE:
     case OrderActionsTypes.UPDATE_ORDER_FAILURE:
     case OrderActionsTypes.DELETE_ORDER_FAILURE:
     case OrderActionsTypes.GET_ORDERS_BY_USER_FAILURE:
+    case OrderActionsTypes.CREATE_ORDER_RETURN_FAILURE:
       return {
         ...state,
         loading: false,
