@@ -150,11 +150,6 @@ export const ModalOrders = ({
 
   const handleSendOrder = (e: any) => {
     e.preventDefault();
-    console.log(
-      selectedInventory.some(
-        (inventory) => inventory.quantity > inventory.stockInventory
-      )
-    );
     if (
       dataToSend.customerId === 0 ||
       dataToSend.paymentOrder === "" ||
@@ -215,7 +210,6 @@ export const ModalOrders = ({
   }, [search]);
 
   useEffect(() => {
-    console.log("selected", selectedInventory);
     const total = selectedInventory.reduce(
       (acc, inventory) => acc + inventory.subTotal,
       0
