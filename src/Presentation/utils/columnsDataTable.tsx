@@ -43,7 +43,7 @@ export const userColumns = [
   {
     field: "nameUser",
     headerName: "Nombre del usuario",
-    width: 270,
+    width: 250,
   },
   {
     field: "emailUser",
@@ -53,12 +53,12 @@ export const userColumns = [
   {
     field: "phoneUser",
     headerName: "Teléfono del usuario",
-    width: 270,
+    width: 200,
   },
   {
     field: "role",
     headerName: "Rol del usuario",
-    width: 270,
+    width: 200,
     renderCell: (params: any) => {
       return <div>{params.row.roleId.name_role}</div>;
     },
@@ -66,7 +66,7 @@ export const userColumns = [
   {
     field: "statusUser",
     headerName: "Status",
-    width: 200,
+    width: 180,
     renderCell: (params: any) => {
       return (
         <div

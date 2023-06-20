@@ -12,8 +12,15 @@ import { roleColumns } from "../../utils/columnsDataTable";
 import { deleteCategory } from "../../../store/actions/categoryActions";
 import { getAllRoles } from "../../../store/actions/roleActions";
 import { ModalRoles } from "./components/Modal";
+import { RoleModel } from "../../../domain/models/RoleModel";
 
 export const Roles = () => {
+  const [roleData, setRoleData] = useState<RoleModel>({
+    nameRole: "",
+    descriptionRole: "",
+    statusRole: "Inactivo",
+    activityId: [],
+  });
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const roles = useSelector((state: RootState) => state.roleReducer.roles);
   const navbarOpen = useSelector(
@@ -21,12 +28,20 @@ export const Roles = () => {
   );
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [actions, setActions] = useState<string>("");
 
   const openModal = () => {
     setShowModal(true);
   };
 
   const closeModal = () => {
+    setRoleData({
+      nameRole: "",
+      descriptionRole: "",
+      statusRole: "Inactivo",
+      activityId: [],
+    });
+    setActions("");
     setShowModal(false);
   };
 
@@ -34,10 +49,16 @@ export const Roles = () => {
     dispatch(getAllRoles());
   }, [dispatch]);
 
+  const handleEditAction = (params: any) => {
+    setRoleData(params.row);
+    setActions("edit");
+    openModal();
+  };
+
   // get the active roles
   // get the inactive roles
-  const activeRoles = roles.filter((role) => role.statusRole === "Active");
-  const inactiveRoles = roles.filter((role) => role.statusRole === "Inactive");
+  const activeRoles = roles.filter((role) => role.statusRole === "Activo");
+  const inactiveRoles = roles.filter((role) => role.statusRole === "Inactivo");
 
   return (
     <div className={`rol-container ${navbarClass}`}>
@@ -60,9 +81,16 @@ export const Roles = () => {
           categories={roles}
           columns={roleColumns}
           deleteCategory={deleteCategory}
+          handleEditAction={handleEditAction}
           showView={false}
         />
-        {showModal && <ModalRoles onCloseModal={closeModal} />}
+        {showModal && (
+          <ModalRoles
+            onCloseModal={closeModal}
+            initialState={roleData}
+            action={actions}
+          />
+        )}
       </div>
     </div>
   );

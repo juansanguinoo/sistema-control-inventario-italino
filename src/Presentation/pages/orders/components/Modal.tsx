@@ -14,6 +14,7 @@ import {
   createOrder,
   updateOrder,
 } from "../../../../store/actions/orderActions";
+import Swal from "sweetalert2";
 
 interface IModalOrdersProps {
   onCloseModal?: () => void;
@@ -149,12 +150,56 @@ export const ModalOrders = ({
 
   const handleSendOrder = (e: any) => {
     e.preventDefault();
-    if (isEdit) {
-      dispatch(updateOrder(dataToSend));
+    console.log(
+      selectedInventory.some(
+        (inventory) => inventory.quantity > inventory.stockInventory
+      )
+    );
+    if (
+      dataToSend.customerId === 0 ||
+      dataToSend.paymentOrder === "" ||
+      dataToSend.typeOrder === ""
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor completa todos los campos",
+      });
+    } else if (dataToSend.orderDetails.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor agrega al menos un producto",
+      });
+    } else if (
+      selectedInventory.some(
+        (inventory) => inventory.quantity > inventory.stockInventory
+      )
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "La cantidad de productos no puede ser mayor al stock",
+      });
     } else {
-      dispatch(createOrder(dataToSend));
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Una vez confirmado no podrás modificar la orden",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (isEdit) {
+            dispatch(updateOrder(dataToSend));
+          } else {
+            dispatch(createOrder(dataToSend));
+          }
+          onCloseModal!();
+        }
+      });
     }
-    onCloseModal!();
   };
 
   useEffect(() => {
@@ -170,6 +215,7 @@ export const ModalOrders = ({
   }, [search]);
 
   useEffect(() => {
+    console.log("selected", selectedInventory);
     const total = selectedInventory.reduce(
       (acc, inventory) => acc + inventory.subTotal,
       0

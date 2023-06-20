@@ -21,9 +21,9 @@ export const FormImagesInventory = ({
     file3: null,
   });
   const [fileName, setFileName] = useState<IFileName>({
-    file1: "No selected file",
-    file2: "No selected file",
-    file3: "No selected file",
+    file1: "No hay imagén",
+    file2: "No hay imagén",
+    file3: "No hay imagén",
   });
 
   const inventories = useSelector(
@@ -86,7 +86,7 @@ export const FormImagesInventory = ({
 
       setFileName((prevFiles: IFileName) => ({
         ...prevFiles,
-        [fileKey]: "No selected file",
+        [fileKey]: "No hay imagén",
       }));
     }
   };
@@ -140,10 +140,10 @@ export const FormImagesInventory = ({
         />
 
         {fileData.file1 ? (
-          <img src={fileData.file1.url} width={300} height={300} alt="file-1" />
+          <img src={fileData.file1.url} width={280} height={200} alt="file-1" />
         ) : (
           <>
-            <MdCloudUpload color="#5570f1" size={60} />
+            <MdCloudUpload color="#5570f1" size={50} />
             <p>Explorar archivos para cargar</p>
           </>
         )}
@@ -162,7 +162,7 @@ export const FormImagesInventory = ({
               }));
               setFileName((prevFiles: IFileName) => ({
                 ...prevFiles,
-                file1: "No selected file",
+                file1: "No hay imagén",
               }));
             }}
           />
@@ -187,13 +187,13 @@ export const FormImagesInventory = ({
             {fileData.file2 ? (
               <img
                 src={fileData.file2.url}
-                width={200}
-                height={200}
+                width={130}
+                height={100}
                 alt="file-2"
               />
             ) : (
               <>
-                <MdCloudUpload color="#5570f1" size={40} />
+                <MdCloudUpload color="#5570f1" size={30} />
                 <p style={{ fontSize: "12px" }}>
                   Explorar archivos para cargar
                 </p>
@@ -214,7 +214,7 @@ export const FormImagesInventory = ({
                   }));
                   setFileName((prevFiles: IFileName) => ({
                     ...prevFiles,
-                    file2: "No selected file",
+                    file2: "No hay imagén",
                   }));
                 }}
               />
@@ -239,13 +239,13 @@ export const FormImagesInventory = ({
             {fileData.file3 ? (
               <img
                 src={fileData.file3.url}
-                width={200}
-                height={200}
+                width={130}
+                height={100}
                 alt="file-3"
               />
             ) : (
               <>
-                <MdCloudUpload color="#5570f1" size={40} />
+                <MdCloudUpload color="#5570f1" size={30} />
                 <p style={{ fontSize: "12px" }}>
                   Explorar archivos para cargar
                 </p>
@@ -266,7 +266,7 @@ export const FormImagesInventory = ({
                   }));
                   setFileName((prevFiles: IFileName) => ({
                     ...prevFiles,
-                    file3: "No selected file",
+                    file3: "No hay imagén",
                   }));
                 }}
               />

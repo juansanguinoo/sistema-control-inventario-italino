@@ -12,6 +12,7 @@ import { TableInformation } from "../../components/tables/TableInformation";
 import { customerColumns } from "../../utils/columnsDataTable";
 import { CustomerModel } from "../../../domain/models/CustomerModel";
 import { useGetCustomerByUser } from "../../hooks/useGetCustomerByUser";
+import { FilterMessage } from "../orders/components/FilterMessage";
 
 export const Customers = () => {
   const { customers } = useGetCustomerByUser();
@@ -21,7 +22,7 @@ export const Customers = () => {
     nitCustomer: "",
     addressCustomer: "",
     phoneCustomer: "",
-    statusCustomer: "Inactive",
+    statusCustomer: "Activo",
   });
   const [actions, setActions] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -41,9 +42,10 @@ export const Customers = () => {
       nitCustomer: "",
       addressCustomer: "",
       phoneCustomer: "",
-      statusCustomer: "Inactive",
+      statusCustomer: "Activo",
     });
     setShowModal(false);
+    setActions("");
   };
 
   const handleEditAction = (params: any) => {
@@ -60,12 +62,12 @@ export const Customers = () => {
 
   // get the active customers
   const activeCustomers = customers.filter(
-    (customer) => customer.statusCustomer === "Active"
+    (customer) => customer.statusCustomer === "Activo"
   );
 
   // get the inactive customers
   const inactiveCustomers = customers.filter(
-    (customer) => customer.statusCustomer === "Inactive"
+    (customer) => customer.statusCustomer === "Inactivo"
   );
 
   // get the createdAt date of the customers reducer
@@ -112,13 +114,28 @@ export const Customers = () => {
           titles={["Clientes agregados en el último mes"]}
           data={[totalCustomers.length]}
         />
-        <TableInformation
-          categories={customers}
-          columns={customerColumns}
-          deleteCategory={deleteCustomer}
-          handleEditAction={handleEditAction}
-          handlePreviewAction={handlePreviewAction}
-        />
+        {customers.length > 0 ? (
+          <TableInformation
+            categories={customers}
+            columns={customerColumns}
+            deleteCategory={deleteCustomer}
+            handleEditAction={handleEditAction}
+            handlePreviewAction={handlePreviewAction}
+          />
+        ) : (
+          <div className="customers-nocustomers">
+            <FilterMessage
+              messageTitle={"¿No tienes clientes aún?"}
+              messageParagraph={"Una vez crees clientes, las podrás ver aquí."}
+            />
+            <div className="customer-add-customer">
+              <HeaderButton
+                title="Crear un nuevo cliente"
+                handleFunction={openModal}
+              />
+            </div>
+          </div>
+        )}
         {showModal && (
           <ModalCustomers
             onCloseModal={closeModal}

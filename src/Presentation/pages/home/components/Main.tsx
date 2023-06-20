@@ -281,11 +281,11 @@ export const MainHome = () => {
                         </div>
                         <div
                           className={`recent-orders-status ${
-                            order.statusOrder === "Completada"
+                            order.statusOrder === "Completado"
                               ? "complete-order"
-                              : order.statusOrder === "En proceso"
+                              : order.statusOrder === "En-proceso"
                               ? "in-progress-order"
-                              : order.statusOrder === "Cancelada"
+                              : order.statusOrder === "Cancelado"
                               ? "canceled-order"
                               : "pending-order"
                           }`}
