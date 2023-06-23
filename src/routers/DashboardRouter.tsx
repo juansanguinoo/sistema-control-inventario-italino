@@ -27,7 +27,7 @@ export const DashboardRouter = () => {
     <>
       <Home />
       <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="dashboard" element={<Dashboard />} />
         <Route path="orders" element={<Orders />} />
         <Route path="orders/orderDetail/:id" element={<ViewOrderDetails />} />
         <Route path="customers" element={<Customers />} />
