@@ -1,4 +1,5 @@
 import { ResponseAPI } from "../../infrastructure/api/models/ResponseApi";
+import { AddInventoryRequest } from "../models/AddInventoryRequest";
 import { Inventory } from "../models/Inventory";
 import { InventoryModel } from "../models/InventoryModel";
 
@@ -10,4 +11,11 @@ export interface IInventoryRepository {
     inventory: Inventory
   ): Promise<ResponseAPI<boolean>>;
   deleteInventory(inventoryId: number): Promise<ResponseAPI<boolean>>;
+  addInventory(
+    addInventory: AddInventoryRequest
+  ): Promise<ResponseAPI<Inventory>>;
+  getInventoryByNameOrReference(
+    nameOrReference: string
+  ): Promise<ResponseAPI<Inventory[]>>;
+  getInventoryToReport(inventoryId: number): Promise<ResponseAPI<Inventory>>;
 }

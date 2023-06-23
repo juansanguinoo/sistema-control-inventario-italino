@@ -1,5 +1,8 @@
 import { Dispatch } from "redux";
 import {
+  AddInventoryAction,
+  AddInventoryFailureAction,
+  AddInventorySuccessAction,
   CreateInventoryAction,
   CreateInventoryFailureAction,
   CreateInventorySuccessAction,
@@ -7,8 +10,14 @@ import {
   DeleteInventoryFailureAction,
   DeleteInventorySuccessAction,
   GetInventoryAction,
+  GetInventoryByNameOrReferenceAction,
+  GetInventoryByNameOrReferenceFailureAction,
+  GetInventoryByNameOrReferenceSuccessAction,
   GetInventoryFailureAction,
   GetInventorySuccessAction,
+  GetInventoryToReportAction,
+  GetInventoryToReportFailureAction,
+  GetInventoryToReportSuccessAction,
   UpdateInventoryAction,
   UpdateInventoryFailureAction,
   UpdateInventorySuccessAction,
@@ -27,6 +36,10 @@ import { CreateInventoryUseCase } from "../../domain/useCases/inventory/CreateIn
 import { Inventory } from "../../domain/models/Inventory";
 import { UpdateInventoryUseCase } from "../../domain/useCases/inventory/UpdateInventoryUseCase";
 import { DeleteInventoryUseCase } from "../../domain/useCases/inventory/DeleteInventoryUseCase";
+import { AddInventoryUseCase } from "../../domain/useCases/inventory/AddInventoryUseCase";
+import { AddInventoryRequest } from "../../domain/models/AddInventoryRequest";
+import { GetInventoryByNameOrReferenceUseCase } from "../../domain/useCases/inventory/GetInventoryByNameOrReference";
+import { GetInventoryToReportUseCase } from "../../domain/useCases/inventory/GetInventoryToReport";
 
 export type InventoryAction =
   | GetInventoryAction
@@ -40,7 +53,16 @@ export type InventoryAction =
   | UpdateInventoryFailureAction
   | DeleteInventoryAction
   | DeleteInventorySuccessAction
-  | DeleteInventoryFailureAction;
+  | DeleteInventoryFailureAction
+  | AddInventoryAction
+  | AddInventorySuccessAction
+  | AddInventoryFailureAction
+  | GetInventoryByNameOrReferenceAction
+  | GetInventoryByNameOrReferenceSuccessAction
+  | GetInventoryByNameOrReferenceFailureAction
+  | GetInventoryToReportAction
+  | GetInventoryToReportSuccessAction
+  | GetInventoryToReportFailureAction;
 
 export const getInventory = () => {
   return async (dispatch: Dispatch<InventoryAction>) => {
@@ -132,6 +154,83 @@ export const deleteInventory = (idInventory: number) => {
       dispatch({
         type: InventoryActionTypes.DELETE_INVENTORY_FAILURE,
         payload: error,
+      });
+    }
+  };
+};
+
+export const addInventory = (addInventory: AddInventoryRequest) => {
+  return async (dispatch: Dispatch) => {
+    const useCase = container.get<AddInventoryUseCase>(
+      TYPES.AddInventoryUseCase
+    );
+
+    dispatch({ type: InventoryActionTypes.ADD_INVENTORY });
+
+    try {
+      const createdInventory = await useCase.execute(addInventory);
+      dispatch({
+        type: InventoryActionTypes.ADD_INVENTORY_SUCCESS,
+        payload: adaptInventory(createdInventory.data!),
+      });
+    } catch (error) {
+      dispatch({
+        type: InventoryActionTypes.ADD_INVENTORY_FAILURE,
+        payload: error,
+      });
+    }
+  };
+};
+
+export const getInventoryByNameOrRefrence = (nameOrRefrence: string) => {
+  return async (dispatch: Dispatch) => {
+    const useCase = container.get<GetInventoryByNameOrReferenceUseCase>(
+      TYPES.GetInventoryByNameOrReferenceUseCase
+    );
+
+    dispatch({ type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE });
+
+    try {
+      const inventory = await useCase.execute(nameOrRefrence);
+      dispatch({
+        type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_SUCCESS,
+        payload: adaptInventories(inventory.data!),
+      });
+    } catch (error: any) {
+      const handleError = new AppError(
+        `Ocurrió un error al obtener el inventario: ${error}`
+      );
+      dispatch({
+        type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const getInventoryToReport = (inventoryId: number) => {
+  return async (dispatch: Dispatch) => {
+    const useCase = container.get<GetInventoryToReportUseCase>(
+      TYPES.GetInventoryToReportUseCase
+    );
+
+    dispatch({ type: InventoryActionTypes.GET_INVENTORY_TO_REPORT });
+
+    try {
+      const inventory = await useCase.execute(inventoryId);
+      console.log("inventory", inventory.data);
+      console.log("adaptInventories", adaptInventory(inventory.data!));
+      dispatch({
+        type: InventoryActionTypes.GET_INVENTORY_TO_REPORT_SUCCESS,
+        payload: adaptInventory(inventory.data!),
+      });
+    } catch (error: any) {
+      const handleError = new AppError(
+        `Ocurrió un error al obtener el inventario: ${error}`
+      );
+      dispatch({
+        type: InventoryActionTypes.GET_INVENTORY_TO_REPORT_FAILURE,
+        payload: handleError,
       });
     }
   };

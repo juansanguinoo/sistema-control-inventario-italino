@@ -21,9 +21,6 @@ import {
 import { Pie } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
-import { useState, useEffect } from "react";
-import { TableInformation } from "../../../components/tables/TableInformation";
-import { orderColumns } from "../../../utils/columnsDataTable";
 
 ChartJS.register(
   ArcElement,

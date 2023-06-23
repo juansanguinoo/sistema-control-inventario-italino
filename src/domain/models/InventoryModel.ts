@@ -12,4 +12,5 @@ export interface InventoryModel {
   createdAt?: string;
   updatedAt?: string;
   category: any;
+  addInventory: any;
 }
