@@ -51,7 +51,7 @@ export interface UpdateRoleAction {
 
 export interface UpdateRoleSuccessAction {
   type: RoleActionType.UPDATE_ROLE_SUCCESS;
-  payload: number;
+  payload: RoleModel;
 }
 
 export interface UpdateRoleFailureAction {

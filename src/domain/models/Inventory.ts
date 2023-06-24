@@ -8,8 +8,9 @@ export interface Inventory {
   selling_price_inventory: number;
   cost_price_inventory: number;
   image_inventory?: string;
-  publicated_inventory: string;
+  publicated_inventory: boolean;
   created_at?: string;
   updated_at?: string;
   category: number;
+  add_inventory: any;
 }

@@ -265,7 +265,7 @@ export const inventoryColumns = [
     renderCell: (params: any) => {
       return (
         <div className="cellWithStatus">
-          {params.row.category.name_category}
+          {params.row.category?.name_category}
         </div>
       );
     },

@@ -36,7 +36,7 @@ export interface UpdateCategoryAction {
 
 export interface UpdateCategorySuccessAction {
   type: CategoryActionTypes.UPDATE_CATEGORY_SUCCESS;
-  payload: number;
+  payload: CategoryModel;
 }
 
 export interface UpdateCategoryFailureAction {

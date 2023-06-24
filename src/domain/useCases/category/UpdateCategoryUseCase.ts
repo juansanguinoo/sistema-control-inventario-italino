@@ -3,6 +3,7 @@ import { Category } from "../../models/Category";
 import { TYPES } from "../../../config/types";
 import type { ICategoryRepository } from "../../repositories/ICategoryRepository";
 import { ResponseAPI } from "../../../infrastructure/api/models/ResponseApi";
+import { CategoryModel } from "../../models/CategoryModel";
 
 @injectable()
 export class UpdateCategoryUseCase {
@@ -13,8 +14,8 @@ export class UpdateCategoryUseCase {
 
   async execute(
     idCategory: number,
-    category: Category
-  ): Promise<ResponseAPI<boolean>> {
+    category: CategoryModel
+  ): Promise<ResponseAPI<Category>> {
     return await this.categoryRepository.updateCategory(idCategory, category);
   }
 }

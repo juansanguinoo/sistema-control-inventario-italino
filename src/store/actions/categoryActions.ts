@@ -16,7 +16,6 @@ import {
 import { CategoryActionTypes } from "../enums/CategoryActionsEnum";
 import { GetCategoriesUseCase } from "../../domain/useCases/category/GetCategoriesUseCase";
 import { TYPES } from "../../config/types";
-import { Category } from "../../domain/models/Category";
 import { CreateCategoryUseCase } from "../../domain/useCases/category/CreateCategoryUseCase";
 import { UpdateCategoryUseCase } from "../../domain/useCases/category/UpdateCategoryUseCase";
 import { DeleteCategoryUseCase } from "../../domain/useCases/category/DeleteCategoryUseCase";
@@ -91,7 +90,7 @@ export const createCategory = (category: CategoryModel) => {
   };
 };
 
-export const updateCategory = (idCategory: number, category: Category) => {
+export const updateCategory = (idCategory: number, category: CategoryModel) => {
   return async (dispatch: Dispatch) => {
     const useCase = container.get<UpdateCategoryUseCase>(
       TYPES.UpdateCategoryUseCase
@@ -100,10 +99,10 @@ export const updateCategory = (idCategory: number, category: Category) => {
     dispatch({ type: CategoryActionTypes.UPDATE_CATEGORY });
 
     try {
-      await useCase.execute(idCategory, category);
+      const response = await useCase.execute(idCategory, category);
       dispatch({
         type: CategoryActionTypes.UPDATE_CATEGORY_SUCCESS,
-        payload: idCategory,
+        payload: adaptCategory(response.data!),
       });
     } catch (error) {
       dispatch({

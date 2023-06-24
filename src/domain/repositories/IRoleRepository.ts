@@ -7,7 +7,7 @@ export interface IRoleRepository {
   getAllRoles(): Promise<ResponseAPI<Role[]>>;
   getRoleById(idRole: number): Promise<ResponseAPI<Role>>;
   createRole(role: RoleModel): Promise<ResponseAPI<Role>>;
-  updateRole(idRole: number, role: RoleModel): Promise<ResponseAPI<boolean>>;
+  updateRole(idRole: number, role: RoleModel): Promise<ResponseAPI<Role>>;
   deleteRole(idRole: number): Promise<ResponseAPI<boolean>>;
   getAllActivities(): Promise<ResponseAPI<Activity[]>>;
 }

@@ -56,8 +56,8 @@ export class UserRepositoryImpl implements IUserRepository {
   async updateUser(
     idUser: number,
     user: UserModel
-  ): Promise<ResponseAPI<boolean>> {
-    const response = await this.httpClient.put<ResponseAPI<boolean>, UserModel>(
+  ): Promise<ResponseAPI<User>> {
+    const response = await this.httpClient.put<ResponseAPI<User>, UserModel>(
       `${this.baseUrl}/${idUser}`,
       user
     );

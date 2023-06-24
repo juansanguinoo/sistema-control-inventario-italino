@@ -11,13 +11,16 @@ import { getInventory } from "../../../../store/actions/inventoryActions";
 import { useParams } from "react-router-dom";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
+import { HeaderButton } from "../../../components/buttons/HeaderButton";
+import { ModalInventory } from "./Modal";
 
 export const DetailInventory = () => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const params = useParams();
-  const [addStock, setAddStock] = useState(false); // eslint-disable-line
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [isResponsive, setIsResponsive] = useState(false);
   const [inventoryData, setInventoryData] = useState<InventoryModel>({
+    id: 0,
     referenceInventory: "",
     nameInventory: "",
     descriptionInventory: "",
@@ -33,6 +36,14 @@ export const DetailInventory = () => {
   const inventories = useSelector(
     (state: RootState) => state.inventoryReducer.inventories
   );
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(() => {
     dispatch(getInventory());
@@ -79,10 +90,6 @@ export const DetailInventory = () => {
     backgroundSize: "contain",
     backgroundRepeat: "no-repeat",
   };
-
-  useEffect(() => {
-    console.log(addStock);
-  }, [addStock]);
 
   return (
     <>
@@ -186,34 +193,17 @@ export const DetailInventory = () => {
         )}
       </div>
       <div className="product-entries">
-        <label
-          className="label-detail-add-stock"
-          htmlFor="btn-switch-add-stock"
-        >
-          Desea agregar mas stock:
-        </label>
-        <input
-          type="checkbox"
-          id="btn-switch-add-stock"
-          checked={addStock}
-          onChange={() => setAddStock(!addStock)}
+        <HeaderButton
+          title="Editar stock del producto"
+          handleFunction={openModal}
         />
-        <label
-          htmlFor="btn-switch-add-stock"
-          className="lbl-switch-add-stock"
-        ></label>
-        {addStock && (
-          <div className="product-entries-input">
-            <input
-              id="productEntries"
-              className="product-entries-value-input"
-              placeholder="Agregar stock"
-              type="text"
-            />
-            <button>Agregar</button>
-          </div>
-        )}
       </div>
+      {showModal && (
+        <ModalInventory
+          onCloseModal={closeModal}
+          inventoryData={inventoryData}
+        />
+      )}
     </>
   );
 };

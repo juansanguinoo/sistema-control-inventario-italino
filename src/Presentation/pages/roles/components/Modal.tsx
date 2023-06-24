@@ -6,6 +6,7 @@ import { RootState } from "../../../../store/store";
 import {
   createRole,
   getAllActivities,
+  updateRole,
 } from "../../../../store/actions/roleActions";
 import Swal from "sweetalert2";
 
@@ -21,10 +22,11 @@ export const ModalRoles = ({
   action,
 }: IModalRoleProps) => {
   const [roleData, setRoleData] = useState<RoleModel>({
+    id: initialState?.id || 0,
     nameRole: initialState?.nameRole || "",
     descriptionRole: initialState?.descriptionRole || "",
     statusRole: initialState?.statusRole || "Inactivo",
-    activityId: initialState?.activityId || [],
+    activities: initialState?.activities || [],
   });
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const activities = useSelector(
@@ -47,16 +49,16 @@ export const ModalRoles = ({
     const { checked, value } = e.target;
     let updatedActivities: number[];
     if (checked) {
-      updatedActivities = [...roleData.activityId, Number(value)];
+      updatedActivities = [...roleData.activities, Number(value)];
     } else {
-      updatedActivities = roleData.activityId.filter(
+      updatedActivities = roleData.activities.filter(
         (idActivity: number) => idActivity !== Number(value)
       );
     }
 
     setRoleData((prevData: RoleModel) => ({
       ...prevData,
-      activityId: updatedActivities,
+      activities: updatedActivities,
     }));
   };
 
@@ -68,14 +70,18 @@ export const ModalRoles = ({
         title: "Oops...",
         text: "Por favor completa todos los campos",
       });
-    } else if (roleData.activityId.length === 0) {
+    } else if (roleData.activities.length === 0) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Por favor selecciona al menos una actividad",
       });
     } else {
-      dispatch(createRole(roleData));
+      if (action === "edit") {
+        dispatch(updateRole(roleData.id!, roleData));
+      } else {
+        dispatch(createRole(roleData));
+      }
       Swal.fire("Buen trabajo!", "Rol creado correctamente!", "success");
       onCloseModal && onCloseModal();
     }
@@ -136,7 +142,7 @@ export const ModalRoles = ({
                       type="checkbox"
                       id={`activity-${activity.id}`}
                       value={activity.id}
-                      checked={roleData.activityId.includes(activity.id)}
+                      checked={roleData.activities.includes(activity.id)}
                       onChange={handleActivityCheckboxChange}
                     />
                   </div>

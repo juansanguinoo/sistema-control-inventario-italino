@@ -47,6 +47,11 @@ import { GetOrderByUserIdUseCase } from "../domain/useCases/order/GetOrderByUser
 import { GetOrderByIdUseCase } from "../domain/useCases/order/GetOrderByIdUseCase";
 import { UpdateOrderUseCase } from "../domain/useCases/order/UpdateOrderUseCase";
 import { CreateOrderReturnUseCase } from "../domain/useCases/order/CreateOrderReturnUseCase";
+import { AddInventoryUseCase } from "../domain/useCases/inventory/AddInventoryUseCase";
+import { GetInventoryByNameOrReferenceUseCase } from "../domain/useCases/inventory/GetInventoryByNameOrReference";
+import { GetInventoryToReportUseCase } from "../domain/useCases/inventory/GetInventoryToReport";
+import { GetOrderAndReturnByIdUseCase } from "../domain/useCases/order/getOrderAndReturnByIdUseCase";
+import { GetOrderByReferenceUseCase } from "../domain/useCases/order/getOrderByReferenceUseCase";
 
 const container = new Container();
 
@@ -111,6 +116,17 @@ container
 container
   .bind<UpdateInventoryUseCase>(TYPES.UpdateInventoryUseCase)
   .to(UpdateInventoryUseCase);
+container
+  .bind<AddInventoryUseCase>(TYPES.AddInventoryUseCase)
+  .to(AddInventoryUseCase);
+container
+  .bind<GetInventoryByNameOrReferenceUseCase>(
+    TYPES.GetInventoryByNameOrReferenceUseCase
+  )
+  .to(GetInventoryByNameOrReferenceUseCase);
+container
+  .bind<GetInventoryToReportUseCase>(TYPES.GetInventoryToReportUseCase)
+  .to(GetInventoryToReportUseCase);
 
 container
   .bind<CreateUserUseCase>(TYPES.CreateUserUseCase)
@@ -184,5 +200,11 @@ container
 container
   .bind<CreateOrderReturnUseCase>(TYPES.CreateOrderReturnUseCase)
   .to(CreateOrderReturnUseCase);
+container
+  .bind<GetOrderAndReturnByIdUseCase>(TYPES.GetOrderAndReturnByIdUseCase)
+  .to(GetOrderAndReturnByIdUseCase);
+container
+  .bind<GetOrderByReferenceUseCase>(TYPES.GetOrderByReferenceUseCase)
+  .to(GetOrderByReferenceUseCase);
 
 export { container };
