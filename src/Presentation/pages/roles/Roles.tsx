@@ -9,17 +9,18 @@ import { HeaderButton } from "../../components/buttons/HeaderButton";
 import { CardInformation } from "../../components/cards/CardInformation";
 import { TableInformation } from "../../components/tables/TableInformation";
 import { roleColumns } from "../../utils/columnsDataTable";
-import { deleteCategory } from "../../../store/actions/categoryActions";
-import { getAllRoles } from "../../../store/actions/roleActions";
+import { getAllRoles, updateRole } from "../../../store/actions/roleActions";
 import { ModalRoles } from "./components/Modal";
 import { RoleModel } from "../../../domain/models/RoleModel";
+import Swal from "sweetalert2";
 
 export const Roles = () => {
   const [roleData, setRoleData] = useState<RoleModel>({
+    id: 0,
     nameRole: "",
     descriptionRole: "",
     statusRole: "Inactivo",
-    activityId: [],
+    activities: [],
   });
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const roles = useSelector((state: RootState) => state.roleReducer.roles);
@@ -29,6 +30,7 @@ export const Roles = () => {
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
   const [showModal, setShowModal] = useState<boolean>(false);
   const [actions, setActions] = useState<string>("");
+  const [deleteAction, setDeleteAction] = useState<boolean>(false);
 
   const openModal = () => {
     setShowModal(true);
@@ -36,10 +38,11 @@ export const Roles = () => {
 
   const closeModal = () => {
     setRoleData({
+      id: 0,
       nameRole: "",
       descriptionRole: "",
       statusRole: "Inactivo",
-      activityId: [],
+      activities: [],
     });
     setActions("");
     setShowModal(false);
@@ -49,16 +52,55 @@ export const Roles = () => {
     dispatch(getAllRoles());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (deleteAction) {
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¡No podrás deshacer esta acción!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "!Sí, eliminar!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(updateRole(roleData.id!, roleData));
+          setDeleteAction(false);
+          Swal.fire(
+            "¡Eliminado!",
+            "Ha sido eliminado correctamente.",
+            "success"
+          );
+        }
+      });
+    }
+  }, [deleteAction, dispatch, roleData]);
+
   const handleEditAction = (params: any) => {
-    setRoleData(params.row);
+    setRoleData({
+      ...params.row,
+      activities: params.row.activities.map(
+        (activity: any) => activity.id_activity
+      ),
+    });
     setActions("edit");
     openModal();
   };
 
-  // get the active roles
-  // get the inactive roles
-  const activeRoles = roles.filter((role) => role.statusRole == "Activo");
-  const inactiveRoles = roles.filter((role) => role.statusRole == "Inactivo");
+  const handleDeleteAction = (params: any) => {
+    setRoleData({
+      ...params.row,
+      activities: params.row.activities.map(
+        (activity: any) => activity.id_activity
+      ),
+      statusRole: "Inactivo",
+    });
+
+    setDeleteAction(true);
+  };
+
+  const activeRoles = roles.filter((role) => role.statusRole === "Activo");
+  const inactiveRoles = roles.filter((role) => role.statusRole === "Inactivo");
 
   return (
     <div className={`rol-container ${navbarClass}`}>
@@ -80,7 +122,7 @@ export const Roles = () => {
         <TableInformation
           categories={roles}
           columns={roleColumns}
-          deleteCategory={deleteCategory}
+          deleteCategory={handleDeleteAction}
           handleEditAction={handleEditAction}
           showView={false}
         />

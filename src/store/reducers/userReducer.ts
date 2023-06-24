@@ -91,7 +91,9 @@ export const userReducer = (
         ...state,
         loading: false,
         error: null,
-        users: state.users,
+        users: state.users.map((user) =>
+          user.id === action.payload.id ? action.payload : user
+        ),
       };
 
     case UserActionsTypes.LOGIN_USER_SUCCESS:

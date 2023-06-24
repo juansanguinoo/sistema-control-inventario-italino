@@ -1,5 +1,8 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import { createCategory } from "../../../../store/actions/categoryActions";
+import {
+  createCategory,
+  updateCategory,
+} from "../../../../store/actions/categoryActions";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { CategoryModel } from "../../../../domain/models/CategoryModel";
@@ -18,6 +21,7 @@ export const ModalCategory = ({
 }: IModalCategoryProps) => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const [categoryData, setCategoryData] = useState<CategoryModel>({
+    id: initialState?.id || 0,
     nameCategory: initialState?.nameCategory || "",
     referenceCategory: initialState?.referenceCategory || "",
     statusCategory: initialState?.statusCategory || "Inactivo",
@@ -45,7 +49,11 @@ export const ModalCategory = ({
         text: "Por favor completa todos los campos",
       });
     } else {
-      dispatch(createCategory(categoryData));
+      if (action === "edit") {
+        dispatch(updateCategory(categoryData.id!, categoryData));
+      } else {
+        dispatch(createCategory(categoryData));
+      }
       Swal.fire("Buen trabajo!", "Categoría creada correctamente!", "success");
       onCloseModal && onCloseModal();
     }

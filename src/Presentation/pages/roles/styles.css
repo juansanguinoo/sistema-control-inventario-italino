@@ -109,11 +109,12 @@ h4 {
 .activity-checkboxes {
   display: flex;
   flex-direction: column;
+  width: 34%;
 }
 
 .activity-checkbox {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
 }
 
 .activity-checkbox input[type="checkbox"] {

@@ -18,6 +18,11 @@ const TYPES = {
   GetInventoriesUseCase: Symbol.for("GetInventoriesUseCase"),
   DeleteInventoryUseCase: Symbol.for("DeleteInventoryUseCase"),
   UpdateInventoryUseCase: Symbol.for("UpdateInventoryUseCase"),
+  AddInventoryUseCase: Symbol.for("AddInventoryUseCase"),
+  GetInventoryByNameOrReferenceUseCase: Symbol.for(
+    "GetInventoryByNameOrReferenceUseCase"
+  ),
+  GetInventoryToReportUseCase: Symbol.for("GetInventoryToReportUseCase"),
 
   CreateUserUseCase: Symbol.for("CreateUserUseCase"),
   GetAllUsersUseCase: Symbol.for("GetAllUsersUseCase"),
@@ -47,6 +52,8 @@ const TYPES = {
   GetOrderByIdUseCase: Symbol.for("GetOrderByIdUseCase"),
   UpdateOrderUseCase: Symbol.for("UpdateOrderUseCase"),
   CreateOrderReturnUseCase: Symbol.for("CreateOrderReturnUseCase"),
+  GetOrderAndReturnByIdUseCase: Symbol.for("GetOrderAndReturnByIdUseCase"),
+  GetOrderByReferenceUseCase: Symbol.for("GetOrderByReferenceUseCase"),
 };
 
 export { TYPES };

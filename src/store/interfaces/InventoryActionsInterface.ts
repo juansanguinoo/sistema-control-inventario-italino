@@ -36,7 +36,7 @@ export interface UpdateInventoryAction {
 
 export interface UpdateInventorySuccessAction {
   type: InventoryActionTypes.UPDATE_INVENTORY_SUCCESS;
-  payload: number;
+  payload: InventoryModel;
 }
 
 export interface UpdateInventoryFailureAction {
@@ -55,5 +55,47 @@ export interface DeleteInventorySuccessAction {
 
 export interface DeleteInventoryFailureAction {
   type: InventoryActionTypes.DELETE_INVENTORY_FAILURE;
+  payload: AppError;
+}
+
+export interface AddInventoryAction {
+  type: InventoryActionTypes.ADD_INVENTORY;
+}
+
+export interface AddInventorySuccessAction {
+  type: InventoryActionTypes.ADD_INVENTORY_SUCCESS;
+  payload: InventoryModel;
+}
+
+export interface AddInventoryFailureAction {
+  type: InventoryActionTypes.ADD_INVENTORY_FAILURE;
+  payload: AppError;
+}
+
+export interface GetInventoryByNameOrReferenceAction {
+  type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE;
+}
+
+export interface GetInventoryByNameOrReferenceSuccessAction {
+  type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_SUCCESS;
+  payload: InventoryModel[];
+}
+
+export interface GetInventoryByNameOrReferenceFailureAction {
+  type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_FAILURE;
+  payload: AppError;
+}
+
+export interface GetInventoryToReportAction {
+  type: InventoryActionTypes.GET_INVENTORY_TO_REPORT;
+}
+
+export interface GetInventoryToReportSuccessAction {
+  type: InventoryActionTypes.GET_INVENTORY_TO_REPORT_SUCCESS;
+  payload: InventoryModel;
+}
+
+export interface GetInventoryToReportFailureAction {
+  type: InventoryActionTypes.GET_INVENTORY_TO_REPORT_FAILURE;
   payload: AppError;
 }

@@ -51,8 +51,8 @@ export class RoleRepositoryImpl implements IRoleRepository {
   async updateRole(
     idRole: number,
     role: RoleModel
-  ): Promise<ResponseAPI<boolean>> {
-    const response = await this.httpClient.put<ResponseAPI<boolean>, RoleModel>(
+  ): Promise<ResponseAPI<Role>> {
+    const response = await this.httpClient.put<ResponseAPI<Role>, RoleModel>(
       `${this.baseUrl}/${idRole}`,
       role
     );

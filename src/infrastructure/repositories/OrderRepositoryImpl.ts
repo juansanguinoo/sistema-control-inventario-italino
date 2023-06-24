@@ -20,6 +20,24 @@ export class OrderRepositoryImpl implements IOrderRepository {
     this.baseUrl = `${apiUrl}`;
   }
 
+  async getOrderByReference(
+    referenceOrder: string
+  ): Promise<ResponseAPI<OrderResponse[]>> {
+    const response = await this.httpClient.get<ResponseAPI<OrderResponse[]>>(
+      `${this.baseUrl}/order/reference/${referenceOrder}`
+    );
+    return response;
+  }
+
+  async getOrderAndReturnById(
+    idOrder: number
+  ): Promise<ResponseAPI<OrderResponse>> {
+    const response = await this.httpClient.get<ResponseAPI<OrderResponse>>(
+      `${this.baseUrl}/order/return/${idOrder}`
+    );
+    return response;
+  }
+
   async createOrderReturn(
     order: OrderReturnRequest
   ): Promise<ResponseAPI<OrderResponse>> {

@@ -1,5 +1,6 @@
 export interface OrderResponseModel {
   id: number;
+  referenceOrder: string;
   customer: any;
   user: any;
   orderDetails: any;
@@ -8,4 +9,5 @@ export interface OrderResponseModel {
   typeOrder: string;
   totalOrder: number;
   createdAt: string;
+  orderReturns: any;
 }

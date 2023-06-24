@@ -135,10 +135,10 @@ export const updateRole = (idRole: number, role: RoleModel) => {
     dispatch({ type: RoleActionType.UPDATE_ROLE });
 
     try {
-      await useCase.execute(idRole, role);
+      const roleUpdated = await useCase.execute(idRole, role);
       dispatch({
         type: RoleActionType.UPDATE_ROLE_SUCCESS,
-        payload: idRole,
+        payload: adaptRole(roleUpdated.data!),
       });
     } catch (error: any) {
       const handleError = new AppError(

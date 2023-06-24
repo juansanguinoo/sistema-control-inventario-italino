@@ -3,11 +3,15 @@ import "./styles.css";
 
 interface ILinkButtonProps {
   title: string;
+  to?: string;
 }
 
-export const LinkButton = ({ title }: ILinkButtonProps) => {
+export const LinkButton = ({
+  title,
+  to = "/private/inventory/create-product",
+}: ILinkButtonProps) => {
   return (
-    <Link to="/private/inventory/create-product">
+    <Link to={to}>
       <button className="header-button create">{title}</button>
     </Link>
   );

@@ -10,14 +10,16 @@ import { RootState } from "../../../store/store";
 import { useState, useEffect } from "react";
 import {
   getCategories,
-  deleteCategory,
+  updateCategory,
 } from "../../../store/actions/categoryActions";
 import { Dispatch } from "redux";
 import { categoryColumns } from "../../utils/columnsDataTable";
 import { CategoryModel } from "../../../domain/models/CategoryModel";
+import Swal from "sweetalert2";
 
 export const Category = () => {
   const [categoryData, setCategoryData] = useState<CategoryModel>({
+    id: 0,
     nameCategory: "",
     referenceCategory: "",
     statusCategory: "Inactive",
@@ -25,6 +27,7 @@ export const Category = () => {
   });
   const [showModal, setShowModal] = useState<boolean>(false);
   const [actions, setActions] = useState<string>("");
+  const [deleteAction, setDeleteAction] = useState<boolean>(false);
 
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const categories = useSelector(
@@ -41,6 +44,7 @@ export const Category = () => {
 
   const closeModal = () => {
     setCategoryData({
+      id: 0,
       nameCategory: "",
       referenceCategory: "",
       statusCategory: "Inactivo",
@@ -54,6 +58,24 @@ export const Category = () => {
     dispatch(getCategories());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (deleteAction) {
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¡No podrás deshacer esta acción!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "¡Sí, eliminar!",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(updateCategory(categoryData.id!, categoryData));
+          setDeleteAction(false);
+        }
+      });
+    }
+  }, [deleteAction, dispatch, categoryData]);
+
   const handleEditAction = (params: any) => {
     setCategoryData(params.row);
     setActions("edit");
@@ -64,6 +86,11 @@ export const Category = () => {
     setCategoryData(params.row);
     setActions("preview");
     openModal();
+  };
+
+  const handleDeleteAction = (params: any) => {
+    setCategoryData({ ...params.row, statusCategory: "Inactivo" });
+    setDeleteAction(true);
   };
 
   // get the active categories
@@ -99,7 +126,7 @@ export const Category = () => {
         <TableInformation
           categories={categories}
           columns={categoryColumns}
-          deleteCategory={deleteCategory}
+          deleteCategory={handleDeleteAction}
           handleEditAction={handleEditAction}
           handlePreviewAction={handlePreviewAction}
         />

@@ -36,12 +36,12 @@ export class CategoryRepositoryImpl implements ICategoryRepository {
   }
   async updateCategory(
     categoryId: number,
-    category: Category
-  ): Promise<ResponseAPI<boolean>> {
-    const response = await this.httpClient.put<ResponseAPI<boolean>, Category>(
-      `${this.baseUrl}/${categoryId}`,
-      category
-    );
+    category: CategoryModel
+  ): Promise<ResponseAPI<Category>> {
+    const response = await this.httpClient.put<
+      ResponseAPI<Category>,
+      CategoryModel
+    >(`${this.baseUrl}/${categoryId}`, category);
     return response;
   }
   async deleteCategory(categoryId: number): Promise<ResponseAPI<boolean>> {

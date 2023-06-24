@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import { getAllRoles } from "../../../../store/actions/roleActions";
 import { Dispatch } from "redux";
-import { createUser } from "../../../../store/actions/userAction";
+import { createUser, updateUser } from "../../../../store/actions/userAction";
 import Swal from "sweetalert2";
 
 interface IModalUserProps {
@@ -20,6 +20,7 @@ export const ModalUsers = ({
 }: IModalUserProps) => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const [userData, setUserData] = useState<UserModel>({
+    id: initialState?.id || 0,
     nameUser: initialState?.nameUser || "",
     phoneUser: initialState?.phoneUser || "",
     emailUser: initialState?.emailUser || "",
@@ -42,8 +43,7 @@ export const ModalUsers = ({
     if (
       userData.nameUser === "" ||
       userData.phoneUser === "" ||
-      userData.emailUser === "" ||
-      userData.passwordUser === ""
+      userData.emailUser === ""
     ) {
       Swal.fire({
         icon: "error",
@@ -66,7 +66,11 @@ export const ModalUsers = ({
           text: "Por favor ingresa un correo válido",
         });
       } else {
-        dispatch(createUser(userData));
+        if (action === "edit") {
+          dispatch(updateUser(userData.id!, userData));
+        } else {
+          dispatch(createUser(userData));
+        }
         Swal.fire("Buen trabajo!", "Usuario creado correctamente!", "success");
         onCloseModal && onCloseModal();
       }
@@ -144,18 +148,21 @@ export const ModalUsers = ({
                 placeholder="Correo electrónico del usuario"
                 value={userData.emailUser}
                 onChange={handleInputChange}
+                readOnly={action === "edit"}
               />
             </div>
-            <div className="form-group-user">
-              <input
-                type="password"
-                id="userPassword"
-                name="passwordUser"
-                placeholder="Contraseña del usuario"
-                value={userData.passwordUser}
-                onChange={handleInputChange}
-              />
-            </div>
+            {action !== "edit" && action !== "preview" && (
+              <div className="form-group-user">
+                <input
+                  type="password"
+                  id="userPassword"
+                  name="passwordUser"
+                  placeholder="Contraseña del usuario"
+                  value={userData.passwordUser}
+                  onChange={handleInputChange}
+                />
+              </div>
+            )}
             <div className="form-group-user">
               <label className="form-modal-user-label-rol" htmlFor="userRole">
                 Rol del usuario:

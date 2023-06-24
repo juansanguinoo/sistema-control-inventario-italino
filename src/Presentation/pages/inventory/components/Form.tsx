@@ -12,6 +12,7 @@ import axios from "axios";
 import {
   createInventory,
   getInventory,
+  updateInventory,
 } from "../../../../store/actions/inventoryActions";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -21,6 +22,7 @@ export const FormInventory = () => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const params = useParams();
   const [inventoryData, setInventoryData] = useState<InventoryModel>({
+    id: 0,
     referenceInventory: "",
     nameInventory: "",
     descriptionInventory: "",
@@ -31,14 +33,33 @@ export const FormInventory = () => {
     imageInventory: "",
     publicatedInventory: false,
     category: 0,
+    categoryId: 0,
+    addInventory: [],
   });
   const [send, setSend] = useState(false);
+  const [hasImage, setHasImage] = useState(false);
 
   const [fileData, setFileData] = useState<IFilesState>({
     file1: null,
     file2: null,
     file3: null,
   });
+
+  useEffect(() => {
+    console.log(inventoryData);
+    const images = inventoryData.imageInventory?.split(",");
+    if (images) {
+      setFileData({
+        file1: images[0],
+        file2: images[1] || null,
+        file3: images[2] || null,
+      });
+    }
+  }, [inventoryData]);
+
+  useEffect(() => {
+    console.log(fileData);
+  }, [fileData]);
 
   const categories = useSelector(
     (state: RootState) => state.categoryReducer.categories
@@ -53,13 +74,16 @@ export const FormInventory = () => {
       (inventory) => inventory.id === Number(params.id)
     );
     if (inventory) {
-      setInventoryData(inventory);
+      setInventoryData({
+        ...inventory,
+        categoryId: inventory.category.id_category,
+      });
     }
   };
 
   useEffect(() => {
     getInventoryById();
-  }, [getInventoryById]);
+  }, []);
 
   useEffect(() => {
     dispatch(getCategories());
@@ -67,59 +91,74 @@ export const FormInventory = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (send) {
-      if (
-        inventoryData.referenceInventory === "" ||
-        inventoryData.nameInventory === "" ||
-        inventoryData.descriptionInventory === ""
-      ) {
-        setSend(false);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "¡Debes llenar todos los campos!",
-        });
-      } else if (
-        inventoryData.stockInventory <= 0 ||
-        isNaN(inventoryData.stockInventory)
-      ) {
-        setSend(false);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "¡Debes agregar un valor válido para el stock!",
-        });
-      } else if (inventoryData.category === 0) {
-        setSend(false);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "¡Por favor selecciona una categoría!",
-        });
-      } else if (
-        Object.values(fileData).some((value) => value !== null) === false
-      ) {
-        setSend(false);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "¡Debes subir al menos una imagen!",
-        });
-      } else if (
-        inventoryData.imageInventory !== "" &&
-        inventoryData.nameInventory !== "" &&
-        inventoryData.referenceInventory !== "" &&
-        inventoryData.descriptionInventory !== "" &&
-        inventoryData.stockInventory > 0 &&
-        inventoryData.category !== 0
-      ) {
-        dispatch(createInventory(inventoryData));
-        navigate("/private/inventory");
-        Swal.fire("¡Buen trabajo!", "¡Producto agregado con éxito!", "success");
-      }
+    console.log(send);
+    console.log(hasImage);
+    if (send && hasImage) {
+      const handleSendInformation = () => {
+        if (
+          inventoryData.referenceInventory === "" ||
+          inventoryData.nameInventory === "" ||
+          inventoryData.descriptionInventory === ""
+        ) {
+          setSend(false);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "¡Debes llenar todos los campos!",
+          });
+        } else if (
+          inventoryData.stockInventory <= 0 ||
+          isNaN(inventoryData.stockInventory)
+        ) {
+          setSend(false);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "¡Debes agregar un valor válido para el stock!",
+          });
+        } else if (inventoryData.category === 0) {
+          setSend(false);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "¡Por favor selecciona una categoría!",
+          });
+        } else if (
+          Object.values(fileData).some((value) => value !== null) === false
+        ) {
+          setSend(false);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "¡Debes subir al menos una imagen!",
+          });
+        } else if (
+          inventoryData.imageInventory !== "" &&
+          inventoryData.nameInventory !== "" &&
+          inventoryData.referenceInventory !== "" &&
+          inventoryData.descriptionInventory !== "" &&
+          inventoryData.stockInventory > 0 &&
+          inventoryData.category !== 0
+        ) {
+          if (params.id) {
+            dispatch(updateInventory(inventoryData));
+          } else {
+            dispatch(createInventory(inventoryData));
+          }
+          Swal.fire(
+            "¡Buen trabajo!",
+            "¡Producto agregado con éxito!",
+            "success"
+          );
+          navigate("/private/inventory");
+        }
+      };
+
+      handleSendInformation();
+      setSend(false);
+      setHasImage(false);
     }
-    setSend(false);
-  }, [send, inventoryData]);
+  }, [send, inventoryData, hasImage]);
 
   const handleCheckboxChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
@@ -150,13 +189,15 @@ export const FormInventory = () => {
     const apiKey = "221939461327129";
 
     const imagesPromise = Object.values(fileData)
-      .filter((file) => file !== null)
+      .filter((file) => file !== null && typeof file !== "string")
       .map((file) => {
         const formData = new FormData();
-        formData.append("file", file.file);
+        formData.append("file", file?.file);
         formData.append("upload_preset", unsignedUploadPreset);
         formData.append("api_key", apiKey);
         formData.append("cloud_name", cloudName);
+
+        console.log(formData);
 
         return axios.post(
           `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
@@ -166,13 +207,17 @@ export const FormInventory = () => {
 
     try {
       const imagesResponse = await Promise.all(imagesPromise);
+      console.log(imagesResponse);
       const imagesUrl = imagesResponse.map((image) => image?.data.url);
       const urlsList = imagesUrl.join(", ");
       if (urlsList) {
         setInventoryData((prevData) => ({
           ...prevData,
-          imageInventory: urlsList,
+          imageInventory: `${prevData.imageInventory}, ${urlsList}`,
         }));
+        setHasImage(true);
+      } else {
+        setHasImage(true);
       }
     } catch (error) {
       console.error("Error uploading images:", error);
@@ -219,13 +264,13 @@ export const FormInventory = () => {
           </div>
           <div className="form-group">
             <select
-              name="category"
-              id="category"
-              value={inventoryData.category}
+              name="categoryId"
+              id="categoryId"
+              value={inventoryData.categoryId}
               onChange={(event) =>
                 setInventoryData((prevData) => ({
                   ...prevData,
-                  category: parseInt(event.target.value),
+                  categoryId: parseInt(event.target.value),
                 }))
               }
             >
@@ -326,7 +371,11 @@ export const FormInventory = () => {
             </div>
           </div>
           <div className="form-group-button">
-            {params.id ? null : (
+            {params.id ? (
+              <button type="submit" className="form-button">
+                Guardar cambios
+              </button>
+            ) : (
               <button type="submit" className="form-button">
                 Crear
               </button>

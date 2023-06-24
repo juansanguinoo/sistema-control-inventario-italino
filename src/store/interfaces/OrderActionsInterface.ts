@@ -99,3 +99,31 @@ export interface CreateOrderReturnFailureAction {
   type: OrderActionsTypes.CREATE_ORDER_RETURN_FAILURE;
   payload: AppError;
 }
+
+export interface GetOrderAndReturnByIdAction {
+  type: OrderActionsTypes.GET_ORDER_AND_RETURN_BY_ID;
+}
+
+export interface GetOrderAndReturnByIdSuccessAction {
+  type: OrderActionsTypes.GET_ORDER_AND_RETURN_BY_ID_SUCCESS;
+  payload: OrderResponseModel;
+}
+
+export interface GetOrderAndReturnByIdFailureAction {
+  type: OrderActionsTypes.GET_ORDER_AND_RETURN_BY_ID_FAILURE;
+  payload: AppError;
+}
+
+export interface GetOrderByReferenceAction {
+  type: OrderActionsTypes.GET_ORDER_BY_REFERENCE;
+}
+
+export interface GetOrderByReferenceSuccessAction {
+  type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_SUCCESS;
+  payload: OrderResponseModel[];
+}
+
+export interface GetOrderByReferenceFailureAction {
+  type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FAILURE;
+  payload: AppError;
+}

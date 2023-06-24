@@ -16,6 +16,7 @@ export const adaptInventory = (inventory: Inventory): InventoryModel => {
     imageInventory: inventory.image_inventory,
     publicatedInventory: inventory.publicated_inventory,
     category: inventory.category,
+    addInventory: inventory.add_inventory,
   };
 };
 

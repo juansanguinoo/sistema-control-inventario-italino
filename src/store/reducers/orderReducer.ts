@@ -5,12 +5,16 @@ import { OrderActionsTypes } from "../enums/OrderActionsEnum";
 export interface OrderState {
   loading: boolean;
   orders: OrderResponseModel[] | [];
+  ordersByReference: OrderResponseModel[] | [];
+  orderToReport: OrderResponseModel | null;
   error: Error | null;
 }
 
 const initialState: OrderState = {
   loading: false,
   orders: [],
+  ordersByReference: [],
+  orderToReport: null,
   error: null,
 };
 
@@ -26,6 +30,8 @@ export const orderReducer = (
     case OrderActionsTypes.DELETE_ORDER:
     case OrderActionsTypes.GET_ORDERS_BY_USER:
     case OrderActionsTypes.CREATE_ORDER_RETURN:
+    case OrderActionsTypes.GET_ORDER_AND_RETURN_BY_ID:
+    case OrderActionsTypes.GET_ORDER_BY_REFERENCE:
       return {
         ...state,
         loading: true,
@@ -90,6 +96,38 @@ export const orderReducer = (
           order.id === action.payload.id ? action.payload : order
         ),
         error: null,
+      };
+
+    case OrderActionsTypes.GET_ORDER_AND_RETURN_BY_ID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        orderToReport: action.payload,
+        error: null,
+      };
+
+    case OrderActionsTypes.GET_ORDER_BY_REFERENCE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        ordersByReference: action.payload,
+        error: null,
+      };
+
+    case OrderActionsTypes.GET_ORDER_AND_RETURN_BY_ID_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        ordersByReference: [],
+        error: action.payload,
+      };
+
+    case OrderActionsTypes.GET_ALL_ORDERS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        orderToReport: null,
+        error: action.payload,
       };
 
     case OrderActionsTypes.GET_ALL_ORDERS_FAILURE:

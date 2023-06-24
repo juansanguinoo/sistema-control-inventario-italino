@@ -7,7 +7,7 @@ export interface ICategoryRepository {
   createCategory(category: CategoryModel): Promise<ResponseAPI<Category>>;
   updateCategory(
     categoryId: number,
-    category: Category
-  ): Promise<ResponseAPI<boolean>>;
+    category: CategoryModel
+  ): Promise<ResponseAPI<Category>>;
   deleteCategory(categoryId: number): Promise<ResponseAPI<boolean>>;
 }
