@@ -8,11 +8,13 @@ import {
   handleMobileClicked,
   handleNavbar,
 } from "../../../store/actions/navbarActions";
+import { useGetUser } from "../../hooks/useGetUser";
 
 export const Home = () => {
   const [navbarExpanded, setNavbarExpanded] = useState<boolean>(true);
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
+  const { loading } = useGetUser();
 
   const toggleNavbar = () => {
     setNavbarExpanded(!navbarExpanded);
@@ -30,9 +32,13 @@ export const Home = () => {
     dispatch(handleMobileClicked(isClicked));
   }, [isClicked, dispatch]);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="app">
-      <HeaderHome title={"Inventory"} toggleMenu={toggleMenuResponsive} />
+      <HeaderHome title={""} toggleMenu={toggleMenuResponsive} />
       <NavbarHome toggleNavbar={toggleNavbar} />
     </div>
   );

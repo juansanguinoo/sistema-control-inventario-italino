@@ -50,7 +50,7 @@ export interface UpdateCustomerAction {
 
 export interface UpdateCustomerSuccessAction {
   type: CustomerActionsTypes.UPDATE_CUSTOMER_SUCCESS;
-  payload: number;
+  payload: CustomerModel;
 }
 
 export interface UpdateCustomerFailureAction {

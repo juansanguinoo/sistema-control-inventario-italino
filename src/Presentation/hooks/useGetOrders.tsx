@@ -5,7 +5,6 @@ import { OrderResponseModel } from "../../domain/models/OrderResponseModel";
 import { useEffect } from "react";
 import {
   getAllOrders,
-  getOrderById,
   getOrdersByUserId,
 } from "../../store/actions/orderActions";
 
@@ -26,7 +25,11 @@ export const useGetOrders = () => {
   );
 
   useEffect(() => {
-    dispatch(getAllOrders());
+    if (getUser?.roleId.id_role === 1) {
+      dispatch(getAllOrders());
+    } else {
+      dispatch(getOrdersByUserId(getUser?.id!));
+    }
   }, [dispatch]);
 
   return { orders, loading, error };

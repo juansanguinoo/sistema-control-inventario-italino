@@ -9,7 +9,7 @@ export interface ICustomerRepository {
   updateCustomer(
     idCustomer: number,
     customer: CustomerModel
-  ): Promise<ResponseAPI<boolean>>;
+  ): Promise<ResponseAPI<Customer>>;
   deleteCustomer(idCustomer: number): Promise<ResponseAPI<boolean>>;
   getCustomerByUserId(idUser: number): Promise<ResponseAPI<Customer[]>>;
 }

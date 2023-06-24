@@ -32,8 +32,6 @@ export const HeaderHome = ({ title, toggleMenu }: IHeaderProps) => {
       ) : (
         <>
           <div className="title">{title}</div>
-          <div className="circle green"></div>
-          <div className="circle red"></div>
         </>
       )}
     </div>

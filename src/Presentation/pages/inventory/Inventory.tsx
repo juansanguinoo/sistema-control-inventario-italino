@@ -70,6 +70,7 @@ export const Inventory = () => {
           deleteCategory={deleteInventory}
           handleEditAction={handleEditAction}
           handlePreviewAction={handlePreviewAction}
+          showDelete={false}
         />
       </div>
     </div>

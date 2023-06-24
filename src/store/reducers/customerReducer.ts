@@ -39,12 +39,18 @@ export const customerReducer = (
         customers: action.payload,
       };
 
+    case CustomerActionsTypes.UPDATE_CUSTOMER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
     case CustomerActionsTypes.CREATE_CUSTOMER_FAILURE:
     case CustomerActionsTypes.DELETE_CUSTOMER_FAILURE:
     case CustomerActionsTypes.GET_ALL_CUSTOMERS_FAILURE:
     case CustomerActionsTypes.GET_CUSTOMER_BY_ID_FAILURE:
     case CustomerActionsTypes.GET_CUSTOMER_BY_USER_ID_FAILURE:
-    case CustomerActionsTypes.UPDATE_CUSTOMER_FAILURE:
       return {
         ...state,
         loading: false,
@@ -91,7 +97,9 @@ export const customerReducer = (
         ...state,
         loading: false,
         error: null,
-        customers: state.customers,
+        customers: state.customers.map((customer) =>
+          customer.id === action.payload.id ? action.payload : customer
+        ),
       };
 
     default:

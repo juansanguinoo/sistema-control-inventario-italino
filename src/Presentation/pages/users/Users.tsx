@@ -87,7 +87,6 @@ export const Users = () => {
   };
 
   const handleDeleteAction = (params: any) => {
-    console.log(params.row);
     setUserData({
       ...params.row,
       statusUser: "Inactivo",

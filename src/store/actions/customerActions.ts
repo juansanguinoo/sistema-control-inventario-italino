@@ -164,10 +164,10 @@ export const updateCustomer = (idCustomer: number, customer: CustomerModel) => {
     dispatch({ type: CustomerActionsTypes.UPDATE_CUSTOMER });
 
     try {
-      await useCase.execute(idCustomer, customer);
+      const response = await useCase.execute(idCustomer, customer);
       dispatch({
         type: CustomerActionsTypes.UPDATE_CUSTOMER_SUCCESS,
-        payload: idCustomer,
+        payload: adaptCustomer(response.data!),
       });
     } catch (error: any) {
       const handleError = new AppError(
