@@ -1,14 +1,11 @@
 import "./styles.css";
 import { IColumnsDataTable } from "../../interfaces/interfaces";
 import { DataGrid } from "@mui/x-data-grid";
-import { useDispatch } from "react-redux";
-import { Dispatch } from "redux";
-import Swal from "sweetalert2";
 
 interface ITableInformationProps {
   categories?: any[] | [];
   columns?: IColumnsDataTable[];
-  deleteCategory?: (id: number) => void;
+  deleteCategory?: (params: any) => void;
   showView?: boolean;
   showDelete?: boolean;
   handleEditAction?: (params: any) => void;
@@ -26,8 +23,6 @@ export const TableInformation = ({
   handlePreviewAction,
   showActions = true,
 }: ITableInformationProps) => {
-  const dispatch = useDispatch<Dispatch<any>>();
-
   const handlePreview = (params: any) => {
     if (handlePreviewAction) {
       handlePreviewAction(params);
@@ -42,24 +37,7 @@ export const TableInformation = ({
 
   const handleDelete = (params: any) => {
     if (deleteCategory) {
-      Swal.fire({
-        title: "¿Estás seguro?",
-        text: "¡No podrás deshacer esta acción!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "!Sí, eliminar!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          dispatch(deleteCategory(params.row.id));
-          Swal.fire(
-            "¡Eliminado!",
-            "Ha sido eliminado correctamente.",
-            "success"
-          );
-        }
-      });
+      deleteCategory(params);
     }
   };
 

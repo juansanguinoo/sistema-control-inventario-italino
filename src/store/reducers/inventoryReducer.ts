@@ -100,7 +100,9 @@ export const inventoryReducer = (
       return {
         ...state,
         loading: false,
-        inventories: state.inventories,
+        inventories: state.inventories.map((inventory) =>
+          inventory.id === action.payload.id ? action.payload : inventory
+        ),
         error: null,
       };
 

@@ -66,13 +66,12 @@ export class InventoryRepositoryImpl implements IInventoryRepository {
   }
 
   async updateInventory(
-    inventoryId: number,
-    inventory: Inventory
-  ): Promise<ResponseAPI<boolean>> {
-    const response = await this.httpClient.put<ResponseAPI<boolean>, Inventory>(
-      `${this.baseUrl}/${inventoryId}`,
-      inventory
-    );
+    inventory: InventoryModel
+  ): Promise<ResponseAPI<Inventory>> {
+    const response = await this.httpClient.put<
+      ResponseAPI<Inventory>,
+      InventoryModel
+    >(`${this.baseUrl}/app`, inventory);
     return response;
   }
 

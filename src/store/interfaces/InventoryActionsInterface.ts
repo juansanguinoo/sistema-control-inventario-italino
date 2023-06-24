@@ -36,7 +36,7 @@ export interface UpdateInventoryAction {
 
 export interface UpdateInventorySuccessAction {
   type: InventoryActionTypes.UPDATE_INVENTORY_SUCCESS;
-  payload: number;
+  payload: InventoryModel;
 }
 
 export interface UpdateInventoryFailureAction {

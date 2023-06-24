@@ -7,6 +7,6 @@ export interface UserModel {
   statusUser: string;
   createdAt?: string;
   updatedAt?: string;
-  roleId?: number;
+  roleId?: any;
   token?: string;
 }

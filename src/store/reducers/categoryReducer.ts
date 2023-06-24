@@ -60,7 +60,9 @@ export const categoryReducer = (
       return {
         ...state,
         loading: false,
-        categories: state.categories,
+        categories: state.categories.map((category) =>
+          category.id === action.payload.id ? action.payload : category
+        ),
         error: null,
       };
 
@@ -69,7 +71,7 @@ export const categoryReducer = (
         ...state,
         loading: false,
         categories: state.categories.filter(
-          (category) => category.idCategory !== action.payload
+          (category) => category.id !== action.payload
         ),
         error: null,
       };

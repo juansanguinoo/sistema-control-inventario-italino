@@ -62,7 +62,9 @@ export const roleReducer = (
       return {
         ...state,
         loading: false,
-        roles: state.roles,
+        roles: state.roles.map((role) =>
+          role.id === action.payload.id ? action.payload : role
+        ),
         error: null,
       };
 

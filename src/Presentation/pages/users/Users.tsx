@@ -8,14 +8,15 @@ import { CardInformation } from "../../components/cards/CardInformation";
 import { TableInformation } from "../../components/tables/TableInformation";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
-import { deleteCategory } from "../../../store/actions/categoryActions";
 import { userColumns } from "../../utils/columnsDataTable";
-import { getAllUsers } from "../../../store/actions/userAction";
+import { getAllUsers, updateUser } from "../../../store/actions/userAction";
 import { ModalUsers } from "./components/Modal";
 import { UserModel } from "../../../domain/models/UserModel";
+import Swal from "sweetalert2";
 
 export const Users = () => {
   const [userData, setUserData] = useState<UserModel>({
+    id: 0,
     nameUser: "",
     phoneUser: "",
     emailUser: "",
@@ -31,6 +32,7 @@ export const Users = () => {
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
   const [showModal, setShowModal] = useState<boolean>(false);
   const [actions, setActions] = useState<string>("");
+  const [deleteAction, setDeleteAction] = useState<boolean>(false);
 
   const openModal = () => {
     setShowModal(true);
@@ -38,6 +40,7 @@ export const Users = () => {
 
   const closeModal = () => {
     setUserData({
+      id: 0,
       nameUser: "",
       phoneUser: "",
       emailUser: "",
@@ -53,6 +56,24 @@ export const Users = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (deleteAction) {
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¡No podrás deshacer esta acción!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "¡Sí, eliminar!",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(updateUser(userData.id!, userData));
+          setDeleteAction(false);
+        }
+      });
+    }
+  }, [deleteAction, dispatch, userData]);
+
   const handleEditAction = (params: any) => {
     setUserData(params.row);
     setActions("edit");
@@ -63,6 +84,16 @@ export const Users = () => {
     setUserData(params.row);
     setActions("preview");
     openModal();
+  };
+
+  const handleDeleteAction = (params: any) => {
+    console.log(params.row);
+    setUserData({
+      ...params.row,
+      statusUser: "Inactivo",
+      roleId: params.row.roleId.id_role,
+    });
+    setDeleteAction(true);
   };
 
   // get the active users
@@ -94,7 +125,7 @@ export const Users = () => {
         <TableInformation
           categories={users}
           columns={userColumns}
-          deleteCategory={deleteCategory}
+          deleteCategory={handleDeleteAction}
           handleEditAction={handleEditAction}
           handlePreviewAction={handlePreviewAction}
         />

@@ -3,6 +3,7 @@ import { TYPES } from "../../../config/types";
 import type { IInventoryRepository } from "../../repositories/IInventoryRepository";
 import { ResponseAPI } from "../../../infrastructure/api/models/ResponseApi";
 import { Inventory } from "../../models/Inventory";
+import { InventoryModel } from "../../models/InventoryModel";
 
 @injectable()
 export class UpdateInventoryUseCase {
@@ -11,13 +12,7 @@ export class UpdateInventoryUseCase {
     private inventoryRepository: IInventoryRepository
   ) {}
 
-  async execute(
-    idInventory: number,
-    inventory: Inventory
-  ): Promise<ResponseAPI<boolean>> {
-    return await this.inventoryRepository.updateInventory(
-      idInventory,
-      inventory
-    );
+  async execute(inventory: InventoryModel): Promise<ResponseAPI<Inventory>> {
+    return await this.inventoryRepository.updateInventory(inventory);
   }
 }

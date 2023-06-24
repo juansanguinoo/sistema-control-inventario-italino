@@ -33,7 +33,6 @@ import {
 } from "../../infrastructure/adapters/inventoryAdapter";
 import { InventoryModel } from "../../domain/models/InventoryModel";
 import { CreateInventoryUseCase } from "../../domain/useCases/inventory/CreateInventoryUseCase";
-import { Inventory } from "../../domain/models/Inventory";
 import { UpdateInventoryUseCase } from "../../domain/useCases/inventory/UpdateInventoryUseCase";
 import { DeleteInventoryUseCase } from "../../domain/useCases/inventory/DeleteInventoryUseCase";
 import { AddInventoryUseCase } from "../../domain/useCases/inventory/AddInventoryUseCase";
@@ -113,7 +112,7 @@ export const createInventory = (inventory: InventoryModel) => {
   };
 };
 
-export const updateInventory = (idInventory: number, inventory: Inventory) => {
+export const updateInventory = (inventory: InventoryModel) => {
   return async (dispatch: Dispatch) => {
     const useCase = container.get<UpdateInventoryUseCase>(
       TYPES.UpdateInventoryUseCase
@@ -122,10 +121,10 @@ export const updateInventory = (idInventory: number, inventory: Inventory) => {
     dispatch({ type: InventoryActionTypes.UPDATE_INVENTORY });
 
     try {
-      await useCase.execute(idInventory, inventory);
+      const response = await useCase.execute(inventory);
       dispatch({
         type: InventoryActionTypes.UPDATE_INVENTORY_SUCCESS,
-        payload: idInventory,
+        payload: adaptInventory(response.data!),
       });
     } catch (error) {
       dispatch({
@@ -218,8 +217,6 @@ export const getInventoryToReport = (inventoryId: number) => {
 
     try {
       const inventory = await useCase.execute(inventoryId);
-      console.log("inventory", inventory.data);
-      console.log("adaptInventories", adaptInventory(inventory.data!));
       dispatch({
         type: InventoryActionTypes.GET_INVENTORY_TO_REPORT_SUCCESS,
         payload: adaptInventory(inventory.data!),

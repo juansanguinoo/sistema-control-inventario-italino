@@ -6,10 +6,7 @@ import { InventoryModel } from "../models/InventoryModel";
 export interface IInventoryRepository {
   getInventories(): Promise<ResponseAPI<Inventory[]>>;
   createInventory(inventory: InventoryModel): Promise<ResponseAPI<Inventory>>;
-  updateInventory(
-    inventoryId: number,
-    inventory: Inventory
-  ): Promise<ResponseAPI<boolean>>;
+  updateInventory(inventory: InventoryModel): Promise<ResponseAPI<Inventory>>;
   deleteInventory(inventoryId: number): Promise<ResponseAPI<boolean>>;
   addInventory(
     addInventory: AddInventoryRequest

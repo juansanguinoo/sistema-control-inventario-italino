@@ -50,7 +50,7 @@ export interface UpdateUserAction {
 
 export interface UpdateUserSuccessAction {
   type: UserActionsTypes.UPDATE_USER_SUCCESS;
-  payload: number;
+  payload: UserModel;
 }
 
 export interface UpdateUserFailureAction {
