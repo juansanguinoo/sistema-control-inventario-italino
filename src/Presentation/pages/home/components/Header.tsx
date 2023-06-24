@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import Menu from "../../../assets/menu.svg";
-import { useEffect, useState } from "react";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 
 interface IHeaderProps {
