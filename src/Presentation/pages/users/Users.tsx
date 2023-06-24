@@ -1,5 +1,5 @@
 import "./styles.css";
-import Folder from "../../assets/Folder.svg";
+import Profile from "../../assets/Profile.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { PageTitle } from "../../components/titles/PageTitle";
 import { RootState } from "../../../store/store";
@@ -66,10 +66,10 @@ export const Users = () => {
   };
 
   // get the active users
-  const activeUsers = users.filter((user) => user.statusUser === "Activo");
+  const activeUsers = users.filter((user) => user.statusUser == "Activo");
 
   // get the inactive users
-  const inactiveUsers = users.filter((user) => user.statusUser === "Inactivo");
+  const inactiveUsers = users.filter((user) => user.statusUser == "Inactivo");
 
   return (
     <div className={`user-container ${navbarClass}`}>
@@ -82,12 +82,12 @@ export const Users = () => {
       </div>
       <div className="user-main">
         <CardInformation
-          icon={Folder}
+          icon={Profile}
           titles={["Total de usuarios"]}
           data={[users.length]}
         />
         <CardInformation
-          icon={Folder}
+          icon={Profile}
           titles={["Usuarios activos", "Usuarios inactivos"]}
           data={[activeUsers.length, inactiveUsers.length]}
         />
