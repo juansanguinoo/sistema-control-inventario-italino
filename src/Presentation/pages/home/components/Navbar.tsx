@@ -13,16 +13,19 @@ import ProfileWhite from "../../../assets/ProfileWhite.svg";
 import Edit from "../../../assets/Edit.svg";
 import EditWhite from "../../../assets/EditWhite.svg";
 import { NavItemHome } from "./NavItem";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 import { useGetUser } from "../../../hooks/useGetUser";
+import { Dispatch } from "redux";
+import { logoutUser } from "../../../../store/actions/userAction";
 
 interface INavbarProps {
   toggleNavbar: () => void;
 }
 
 export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
+  const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const { getUser } = useGetUser();
   const navbarOpen = useSelector(
     (state: RootState) => state.navbarReducer.stateOpen
@@ -33,6 +36,10 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
 
   const { isMobile } = useIsMobile();
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
+
+  const handleLogOut = () => {
+    dispatch(logoutUser());
+  };
 
   return (
     <div
@@ -118,7 +125,9 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
           />
         ) : null}
       </ul>
-      <div className="logout">Cerrar sesión</div>
+      <div className="logout" onClick={handleLogOut}>
+        Cerrar sesión
+      </div>
     </div>
   );
 };

@@ -116,6 +116,16 @@ export const userReducer = (
         loggedIn: true,
       };
 
+    case UserActionsTypes.LOGOUT_USER:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        user: null,
+        token: null,
+        loggedIn: false,
+      };
+
     default:
       return state;
   }

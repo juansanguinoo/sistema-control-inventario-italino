@@ -1,6 +1,7 @@
 import { useIsMobile } from "../../../hooks/useIsMobile";
 import Menu from "../../../assets/menu.svg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const HeaderLandingPage = () => {
   const [isClicked, setIsClicked] = useState(false);
@@ -28,14 +29,18 @@ export const HeaderLandingPage = () => {
             <a href="#">Inicio</a>
           </li>
           <li>
-            <a href="#">Nosotros</a>
+            <a href="#Productos">Productos</a>
           </li>
           <li>
-            <a href="#">Productos</a>
+            <a href="#Nosotros">Nosotros</a>
           </li>
           <li>
-            <a href="#">Contacto</a>
+            <a href="#Contacto">Contacto</a>
           </li>
+          {/* <li>
+            <a href="#Contacto">Ingresar</a>
+          </li> */}
+          <Link to="login">Ingresar</Link>
         </ul>
       </div>
     </div>

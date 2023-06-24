@@ -18,6 +18,7 @@ import {
   LoginUserAction,
   LoginUserFailureAction,
   LoginUserSuccessAction,
+  LogoutUserAction,
   UpdateUserAction,
   UpdateUserFailureAction,
   UpdateUserSuccessAction,
@@ -58,7 +59,8 @@ export type UserAction =
   | LoginUserFailureAction
   | CheckLoginAction
   | CheckLoginSuccessAction
-  | CheckLoginFailureAction;
+  | CheckLoginFailureAction
+  | LogoutUserAction;
 
 export const getAllUsers = () => {
   return async (dispatch: Dispatch<UserAction>) => {
@@ -239,5 +241,12 @@ export const checkLogin = () => {
         payload: handleError,
       });
     }
+  };
+};
+
+export const logoutUser = () => {
+  return async (dispatch: Dispatch<UserAction>) => {
+    dispatch({ type: UserActionsTypes.LOGOUT_USER });
+    sessionStorage.removeItem("token");
   };
 };
