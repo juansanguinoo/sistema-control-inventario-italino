@@ -20,7 +20,9 @@ import {
 } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store/store";
+import { useState, useEffect } from "react";
 
 ChartJS.register(
   ArcElement,
@@ -33,12 +35,78 @@ ChartJS.register(
 );
 
 export const MainHome = () => {
+  const totalOrders = useSelector(
+    (state: RootState) => state.orderReducer.orders
+  );
+  const [orderTotalByMonth, orderTotalByYear] = useState<any>([]);
+  const [productsMostSoldLabel, setProductsMostSoldLabel] = useState<any>([]);
+  const [productsMostSoldData, setProductsMostSoldData] = useState<any>([]);
+
+  useEffect(() => {
+    // get just the top 5 products most sold from totalOrders.orderDetails.quantity is the quantity of the product and totalOrders.orderDetails.inventory.name_inventory is the product
+
+    const products = totalOrders.map((order) => {
+      return order.orderDetails.map((detail: any) => {
+        return {
+          name: detail.inventory.name_inventory,
+          quantity: detail.quantity,
+        };
+      });
+    });
+
+    const productsFlatten = products.flat();
+
+    const productsGrouped = productsFlatten.reduce((acc, curr) => {
+      if (acc[curr.name]) {
+        acc[curr.name] += curr.quantity;
+      } else {
+        acc[curr.name] = curr.quantity;
+      }
+      return acc;
+    }, {});
+
+    const productsSorted = Object.entries(productsGrouped).sort(
+      (a: any, b: any) => b[1] - a[1]
+    );
+
+    const productsMostSold = productsSorted.slice(0, 5);
+
+    const productsMostSoldLabel = productsMostSold.map((product: any) => {
+      return product[0].length > 30
+        ? product[0].slice(0, 30) + "..."
+        : product[0];
+    });
+
+    const productsMostSoldData = productsMostSold.map((product: any) => {
+      return product[1];
+    });
+
+    setProductsMostSoldLabel(productsMostSoldLabel);
+    setProductsMostSoldData(productsMostSoldData);
+  }, [totalOrders]);
+
+  useEffect(() => {
+    const totalOrdersByMonth = months.map((month) => {
+      const filteredOrders = totalOrders.filter((order) => {
+        const date = new Date(order.createdAt);
+        return date.toLocaleString("es-MX", { month: "long" }) === month;
+      });
+      if (filteredOrders.length > 0) {
+        return filteredOrders.reduce((a, b) => a + b.totalOrder, 0);
+      } else {
+        return 0;
+      }
+    });
+
+    orderTotalByYear(totalOrdersByMonth);
+  }, [totalOrders]);
+
   const data = {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    labels: productsMostSoldLabel,
     datasets: [
       {
         label: "# of Votes",
-        data: [12, 19, 3, 5, 2, 3],
+        data: productsMostSoldData,
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
           "rgba(54, 162, 235, 0.2)",
@@ -68,7 +136,7 @@ export const MainHome = () => {
       },
       title: {
         display: true,
-        text: "Chart.js Bar Chart",
+        text: "Grafica de ventas por mes",
       },
     },
   };
@@ -92,14 +160,9 @@ export const MainHome = () => {
     labels,
     datasets: [
       {
-        label: "Dataset 1",
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+        label: "Ventas por mes",
+        data: orderTotalByMonth,
         backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-      {
-        label: "Dataset 2",
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
     ],
   };
@@ -133,19 +196,6 @@ export const MainHome = () => {
     "Noviembre",
     "Diciembre",
   ];
-
-  // Obtenemos el total de órdenes por mes
-  const ordersPerMonth = months.map((month) => {
-    const filteredOrders = pendingOrders.filter((order) => {
-      const date = new Date(order.createdAt);
-      return date.toLocaleString("es-MX", { month: "long" }) === month;
-    });
-
-    return {
-      month,
-      totalOrders: filteredOrders.length,
-    };
-  });
 
   return (
     <>

@@ -2,7 +2,7 @@ import Image11 from "../../../assets/1 1.svg";
 
 export const ContactLandingPage = () => {
   return (
-    <div className="contact-landing">
+    <div className="contact-landing" id="Contacto">
       <div className="contact-landing-content">
         <div className="contact">
           <div className="first-text">Ponte en contacto</div>

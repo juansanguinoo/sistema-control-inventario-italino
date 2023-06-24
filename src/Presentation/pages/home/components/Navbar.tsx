@@ -13,15 +13,20 @@ import ProfileWhite from "../../../assets/ProfileWhite.svg";
 import Edit from "../../../assets/Edit.svg";
 import EditWhite from "../../../assets/EditWhite.svg";
 import { NavItemHome } from "./NavItem";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import { useIsMobile } from "../../../hooks/useIsMobile";
+import { useGetUser } from "../../../hooks/useGetUser";
+import { Dispatch } from "redux";
+import { logoutUser } from "../../../../store/actions/userAction";
 
 interface INavbarProps {
   toggleNavbar: () => void;
 }
 
 export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
+  const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
+  const { getUser } = useGetUser();
   const navbarOpen = useSelector(
     (state: RootState) => state.navbarReducer.stateOpen
   );
@@ -31,6 +36,10 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
 
   const { isMobile } = useIsMobile();
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
+
+  const handleLogOut = () => {
+    dispatch(logoutUser());
+  };
 
   return (
     <div
@@ -44,50 +53,81 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
         </div>
       )}
       <ul className={`navigation`}>
-        <NavItemHome
-          icon={Dashboard}
-          iconWhite={DashboardWhite}
-          label="Dashboard"
-          to={"/private/dashboard"}
-        />
-        <NavItemHome
-          icon={Bag}
-          iconWhite={BagWhite}
-          label="Ordenes"
-          to={"/private/orders"}
-        />
-        <NavItemHome
-          icon={User}
-          iconWhite={UserWhite}
-          label="Clientes"
-          to={"/private/customers"}
-        />
-        <NavItemHome
-          icon={Folder}
-          iconWhite={FolderWhite}
-          label="Productos"
-          to={"/private/inventory"}
-        />
-        <NavItemHome
-          icon={Bookmark}
-          iconWhite={BookmarkWhite}
-          label="Categorías"
-          to={"/private/category"}
-        />
-        <NavItemHome
-          icon={Profile}
-          iconWhite={ProfileWhite}
-          label="Usuarios"
-          to={"/private/users"}
-        />
-        <NavItemHome
-          icon={Edit}
-          iconWhite={EditWhite}
-          label="Roles"
-          to={"/private/role"}
-        />
+        {getUser?.roleId.activities?.some(
+          (activity: any) => activity.id_activity === 1
+        ) ? (
+          <NavItemHome
+            icon={Dashboard}
+            iconWhite={DashboardWhite}
+            label="Dashboard"
+            to={"/private/dashboard"}
+          />
+        ) : null}
+        {getUser?.roleId.activities?.some(
+          (activity: any) => activity.id_activity === 2
+        ) ? (
+          <NavItemHome
+            icon={Bag}
+            iconWhite={BagWhite}
+            label="Ordenes"
+            to={"/private/orders"}
+          />
+        ) : null}
+
+        {getUser?.roleId.activities?.some(
+          (activity: any) => activity.id_activity === 3
+        ) ? (
+          <NavItemHome
+            icon={User}
+            iconWhite={UserWhite}
+            label="Clientes"
+            to={"/private/customers"}
+          />
+        ) : null}
+
+        {getUser?.roleId.activities?.some(
+          (activity: any) => activity.id_activity === 4
+        ) ? (
+          <NavItemHome
+            icon={Folder}
+            iconWhite={FolderWhite}
+            label="Productos"
+            to={"/private/inventory"}
+          />
+        ) : null}
+
+        {getUser?.roleId.activities?.some(
+          (activity: any) => activity.id_activity === 5
+        ) ? (
+          <NavItemHome
+            icon={Bookmark}
+            iconWhite={BookmarkWhite}
+            label="Categorías"
+            to={"/private/category"}
+          />
+        ) : null}
+
+        {getUser?.roleId.id_role === 1 ? (
+          <NavItemHome
+            icon={Profile}
+            iconWhite={ProfileWhite}
+            label="Usuarios"
+            to={"/private/users"}
+          />
+        ) : null}
+
+        {getUser?.roleId.id_role === 1 ? (
+          <NavItemHome
+            icon={Edit}
+            iconWhite={EditWhite}
+            label="Roles"
+            to={"/private/role"}
+          />
+        ) : null}
       </ul>
-      <div className="logout">Logout</div>
+      <div className="logout" onClick={handleLogOut}>
+        Cerrar sesión
+      </div>
     </div>
   );
 };

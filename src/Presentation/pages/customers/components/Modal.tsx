@@ -1,10 +1,12 @@
 import "../styles.css";
 import { FormEvent, useState } from "react";
 import { CustomerModel } from "../../../../domain/models/CustomerModel";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../store/store";
+import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
-import { createCustomer } from "../../../../store/actions/customerActions";
+import {
+  createCustomer,
+  updateCustomer,
+} from "../../../../store/actions/customerActions";
 import Swal from "sweetalert2";
 
 interface IModalCustomersProps {
@@ -20,6 +22,7 @@ export const ModalCustomers = ({
 }: IModalCustomersProps) => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const [customerData, setCustomerData] = useState<CustomerModel>({
+    id: initialState?.id || 0,
     userId: initialState?.userId || 0,
     nameCustomer: initialState?.nameCustomer || "",
     nitCustomer: initialState?.nitCustomer || "",
@@ -28,11 +31,8 @@ export const ModalCustomers = ({
     statusCustomer: initialState?.statusCustomer || "Activo",
   });
 
-  const getUser = useSelector((state: RootState) => state.userReducer.user);
-
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    customerData.userId = getUser?.id;
     if (
       customerData.userId === undefined ||
       customerData.nameCustomer === "" ||
@@ -47,7 +47,11 @@ export const ModalCustomers = ({
         text: "Por favor completa todos los campos",
       });
     } else {
-      dispatch(createCustomer(customerData));
+      if (action === "edit") {
+        dispatch(updateCustomer(customerData.id!, customerData));
+      } else {
+        dispatch(createCustomer(customerData));
+      }
       Swal.fire("Buen trabajo!", "Cliente creado correctamente!", "success");
       onCloseModal && onCloseModal();
     }
@@ -139,6 +143,7 @@ export const ModalCustomers = ({
               </label>
               <select
                 id="customerStatus"
+                value={customerData.statusCustomer}
                 onChange={(event) =>
                   setCustomerData((prevData) => ({
                     ...prevData,

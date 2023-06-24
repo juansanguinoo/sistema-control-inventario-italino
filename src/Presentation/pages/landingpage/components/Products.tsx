@@ -17,7 +17,7 @@ export const ProductsLandingPage = () => {
   }, [dispatch]);
 
   return (
-    <div className="products-landing">
+    <div className="products-landing" id="Productos">
       <div className="products-landing-content">
         <div className="products-title">
           <h1>Nuestros Productos</h1>
@@ -26,7 +26,7 @@ export const ProductsLandingPage = () => {
           {inventories.map((inventory: InventoryModel) => {
             const image = inventory.imageInventory?.split(", ")[0];
             return (
-              <div className="card-landing">
+              <div className="card-landing" key={inventory.id}>
                 <div className="card-landing-image">
                   <img src={image} alt="" />
                 </div>

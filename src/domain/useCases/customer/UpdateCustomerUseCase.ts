@@ -3,6 +3,7 @@ import type { ICustomerRepository } from "../../repositories/ICustomerRepository
 import { TYPES } from "../../../config/types";
 import { CustomerModel } from "../../models/CustomerModel";
 import { ResponseAPI } from "../../../infrastructure/api/models/ResponseApi";
+import { Customer } from "../../models/Customer";
 
 @injectable()
 export class UpdateCustomerUseCase {
@@ -14,7 +15,7 @@ export class UpdateCustomerUseCase {
   async execute(
     idCustomer: number,
     customer: CustomerModel
-  ): Promise<ResponseAPI<boolean>> {
+  ): Promise<ResponseAPI<Customer>> {
     const response = await this.customerRepository.updateCustomer(
       idCustomer,
       customer

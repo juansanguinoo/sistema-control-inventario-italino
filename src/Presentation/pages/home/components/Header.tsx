@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import Menu from "../../../assets/menu.svg";
-import { useEffect, useState } from "react";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 
 interface IHeaderProps {
@@ -32,8 +31,6 @@ export const HeaderHome = ({ title, toggleMenu }: IHeaderProps) => {
       ) : (
         <>
           <div className="title">{title}</div>
-          <div className="circle green"></div>
-          <div className="circle red"></div>
         </>
       )}
     </div>

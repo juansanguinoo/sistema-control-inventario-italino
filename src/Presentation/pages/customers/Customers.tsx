@@ -1,22 +1,26 @@
 import "./styles.css";
 import User from "../../assets/User.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { CardInformation } from "../../components/cards/CardInformation";
 import { PageTitle } from "../../components/titles/PageTitle";
 import { HeaderButton } from "../../components/buttons/HeaderButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ModalCustomers } from "./components/Modal";
-import { deleteCustomer } from "../../../store/actions/customerActions";
 import { TableInformation } from "../../components/tables/TableInformation";
 import { customerColumns } from "../../utils/columnsDataTable";
 import { CustomerModel } from "../../../domain/models/CustomerModel";
 import { useGetCustomerByUser } from "../../hooks/useGetCustomerByUser";
 import { FilterMessage } from "../orders/components/FilterMessage";
+import Swal from "sweetalert2";
+import { Dispatch } from "redux";
+import { updateCustomer } from "../../../store/actions/customerActions";
 
 export const Customers = () => {
+  const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const { customers } = useGetCustomerByUser();
   const [customerData, setCustomerData] = useState<CustomerModel>({
+    id: 0,
     userId: 0,
     nameCustomer: "",
     nitCustomer: "",
@@ -26,6 +30,7 @@ export const Customers = () => {
   });
   const [actions, setActions] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [deleteAction, setDeleteAction] = useState<boolean>(false);
   const navbarOpen = useSelector(
     (state: RootState) => state.navbarReducer.stateOpen
   );
@@ -48,8 +53,30 @@ export const Customers = () => {
     setActions("");
   };
 
+  useEffect(() => {
+    if (deleteAction) {
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¡No podrás deshacer esta acción!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "¡Sí, eliminar!",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(updateCustomer(customerData.id!, customerData));
+          setDeleteAction(false);
+        }
+      });
+    }
+  }, [deleteAction, dispatch, customerData]);
+
   const handleEditAction = (params: any) => {
-    setCustomerData(params.row);
+    setCustomerData({
+      ...params.row,
+      userId: params.row.userId.id_user,
+      id: params.row.id,
+    });
     setActions("edit");
     openModal();
   };
@@ -58,6 +85,17 @@ export const Customers = () => {
     setCustomerData(params.row);
     setActions("preview");
     openModal();
+  };
+
+  const handleDeleteAction = (params: any) => {
+    console.log(params.row);
+    setCustomerData({
+      ...params.row,
+      statusCustomer: "Inactivo",
+      id: params.row.id,
+      userId: params.row.userId.id_user,
+    });
+    setDeleteAction(true);
   };
 
   // get the active customers
@@ -118,7 +156,7 @@ export const Customers = () => {
           <TableInformation
             categories={customers}
             columns={customerColumns}
-            deleteCategory={deleteCustomer}
+            deleteCategory={handleDeleteAction}
             handleEditAction={handleEditAction}
             handlePreviewAction={handlePreviewAction}
           />

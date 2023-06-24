@@ -48,9 +48,9 @@ export class CustomerRepositoryImpl implements ICustomerRepository {
   async updateCustomer(
     idCustomer: number,
     customer: CustomerModel
-  ): Promise<ResponseAPI<boolean>> {
+  ): Promise<ResponseAPI<Customer>> {
     const response = await this.httpClient.put<
-      ResponseAPI<boolean>,
+      ResponseAPI<Customer>,
       CustomerModel
     >(`${this.baseUrl}/${idCustomer}`, customer);
     return response;

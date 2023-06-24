@@ -21,11 +21,11 @@ export const AppRouter = () => {
     return loggedIn ? children : <Navigate to="/" />;
   };
   const PublicRoute = ({ children }: any) => {
-    const selectedNavItem = localStorage.getItem("selectedNavItem");
+    const selectedNavItem = sessionStorage.getItem("selectedNavItem");
     const route =
       selectedNavItem && selectedNavItem !== "/"
         ? selectedNavItem
-        : "/private/users";
+        : "/private/inventory";
 
     return loggedIn ? <Navigate to={`${route}`} /> : children;
   };

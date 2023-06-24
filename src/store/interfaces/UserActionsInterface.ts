@@ -99,3 +99,7 @@ export interface CheckLoginFailureAction {
   type: UserActionsTypes.CHECK_LOGIN_FAILURE;
   payload: AppError;
 }
+
+export interface LogoutUserAction {
+  type: UserActionsTypes.LOGOUT_USER;
+}

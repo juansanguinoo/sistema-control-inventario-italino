@@ -56,10 +56,7 @@ import { GetOrderByReferenceUseCase } from "../domain/useCases/order/getOrderByR
 const container = new Container();
 
 // HttpClient
-container
-  .bind<IHttpClient>(TYPES.HttpClient)
-  .to(AxiosHttpClient)
-  .inSingletonScope();
+container.bind<IHttpClient>(TYPES.HttpClient).to(AxiosHttpClient);
 
 // BaseUrl
 container

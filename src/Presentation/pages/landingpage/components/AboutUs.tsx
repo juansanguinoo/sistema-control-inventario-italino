@@ -3,7 +3,7 @@ import Image7 from "../../../assets/image 7.svg";
 
 export const AboutUsLandingPage = () => {
   return (
-    <div className="about-us-landing">
+    <div className="about-us-landing" id="Nosotros">
       <div className="about-us-landing-content">
         <div className="about-us-title">
           <h1>Nuestra Empresa</h1>

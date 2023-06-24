@@ -2,7 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { RootState } from "../../store/store";
 import { useEffect } from "react";
-import { getCustomerByUserId } from "../../store/actions/customerActions";
+import {
+  getAllCustomers,
+  getCustomerByUserId,
+} from "../../store/actions/customerActions";
 
 export const useGetCustomerByUser = () => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
@@ -20,8 +23,10 @@ export const useGetCustomerByUser = () => {
   );
 
   useEffect(() => {
-    if (getUser?.id) {
-      dispatch(getCustomerByUserId(getUser.id));
+    if (getUser?.roleId.id_role === 1) {
+      dispatch(getAllCustomers());
+    } else {
+      dispatch(getCustomerByUserId(getUser?.id!));
     }
   }, []);
 
