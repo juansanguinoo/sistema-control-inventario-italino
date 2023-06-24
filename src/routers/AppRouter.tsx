@@ -33,10 +33,6 @@ export const AppRouter = () => {
   return (
     <Routes>
       <Route
-        path="/"
-        element={<PublicRoute children={<h1>Home</h1>}></PublicRoute>}
-      />
-      <Route
         path="/private/*"
         element={<PrivateRoute children={<DashboardRouter />}></PrivateRoute>}
       />
