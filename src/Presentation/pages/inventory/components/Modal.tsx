@@ -5,6 +5,8 @@ import { useGetCustomerByUser } from "../../../hooks/useGetCustomerByUser";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { addInventory } from "../../../../store/actions/inventoryActions";
+import Swal from "sweetalert2";
+
 interface IModalInventoryProps {
   onCloseModal?: () => void;
   inventoryData: InventoryModel;
@@ -26,8 +28,22 @@ export const ModalInventory = ({
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    dispatch(addInventory(sendData));
-    onCloseModal && onCloseModal();
+    // dispatch(addInventory(sendData));
+    if (sendData.quantity !== 0 && sendData.detail !== "") {
+      dispatch(addInventory(sendData));
+      Swal.fire(
+        "¡Buen trabajo!",
+        "¡Producto actualizado con éxito!",
+        "success"
+      );
+      onCloseModal && onCloseModal();
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "¡Debes llenar todos los campos!",
+      });
+    }
   };
 
   return (

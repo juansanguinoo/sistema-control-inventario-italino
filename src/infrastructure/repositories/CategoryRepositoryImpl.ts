@@ -13,7 +13,7 @@ export class CategoryRepositoryImpl implements ICategoryRepository {
 
   constructor(
     @inject(TYPES.HttpClient) httpClient: IHttpClient,
-    apiUrl = "http://localhost:3000"
+    apiUrl = import.meta.env.VITE_BACKEND_URL
   ) {
     this.httpClient = httpClient;
     this.baseUrl = `${apiUrl}/categories`;

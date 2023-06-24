@@ -184,6 +184,22 @@ export const Orders = () => {
     navigate(`orderDetail/${params.id}`);
   };
 
+  const deliveredOrders = orders.filter(
+    (order) => order.statusOrder === "Entregado"
+  );
+
+  const inProcessOrders = orders.filter(
+    (order) => order.statusOrder === "En-proceso"
+  );
+
+  const pendingOrders = orders.filter(
+    (order) => order.statusOrder === "Pendiente"
+  );
+
+  const canceledOrders = orders.filter(
+    (order) => order.statusOrder === "Cancelado"
+  );
+
   return (
     <div className={`orders-container ${navbarClass}`}>
       <div className="orders-header">
@@ -194,8 +210,20 @@ export const Orders = () => {
         />
       </div>
       <div className="orders-main">
-        <CardInformation icon={Bag} />
-        <CardInformation icon={Bag} />
+        <CardInformation
+          icon={Bag}
+          titles={[
+            "Total de ordenes",
+            "Ordenes entregadas",
+            "Ordenes en proceso",
+          ]}
+          data={[orders.length, deliveredOrders.length, inProcessOrders.length]}
+        />
+        <CardInformation
+          icon={Bag}
+          titles={["Ordenes pendientes", "Ordenes canceladas"]}
+          data={[pendingOrders.length, canceledOrders.length]}
+        />
         {orders.length > 0 ? (
           <TableInformation
             categories={orders}

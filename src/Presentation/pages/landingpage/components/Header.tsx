@@ -6,8 +6,6 @@ export const HeaderLandingPage = () => {
   const [isClicked, setIsClicked] = useState(false);
   const { isMobile } = useIsMobile();
 
-  useEffect(() => console.log(isClicked), [isClicked]);
-
   return (
     <div className="header-landing">
       {isMobile ? null : (

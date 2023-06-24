@@ -46,7 +46,6 @@ export const FormInventory = () => {
   });
 
   useEffect(() => {
-    console.log(inventoryData);
     const images = inventoryData.imageInventory?.split(",");
     if (images) {
       setFileData({
@@ -56,10 +55,6 @@ export const FormInventory = () => {
       });
     }
   }, [inventoryData]);
-
-  useEffect(() => {
-    console.log(fileData);
-  }, [fileData]);
 
   const categories = useSelector(
     (state: RootState) => state.categoryReducer.categories
@@ -91,8 +86,6 @@ export const FormInventory = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(send);
-    console.log(hasImage);
     if (send && hasImage) {
       const handleSendInformation = () => {
         if (
@@ -184,9 +177,9 @@ export const FormInventory = () => {
   };
 
   const handleUploadImages = async () => {
-    const cloudName = "dahcvsp9v";
-    const unsignedUploadPreset = "ProductosItalino";
-    const apiKey = "221939461327129";
+    const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+    const unsignedUploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+    const apiKey = import.meta.env.VITE_CLOUDINARY_API_KEY;
 
     const imagesPromise = Object.values(fileData)
       .filter((file) => file !== null && typeof file !== "string")
@@ -197,8 +190,6 @@ export const FormInventory = () => {
         formData.append("api_key", apiKey);
         formData.append("cloud_name", cloudName);
 
-        console.log(formData);
-
         return axios.post(
           `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
           formData
@@ -207,7 +198,6 @@ export const FormInventory = () => {
 
     try {
       const imagesResponse = await Promise.all(imagesPromise);
-      console.log(imagesResponse);
       const imagesUrl = imagesResponse.map((image) => image?.data.url);
       const urlsList = imagesUrl.join(", ");
       if (urlsList) {

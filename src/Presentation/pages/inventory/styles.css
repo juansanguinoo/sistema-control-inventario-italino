@@ -473,7 +473,7 @@
   outline: none;
 }
 
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 1400px) {
   .form {
     flex-direction: column;
     align-items: center;
