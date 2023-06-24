@@ -6,6 +6,12 @@ import User from "../../../assets/User.svg";
 import UserWhite from "../../../assets/UserWhite.svg";
 import Folder from "../../../assets/Folder.svg";
 import FolderWhite from "../../../assets/FolderWhite.svg";
+import Bookmark from "../../../assets/Bookmark.svg";
+import BookmarkWhite from "../../../assets/BookmarkWhite.svg";
+import Profile from "../../../assets/Profile.svg";
+import ProfileWhite from "../../../assets/ProfileWhite.svg";
+import Edit from "../../../assets/Edit.svg";
+import EditWhite from "../../../assets/EditWhite.svg";
 import { NavItemHome } from "./NavItem";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
@@ -36,7 +42,7 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
     >
       {isMobile ? null : (
         <div className="logo" onClick={toggleNavbar}>
-          LOGO
+          ITALINO
         </div>
       )}
       <ul className={`navigation`}>
@@ -87,8 +93,8 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
           (activity: any) => activity.id_activity === 5
         ) ? (
           <NavItemHome
-            icon={Folder}
-            iconWhite={FolderWhite}
+            icon={Bookmark}
+            iconWhite={BookmarkWhite}
             label="Categorías"
             to={"/private/category"}
           />
@@ -96,8 +102,8 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
 
         {getUser?.roleId.id_role === 1 ? (
           <NavItemHome
-            icon={Folder}
-            iconWhite={FolderWhite}
+            icon={Profile}
+            iconWhite={ProfileWhite}
             label="Usuarios"
             to={"/private/users"}
           />
@@ -105,8 +111,8 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
 
         {getUser?.roleId.id_role === 1 ? (
           <NavItemHome
-            icon={Folder}
-            iconWhite={FolderWhite}
+            icon={Edit}
+            iconWhite={EditWhite}
             label="Roles"
             to={"/private/role"}
           />

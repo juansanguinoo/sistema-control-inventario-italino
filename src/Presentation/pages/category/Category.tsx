@@ -1,5 +1,5 @@
 import "./styles.css";
-import Folder from "../../assets/Folder.svg";
+import Bookmark from "../../assets/Bookmark.svg";
 import { ModalCategory } from "./components/Modal";
 import { PageTitle } from "../../components/titles/PageTitle";
 import { HeaderButton } from "../../components/buttons/HeaderButton";
@@ -95,12 +95,12 @@ export const Category = () => {
 
   // get the active categories
   const activeCategories = categories.filter(
-    (category) => category.statusCategory === "Activo"
+    (category) => category.statusCategory == "Activo"
   );
 
   // get the inactive categories
   const inactiveCategories = categories.filter(
-    (category) => category.statusCategory === "Inactivo"
+    (category) => category.statusCategory == "Inactivo"
   );
 
   return (
@@ -114,12 +114,12 @@ export const Category = () => {
       </div>
       <div className="category-main">
         <CardInformation
-          icon={Folder}
+          icon={Bookmark}
           titles={["Total de categorías"]}
           data={[categories.length]}
         />
         <CardInformation
-          icon={Folder}
+          icon={Bookmark}
           titles={["Categorías activas", "Categorías inactivas"]}
           data={[activeCategories.length, inactiveCategories.length]}
         />

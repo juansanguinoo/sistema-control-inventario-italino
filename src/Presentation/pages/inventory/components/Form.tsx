@@ -177,9 +177,9 @@ export const FormInventory = () => {
   };
 
   const handleUploadImages = async () => {
-    const cloudName = "dahcvsp9v";
-    const unsignedUploadPreset = "ProductosItalino";
-    const apiKey = "221939461327129";
+    const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+    const unsignedUploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+    const apiKey = import.meta.env.VITE_CLOUDINARY_API_KEY;
 
     const imagesPromise = Object.values(fileData)
       .filter((file) => file !== null && typeof file !== "string")

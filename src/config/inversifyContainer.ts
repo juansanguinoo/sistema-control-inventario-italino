@@ -59,7 +59,9 @@ const container = new Container();
 container.bind<IHttpClient>(TYPES.HttpClient).to(AxiosHttpClient);
 
 // BaseUrl
-container.bind<string>(TYPES.BaseUrl).toConstantValue("http://localhost:3000");
+container
+  .bind<string>(TYPES.BaseUrl)
+  .toConstantValue(import.meta.env.VITE_BACKEND_URL);
 
 // Repositories
 container
