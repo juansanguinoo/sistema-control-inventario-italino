@@ -147,12 +147,6 @@ export const MainHome = () => {
     };
   });
 
-  // Imprimimos los resultados
-  console.log("Total de órdenes por mes:");
-  ordersPerMonth.forEach((data) => {
-    console.log(`${data.month}: ${data.totalOrders} órdenes`);
-  });
-
   return (
     <>
       <div className="dashboard">

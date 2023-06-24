@@ -31,6 +31,7 @@ export const DetailInventory = () => {
     imageInventory: "",
     publicatedInventory: false,
     category: "",
+    addInventory: [],
   });
 
   const inventories = useSelector(

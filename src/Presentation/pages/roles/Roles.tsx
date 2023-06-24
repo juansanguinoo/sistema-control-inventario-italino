@@ -1,5 +1,5 @@
 import "./styles.css";
-import Folder from "../../assets/Folder.svg";
+import Edit from "../../assets/Edit.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { RootState } from "../../../store/store";
@@ -110,12 +110,12 @@ export const Roles = () => {
       </div>
       <div className="rol-main">
         <CardInformation
-          icon={Folder}
+          icon={Edit}
           titles={["Total de roles"]}
           data={[roles.length]}
         />
         <CardInformation
-          icon={Folder}
+          icon={Edit}
           titles={["Roles activos", "Roles inactivos"]}
           data={[activeRoles.length, inactiveRoles.length]}
         />
