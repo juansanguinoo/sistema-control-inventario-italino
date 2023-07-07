@@ -12,6 +12,22 @@ export const ProductsLandingPage = () => {
     (state: RootState) => state.inventoryReducer.inventories
   );
 
+  const firstTenInventories = [];
+
+  for (let i = 0; i < inventories.length; i++) {
+    if (inventories[i]?.publicatedInventory === true) {
+      firstTenInventories.push(inventories[i]);
+    }
+
+    if (firstTenInventories.length === 10) {
+      break;
+    }
+  }
+
+  // const firstTenInventories = inventories.filter(
+  //   (inventory) => inventory.publicatedInventory === true
+  // ).slice(0, 10);
+
   useEffect(() => {
     dispatch(getInventory());
   }, [dispatch]);
@@ -23,7 +39,7 @@ export const ProductsLandingPage = () => {
           <h1>Nuestros Productos</h1>
         </div>
         <div className="products-cards">
-          {inventories.map((inventory: InventoryModel) => {
+          {firstTenInventories.map((inventory: InventoryModel) => {
             const image = inventory.imageInventory?.split(", ")[0];
             return (
               <div className="card-landing" key={inventory.id}>

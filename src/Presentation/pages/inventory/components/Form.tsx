@@ -109,7 +109,7 @@ export const FormInventory = () => {
             title: "Oops...",
             text: "¡Debes agregar un valor válido para el stock!",
           });
-        } else if (inventoryData.category === 0) {
+        } else if (inventoryData.categoryId === 0) {
           setSend(false);
           Swal.fire({
             icon: "error",
@@ -131,7 +131,7 @@ export const FormInventory = () => {
           inventoryData.referenceInventory !== "" &&
           inventoryData.descriptionInventory !== "" &&
           inventoryData.stockInventory > 0 &&
-          inventoryData.category !== 0
+          inventoryData.categoryId !== 0
         ) {
           if (params.id) {
             dispatch(updateInventory(inventoryData));
@@ -203,7 +203,7 @@ export const FormInventory = () => {
       if (urlsList) {
         setInventoryData((prevData) => ({
           ...prevData,
-          imageInventory: `${prevData.imageInventory}, ${urlsList}`,
+          imageInventory: urlsList,
         }));
         setHasImage(true);
       } else {

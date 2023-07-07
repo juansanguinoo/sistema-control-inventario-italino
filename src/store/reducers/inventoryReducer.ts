@@ -7,6 +7,7 @@ export interface InventoryState {
   inventories: InventoryModel[] | [];
   inventoryByNameOrReference: InventoryModel[] | [];
   inventoryToReport: InventoryModel | null;
+  inventoryByCategory: InventoryModel[] | [];
   error: Error | null;
 }
 
@@ -15,6 +16,7 @@ const initialState: InventoryState = {
   inventories: [],
   inventoryByNameOrReference: [],
   inventoryToReport: null,
+  inventoryByCategory: [],
   error: null,
 };
 
@@ -30,6 +32,7 @@ export const inventoryReducer = (
     case InventoryActionTypes.ADD_INVENTORY:
     case InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE:
     case InventoryActionTypes.GET_INVENTORY_TO_REPORT:
+    case InventoryActionTypes.GET_INVENTORIES_BY_CATEGORY_ID:
       return {
         ...state,
         loading: true,
@@ -60,6 +63,14 @@ export const inventoryReducer = (
         error: null,
       };
 
+    case InventoryActionTypes.GET_INVENTORIES_BY_CATEGORY_ID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        inventoryByCategory: action.payload,
+        error: null,
+      };
+
     case InventoryActionTypes.GET_INVENTORIES_FAILURE:
     case InventoryActionTypes.CREATE_INVENTORY_FAILURE:
     case InventoryActionTypes.UPDATE_INVENTORY_FAILURE:
@@ -86,6 +97,14 @@ export const inventoryReducer = (
         loading: false,
         error: action.payload,
         inventoryToReport: null,
+      };
+
+    case InventoryActionTypes.GET_INVENTORIES_BY_CATEGORY_ID_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+        inventoryByCategory: [],
       };
 
     case InventoryActionTypes.CREATE_INVENTORY_SUCCESS:
