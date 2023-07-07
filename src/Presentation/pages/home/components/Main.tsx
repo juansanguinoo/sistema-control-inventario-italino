@@ -42,11 +42,26 @@ export const MainHome = () => {
   const [productsMostSoldLabel, setProductsMostSoldLabel] = useState<any>([]);
   const [productsMostSoldData, setProductsMostSoldData] = useState<any>([]);
 
+  const months = [
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+    "julio",
+    "agosto",
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre",
+  ];
+
   useEffect(() => {
     // get just the top 5 products most sold from totalOrders.orderDetails.quantity is the quantity of the product and totalOrders.orderDetails.inventory.name_inventory is the product
 
     const products = totalOrders.map((order) => {
-      return order.orderDetails.map((detail: any) => {
+      return order.orderDetails?.map((detail: any) => {
         return {
           name: detail.inventory.name_inventory,
           quantity: detail.quantity,
@@ -142,18 +157,18 @@ export const MainHome = () => {
   };
 
   const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiempre",
+    "Octubre",
+    "Noviembre",
+    "Dicembre",
   ];
 
   const dataTable = {
@@ -181,21 +196,6 @@ export const MainHome = () => {
   const pendingOrders = orders.filter(
     (order) => order.statusOrder === "Pendiente"
   );
-
-  const months = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ];
 
   return (
     <>

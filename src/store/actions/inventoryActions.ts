@@ -12,6 +12,9 @@ import {
   GetInventoryAction,
   GetInventoryByNameOrReferenceAction,
   GetInventoryByNameOrReferenceFailureAction,
+  GetInventoryByNameOrReferenceFilterAction,
+  GetInventoryByNameOrReferenceFilterFailureAction,
+  GetInventoryByNameOrReferenceFilterSuccessAction,
   GetInventoryByNameOrReferenceSuccessAction,
   GetInventoryFailureAction,
   GetInventorySuccessAction,
@@ -59,6 +62,9 @@ export type InventoryAction =
   | GetInventoryByNameOrReferenceAction
   | GetInventoryByNameOrReferenceSuccessAction
   | GetInventoryByNameOrReferenceFailureAction
+  | GetInventoryByNameOrReferenceFilterAction
+  | GetInventoryByNameOrReferenceFilterSuccessAction
+  | GetInventoryByNameOrReferenceFilterFailureAction
   | GetInventoryToReportAction
   | GetInventoryToReportSuccessAction
   | GetInventoryToReportFailureAction;
@@ -201,6 +207,34 @@ export const getInventoryByNameOrRefrence = (nameOrRefrence: string) => {
       );
       dispatch({
         type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const getInventoryByNameOrRefrenceFilter = (nameOrRefrence: string) => {
+  return async (dispatch: Dispatch) => {
+    const useCase = container.get<GetInventoryByNameOrReferenceUseCase>(
+      TYPES.GetInventoryByNameOrReferenceUseCase
+    );
+
+    dispatch({
+      type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_FILTER,
+    });
+
+    try {
+      const inventory = await useCase.execute(nameOrRefrence);
+      dispatch({
+        type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_SUCCESS_FILTER,
+        payload: adaptInventories(inventory.data!),
+      });
+    } catch (error: any) {
+      const handleError = new AppError(
+        `Ocurrió un error al obtener el inventario: ${error}`
+      );
+      dispatch({
+        type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_FAILURE_FILTER,
         payload: handleError,
       });
     }

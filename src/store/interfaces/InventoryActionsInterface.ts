@@ -86,6 +86,20 @@ export interface GetInventoryByNameOrReferenceFailureAction {
   payload: AppError;
 }
 
+export interface GetInventoryByNameOrReferenceFilterAction {
+  type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_FILTER;
+}
+
+export interface GetInventoryByNameOrReferenceFilterSuccessAction {
+  type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_SUCCESS_FILTER;
+  payload: InventoryModel[];
+}
+
+export interface GetInventoryByNameOrReferenceFilterFailureAction {
+  type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_FAILURE_FILTER;
+  payload: AppError;
+}
+
 export interface GetInventoryToReportAction {
   type: InventoryActionTypes.GET_INVENTORY_TO_REPORT;
 }

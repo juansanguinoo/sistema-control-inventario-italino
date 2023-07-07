@@ -29,6 +29,7 @@ export const inventoryReducer = (
     case InventoryActionTypes.DELETE_INVENTORY:
     case InventoryActionTypes.ADD_INVENTORY:
     case InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE:
+    case InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_FILTER:
     case InventoryActionTypes.GET_INVENTORY_TO_REPORT:
       return {
         ...state,
@@ -60,11 +61,20 @@ export const inventoryReducer = (
         error: null,
       };
 
+    case InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_SUCCESS_FILTER:
+      return {
+        ...state,
+        loading: false,
+        inventories: action.payload,
+        error: null,
+      };
+
     case InventoryActionTypes.GET_INVENTORIES_FAILURE:
     case InventoryActionTypes.CREATE_INVENTORY_FAILURE:
     case InventoryActionTypes.UPDATE_INVENTORY_FAILURE:
     case InventoryActionTypes.DELETE_INVENTORY_FAILURE:
     case InventoryActionTypes.ADD_INVENTORY_FAILURE:
+    case InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_FAILURE_FILTER:
       return {
         ...state,
         loading: false,

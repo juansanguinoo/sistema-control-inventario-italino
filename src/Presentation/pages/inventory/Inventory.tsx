@@ -6,10 +6,11 @@ import { RootState } from "../../../store/store";
 import { CardInformation } from "../../components/cards/CardInformation";
 import { TableInformation } from "../../components/tables/TableInformation";
 import { Dispatch } from "redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   deleteInventory,
   getInventory,
+  getInventoryByNameOrRefrenceFilter,
 } from "../../../store/actions/inventoryActions";
 import { inventoryColumns } from "../../utils/columnsDataTable";
 import { LinkButton } from "../../components/buttons/LinkButton";
@@ -20,6 +21,7 @@ import { useGetInventoryInformation } from "../../hooks/useGetInventoryInformati
 export const Inventory = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
+  const [search, setSearch] = useState("");
   const inventories: InventoryModel[] = useSelector(
     (state: RootState) => state.inventoryReducer.inventories
   );
@@ -27,6 +29,10 @@ export const Inventory = () => {
     (state: RootState) => state.navbarReducer.stateOpen
   );
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
+
+  const handleSearch = () => {
+    dispatch(getInventoryByNameOrRefrenceFilter(search));
+  };
 
   useEffect(() => {
     dispatch(getInventory());
@@ -64,6 +70,23 @@ export const Inventory = () => {
           ]}
           data={[totalStock, inactiveProducts.length, publishedProducts.length]}
         />
+        <div className="main-reports">
+          <div className="main-reports-search-container">
+            <input
+              type="text"
+              placeholder="Buscar por nombre o referencia"
+              className="main-reports-search-container-input-text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button
+              className="main-reports-search-container-input-button"
+              onClick={handleSearch}
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
         <TableInformation
           categories={inventories}
           columns={inventoryColumns}

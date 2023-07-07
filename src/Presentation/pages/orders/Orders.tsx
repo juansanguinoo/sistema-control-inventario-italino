@@ -51,6 +51,11 @@ export const Orders = () => {
 
   const orderColumns = [
     {
+      field: "referenceOrder",
+      headerName: "Referencia",
+      width: 120,
+    },
+    {
       field: "Customer",
       headerName: "Nombre del cliente",
       width: 260,

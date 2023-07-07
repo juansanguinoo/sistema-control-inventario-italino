@@ -202,8 +202,12 @@ export const ModalOrders = ({
       setInventoriesFiltered([]);
       return;
     } else {
-      const filtered = inventories.filter((inventory) =>
-        inventory.nameInventory.toLowerCase().includes(search.toLowerCase())
+      const filtered = inventories.filter(
+        (inventory) =>
+          inventory.nameInventory
+            .toLowerCase()
+            .includes(search.toLowerCase()) &&
+          inventory.statusInventory === "Activo"
       );
       setInventoriesFiltered(filtered);
     }
@@ -321,8 +325,8 @@ export const ModalOrders = ({
                     value={dataToSend.statusOrder}
                   >
                     <option value="Pendiente">Pendiente</option>
-                    <option value="En-proceso">En-proceso</option>
                     <option value="Entregado">Entregado</option>
+                    <option value="Salida">Salida</option>
                   </select>
                 </div>
                 <div className="form-group">

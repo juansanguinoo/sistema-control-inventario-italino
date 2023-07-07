@@ -481,6 +481,7 @@
 
   background-color: #fff;
   border-radius: 1rem;
+  overflow-y: auto;
 }
 
 .dashboard-recent-orders ul {

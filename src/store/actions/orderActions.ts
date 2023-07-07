@@ -84,6 +84,8 @@ export const createOrder = (order: OrderRequest) => {
 
     try {
       const result = await useCase.execute(order);
+      console.log(result.data);
+      console.log(adaptOrder(result.data!));
 
       dispatch({
         type: OrderActionsTypes.CREATE_ORDER_SUCCESS,
