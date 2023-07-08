@@ -38,6 +38,15 @@ export class InventoryRepositoryImpl implements IInventoryRepository {
     return response;
   }
 
+  async getInventoriesByCategoryId(
+    categoryId: number
+  ): Promise<ResponseAPI<Inventory[]>> {
+    const response = await this.httpClient.get<ResponseAPI<Inventory[]>>(
+      `${this.baseUrl}/category/${categoryId}`
+    );
+    return response;
+  }
+
   async addInventory(
     addInventory: AddInventoryRequest
   ): Promise<ResponseAPI<Inventory>> {

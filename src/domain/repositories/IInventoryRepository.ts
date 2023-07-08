@@ -15,4 +15,7 @@ export interface IInventoryRepository {
     nameOrReference: string
   ): Promise<ResponseAPI<Inventory[]>>;
   getInventoryToReport(inventoryId: number): Promise<ResponseAPI<Inventory>>;
+  getInventoriesByCategoryId(
+    categoryId: number
+  ): Promise<ResponseAPI<Inventory[]>>;
 }

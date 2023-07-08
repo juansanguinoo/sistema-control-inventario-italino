@@ -23,6 +23,9 @@ const TYPES = {
     "GetInventoryByNameOrReferenceUseCase"
   ),
   GetInventoryToReportUseCase: Symbol.for("GetInventoryToReportUseCase"),
+  GetInventoriesByCategoryIdUseCase: Symbol.for(
+    "GetInventoriesByCategoryIdUseCase"
+  ),
 
   CreateUserUseCase: Symbol.for("CreateUserUseCase"),
   GetAllUsersUseCase: Symbol.for("GetAllUsersUseCase"),

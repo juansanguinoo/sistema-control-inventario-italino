@@ -21,6 +21,9 @@ import {
   UpdateInventoryAction,
   UpdateInventoryFailureAction,
   UpdateInventorySuccessAction,
+  GetInventoriesByCategoryIdAction,
+  GetInventoriesByCategoryIdSuccessAction,
+  GetInventoriesByCategoryIdFailureAction,
 } from "../interfaces/InventoryActionsInterface";
 import { container } from "../../config/inversifyContainer";
 import { GetInventoriesUseCase } from "../../domain/useCases/inventory/GetInventoriesUseCase";
@@ -39,6 +42,7 @@ import { AddInventoryUseCase } from "../../domain/useCases/inventory/AddInventor
 import { AddInventoryRequest } from "../../domain/models/AddInventoryRequest";
 import { GetInventoryByNameOrReferenceUseCase } from "../../domain/useCases/inventory/GetInventoryByNameOrReference";
 import { GetInventoryToReportUseCase } from "../../domain/useCases/inventory/GetInventoryToReport";
+import { GetInventoriesByCategoryIdUseCase } from "../../domain/useCases/inventory/getInventoriesByCategoryIdUseCase";
 
 export type InventoryAction =
   | GetInventoryAction
@@ -61,7 +65,10 @@ export type InventoryAction =
   | GetInventoryByNameOrReferenceFailureAction
   | GetInventoryToReportAction
   | GetInventoryToReportSuccessAction
-  | GetInventoryToReportFailureAction;
+  | GetInventoryToReportFailureAction
+  | GetInventoriesByCategoryIdAction
+  | GetInventoriesByCategoryIdSuccessAction
+  | GetInventoriesByCategoryIdFailureAction;
 
 export const getInventory = () => {
   return async (dispatch: Dispatch<InventoryAction>) => {
@@ -227,6 +234,32 @@ export const getInventoryToReport = (inventoryId: number) => {
       );
       dispatch({
         type: InventoryActionTypes.GET_INVENTORY_TO_REPORT_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const getInventoriesByCategoryId = (categoryId: number) => {
+  return async (dispatch: Dispatch) => {
+    const useCase = container.get<GetInventoriesByCategoryIdUseCase>(
+      TYPES.GetInventoriesByCategoryIdUseCase
+    );
+
+    dispatch({ type: InventoryActionTypes.GET_INVENTORIES_BY_CATEGORY_ID });
+
+    try {
+      const inventories = await useCase.execute(categoryId);
+      dispatch({
+        type: InventoryActionTypes.GET_INVENTORIES_BY_CATEGORY_ID_SUCCESS,
+        payload: adaptInventories(inventories.data!),
+      });
+    } catch (error: any) {
+      const handleError = new AppError(
+        `Ocurrió un error al obtener el inventario: ${error}`
+      );
+      dispatch({
+        type: InventoryActionTypes.GET_INVENTORIES_BY_CATEGORY_ID_FAILURE,
         payload: handleError,
       });
     }
