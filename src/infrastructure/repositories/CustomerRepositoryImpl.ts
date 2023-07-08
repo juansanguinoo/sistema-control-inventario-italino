@@ -21,6 +21,15 @@ export class CustomerRepositoryImpl implements ICustomerRepository {
     this.customUrl = `${apiUrl}/customersBySaller`;
   }
 
+  async getCustomerByNameOrNIT(
+    nameOrNit: string
+  ): Promise<ResponseAPI<Customer[]>> {
+    const response = await this.httpClient.get<ResponseAPI<Customer[]>>(
+      `${this.baseUrl}/search/${nameOrNit}`
+    );
+    return response;
+  }
+
   async getAllCustomers(): Promise<ResponseAPI<Customer[]>> {
     const response = await this.httpClient.get<ResponseAPI<Customer[]>>(
       this.baseUrl

@@ -32,6 +32,7 @@ export const orderReducer = (
     case OrderActionsTypes.CREATE_ORDER_RETURN:
     case OrderActionsTypes.GET_ORDER_AND_RETURN_BY_ID:
     case OrderActionsTypes.GET_ORDER_BY_REFERENCE:
+    case OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER:
       return {
         ...state,
         loading: true,
@@ -39,6 +40,14 @@ export const orderReducer = (
       };
 
     case OrderActionsTypes.GET_ALL_ORDERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        orders: action.payload,
+        error: null,
+      };
+
+    case OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -137,6 +146,7 @@ export const orderReducer = (
     case OrderActionsTypes.DELETE_ORDER_FAILURE:
     case OrderActionsTypes.GET_ORDERS_BY_USER_FAILURE:
     case OrderActionsTypes.CREATE_ORDER_RETURN_FAILURE:
+    case OrderActionsTypes.GET_ORDER_BY_REFERENCE_FAILURE:
       return {
         ...state,
         loading: false,

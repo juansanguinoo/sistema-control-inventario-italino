@@ -52,6 +52,7 @@ import { GetInventoryByNameOrReferenceUseCase } from "../domain/useCases/invento
 import { GetInventoryToReportUseCase } from "../domain/useCases/inventory/GetInventoryToReport";
 import { GetOrderAndReturnByIdUseCase } from "../domain/useCases/order/getOrderAndReturnByIdUseCase";
 import { GetOrderByReferenceUseCase } from "../domain/useCases/order/getOrderByReferenceUseCase";
+import { GetCustomersByNameOrNitUseCase } from "../domain/useCases/customer/GetCustomersByNameOrNit";
 
 const container = new Container();
 
@@ -180,6 +181,9 @@ container
 container
   .bind<GetCustomerByUserIdUseCase>(TYPES.GetCustomerByUserIdUseCase)
   .to(GetCustomerByUserIdUseCase);
+container
+  .bind<GetCustomersByNameOrNitUseCase>(TYPES.GetCustomersByNameOrNitUseCase)
+  .to(GetCustomersByNameOrNitUseCase);
 
 container
   .bind<CreateOrderUseCase>(TYPES.CreateOrderUseCase)

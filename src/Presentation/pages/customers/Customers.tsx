@@ -14,7 +14,10 @@ import { useGetCustomerByUser } from "../../hooks/useGetCustomerByUser";
 import { FilterMessage } from "../orders/components/FilterMessage";
 import Swal from "sweetalert2";
 import { Dispatch } from "redux";
-import { updateCustomer } from "../../../store/actions/customerActions";
+import {
+  getCustomersByNameOrNit,
+  updateCustomer,
+} from "../../../store/actions/customerActions";
 
 export const Customers = () => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
@@ -31,6 +34,7 @@ export const Customers = () => {
   const [actions, setActions] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
   const [deleteAction, setDeleteAction] = useState<boolean>(false);
+  const [search, setSearch] = useState("");
   const navbarOpen = useSelector(
     (state: RootState) => state.navbarReducer.stateOpen
   );
@@ -38,6 +42,10 @@ export const Customers = () => {
 
   const openModal = () => {
     setShowModal(true);
+  };
+
+  const handleSearch = () => {
+    dispatch(getCustomersByNameOrNit(search));
   };
 
   const closeModal = () => {
@@ -152,6 +160,23 @@ export const Customers = () => {
           titles={["Clientes agregados en el último mes"]}
           data={[totalCustomers.length]}
         />
+        <div className="main-reports">
+          <div className="main-reports-search-container">
+            <input
+              type="text"
+              placeholder="Buscar por nombre o NIT"
+              className="main-reports-search-container-input-text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button
+              className="main-reports-search-container-input-button"
+              onClick={handleSearch}
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
         {customers.length > 0 ? (
           <TableInformation
             categories={customers}

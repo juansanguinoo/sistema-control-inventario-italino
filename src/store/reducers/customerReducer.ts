@@ -25,10 +25,19 @@ export const customerReducer = (
     case CustomerActionsTypes.CREATE_CUSTOMER:
     case CustomerActionsTypes.UPDATE_CUSTOMER:
     case CustomerActionsTypes.DELETE_CUSTOMER:
+    case CustomerActionsTypes.GET_CUSTOMERS_BY_NAME_OR_NIT:
       return {
         ...state,
         loading: true,
         error: null,
+      };
+
+    case CustomerActionsTypes.GET_CUSTOMERS_BY_NAME_OR_NIT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        customers: action.payload,
       };
 
     case CustomerActionsTypes.GET_ALL_CUSTOMERS_SUCCESS:
@@ -51,6 +60,7 @@ export const customerReducer = (
     case CustomerActionsTypes.GET_ALL_CUSTOMERS_FAILURE:
     case CustomerActionsTypes.GET_CUSTOMER_BY_ID_FAILURE:
     case CustomerActionsTypes.GET_CUSTOMER_BY_USER_ID_FAILURE:
+    case CustomerActionsTypes.GET_CUSTOMERS_BY_NAME_OR_NIT_FAILURE:
       return {
         ...state,
         loading: false,

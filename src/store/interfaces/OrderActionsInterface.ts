@@ -127,3 +127,17 @@ export interface GetOrderByReferenceFailureAction {
   type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FAILURE;
   payload: AppError;
 }
+
+export interface GetOrderByReferenceFilterAction {
+  type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER;
+}
+
+export interface GetOrderByReferenceFilterSuccessAction {
+  type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER_SUCCESS;
+  payload: OrderResponseModel[];
+}
+
+export interface GetOrderByReferenceFilterFailureAction {
+  type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER_FAILURE;
+  payload: AppError;
+}

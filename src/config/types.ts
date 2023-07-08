@@ -45,6 +45,7 @@ const TYPES = {
   UpdateCustomerUseCase: Symbol.for("UpdateCustomerUseCase"),
   DeleteCustomerUseCase: Symbol.for("DeleteCustomerUseCase"),
   GetCustomerByUserIdUseCase: Symbol.for("GetCustomerByUserIdUseCase"),
+  GetCustomersByNameOrNitUseCase: Symbol.for("GetCustomersByNameOrNitUseCase"),
 
   CreateOrderUseCase: Symbol.for("CreateOrderUseCase"),
   GetAllOrdersUseCase: Symbol.for("GetAllOrdersUseCase"),

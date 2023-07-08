@@ -12,4 +12,5 @@ export interface ICustomerRepository {
   ): Promise<ResponseAPI<Customer>>;
   deleteCustomer(idCustomer: number): Promise<ResponseAPI<boolean>>;
   getCustomerByUserId(idUser: number): Promise<ResponseAPI<Customer[]>>;
+  getCustomerByNameOrNIT(nameOrNit: string): Promise<ResponseAPI<Customer[]>>;
 }

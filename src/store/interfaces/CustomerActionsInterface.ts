@@ -85,3 +85,17 @@ export interface GetCustomerByUserIdFailureAction {
   type: CustomerActionsTypes.GET_CUSTOMER_BY_USER_ID_FAILURE;
   payload: AppError;
 }
+
+export interface GetCustomersByNameOrNitAction {
+  type: CustomerActionsTypes.GET_CUSTOMERS_BY_NAME_OR_NIT;
+}
+
+export interface GetCustomersByNameOrNitSuccessAction {
+  type: CustomerActionsTypes.GET_CUSTOMERS_BY_NAME_OR_NIT_SUCCESS;
+  payload: CustomerModel[];
+}
+
+export interface GetCustomersByNameOrNitFailureAction {
+  type: CustomerActionsTypes.GET_CUSTOMERS_BY_NAME_OR_NIT_FAILURE;
+  payload: AppError;
+}

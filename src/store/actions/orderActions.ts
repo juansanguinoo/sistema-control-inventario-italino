@@ -18,6 +18,9 @@ import {
   GetOrderAndReturnByIdSuccessAction,
   GetOrderByReferenceAction,
   GetOrderByReferenceFailureAction,
+  GetOrderByReferenceFilterAction,
+  GetOrderByReferenceFilterFailureAction,
+  GetOrderByReferenceFilterSuccessAction,
   GetOrderByReferenceSuccessAction,
   GetOrderFailureAction,
   GetOrderSuccessAction,
@@ -74,7 +77,10 @@ export type OrderAction =
   | GetOrderAndReturnByIdFailureAction
   | GetOrderByReferenceAction
   | GetOrderByReferenceSuccessAction
-  | GetOrderByReferenceFailureAction;
+  | GetOrderByReferenceFailureAction
+  | GetOrderByReferenceFilterAction
+  | GetOrderByReferenceFilterSuccessAction
+  | GetOrderByReferenceFilterFailureAction;
 
 export const createOrder = (order: OrderRequest) => {
   return async (dispatch: Dispatch<OrderAction>) => {
@@ -284,6 +290,33 @@ export const getOrderByReference = (reference: string) => {
       );
       dispatch({
         type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const getOrderByReferenceFilter = (reference: string) => {
+  return async (dispatch: Dispatch<OrderAction>) => {
+    const useCase = container.get<GetOrderByReferenceUseCase>(
+      TYPES.GetOrderByReferenceUseCase
+    );
+
+    dispatch({ type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER });
+
+    try {
+      const result = await useCase.execute(reference);
+
+      dispatch({
+        type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER_SUCCESS,
+        payload: adaptOrders(result.data!),
+      });
+    } catch (error) {
+      const handleError = new AppError(
+        `Ocurrió un error al obtener la orden ${error}`
+      );
+      dispatch({
+        type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER_FAILURE,
         payload: handleError,
       });
     }
