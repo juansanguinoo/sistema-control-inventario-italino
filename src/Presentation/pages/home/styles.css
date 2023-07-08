@@ -130,7 +130,8 @@
 
 /* Estilos para el Main */
 .main {
-  height: calc(100vh - 60px);
+  min-height: 100vh;
+  height: calc(100% - 60px);
   background-color: #eef0fa;
   padding: 1rem;
   transition: margin-left 0.5s ease;

@@ -8,6 +8,7 @@ import {
   updateCustomer,
 } from "../../../../store/actions/customerActions";
 import Swal from "sweetalert2";
+import { useGetUser } from "../../../hooks/useGetUser";
 
 interface IModalCustomersProps {
   onCloseModal?: () => void;
@@ -21,6 +22,7 @@ export const ModalCustomers = ({
   action,
 }: IModalCustomersProps) => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
+  const { getUser } = useGetUser();
   const [customerData, setCustomerData] = useState<CustomerModel>({
     id: initialState?.id || 0,
     userId: initialState?.userId || 0,
@@ -50,7 +52,7 @@ export const ModalCustomers = ({
       if (action === "edit") {
         dispatch(updateCustomer(customerData.id!, customerData));
       } else {
-        dispatch(createCustomer(customerData));
+        dispatch(createCustomer({ ...customerData, userId: getUser?.id }));
       }
       Swal.fire("Buen trabajo!", "Cliente creado correctamente!", "success");
       onCloseModal && onCloseModal();

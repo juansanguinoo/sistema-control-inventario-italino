@@ -113,3 +113,17 @@ export interface GetInventoryToReportFailureAction {
   type: InventoryActionTypes.GET_INVENTORY_TO_REPORT_FAILURE;
   payload: AppError;
 }
+
+export interface GetInventoriesByCategoryIdAction {
+  type: InventoryActionTypes.GET_INVENTORIES_BY_CATEGORY_ID;
+}
+
+export interface GetInventoriesByCategoryIdSuccessAction {
+  type: InventoryActionTypes.GET_INVENTORIES_BY_CATEGORY_ID_SUCCESS;
+  payload: InventoryModel[];
+}
+
+export interface GetInventoriesByCategoryIdFailureAction {
+  type: InventoryActionTypes.GET_INVENTORIES_BY_CATEGORY_ID_FAILURE;
+  payload: AppError;
+}
