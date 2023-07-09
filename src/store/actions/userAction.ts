@@ -22,6 +22,9 @@ import {
   UpdateUserAction,
   UpdateUserFailureAction,
   UpdateUserSuccessAction,
+  UpdatePasswordAction,
+  UpdatePasswordFailureAction,
+  UpdatePasswordSuccessAction,
 } from "../interfaces/UserActionsInterface";
 import { container } from "../../config/inversifyContainer";
 import { GetAllUserUseCase } from "../../domain/useCases/user/GetAllUserUseCase";
@@ -37,6 +40,7 @@ import { UpdateUserUseCase } from "../../domain/useCases/user/UpdateUserUseCase"
 import { DeleteUserUseCase } from "../../domain/useCases/user/DeleteUserUseCase";
 import { LoginUserUseCase } from "../../domain/useCases/user/LoginUserUseCase";
 import { CheckLoginUserUseCase } from "../../domain/useCases/user/CheckLoginUserUseCase";
+import { UpdatePasswordUseCase } from "../../domain/useCases/user/UpdatePasswordUseCase";
 
 export type UserAction =
   | GetAllUsersAction
@@ -60,7 +64,10 @@ export type UserAction =
   | CheckLoginAction
   | CheckLoginSuccessAction
   | CheckLoginFailureAction
-  | LogoutUserAction;
+  | LogoutUserAction
+  | UpdatePasswordAction
+  | UpdatePasswordSuccessAction
+  | UpdatePasswordFailureAction;
 
 export const getAllUsers = () => {
   return async (dispatch: Dispatch<UserAction>) => {
@@ -248,5 +255,34 @@ export const logoutUser = () => {
   return async (dispatch: Dispatch<UserAction>) => {
     dispatch({ type: UserActionsTypes.LOGOUT_USER });
     sessionStorage.removeItem("token");
+  };
+};
+
+export const updatePassword = (
+  idUser: number,
+  password: string,
+  newPassword: string
+) => {
+  return async (dispatch: Dispatch<UserAction>) => {
+    const useCase = container.get<UpdatePasswordUseCase>(
+      TYPES.UpdatePasswordUseCase
+    );
+    dispatch({ type: UserActionsTypes.UPDATE_PASSWORD });
+
+    try {
+      const response = await useCase.execute(idUser, password, newPassword);
+      dispatch({
+        type: UserActionsTypes.UPDATE_PASSWORD_SUCCESS,
+        payload: adaptUser(response.data!),
+      });
+    } catch (error: any) {
+      const handleError = new AppError(
+        `Ocurrió un error al actualizar el usuario ${error}`
+      );
+      dispatch({
+        type: UserActionsTypes.UPDATE_PASSWORD_FAILURE,
+        payload: handleError,
+      });
+    }
   };
 };
