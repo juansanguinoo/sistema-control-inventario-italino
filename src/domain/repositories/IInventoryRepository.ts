@@ -1,6 +1,7 @@
 import { ResponseAPI } from "../../infrastructure/api/models/ResponseApi";
 import { AddInventoryRequest } from "../models/AddInventoryRequest";
 import { Inventory } from "../models/Inventory";
+import { InventoryInfoResponse } from "../models/InventoryInfoResponse";
 import { InventoryModel } from "../models/InventoryModel";
 
 export interface IInventoryRepository {
@@ -18,4 +19,5 @@ export interface IInventoryRepository {
   getInventoriesByCategoryId(
     categoryId: number
   ): Promise<ResponseAPI<Inventory[]>>;
+  getInventoryInfo(): Promise<ResponseAPI<InventoryInfoResponse>>;
 }

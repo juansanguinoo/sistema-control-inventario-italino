@@ -1,4 +1,5 @@
 import { AppError } from "../../domain/errors/AppError";
+import { CustomerInfoResponse } from "../../domain/models/CustomerInfoResponse";
 import { CustomerModel } from "../../domain/models/CustomerModel";
 import { CustomerActionsTypes } from "../enums/CustomerActionsEnum";
 
@@ -97,5 +98,19 @@ export interface GetCustomersByNameOrNitSuccessAction {
 
 export interface GetCustomersByNameOrNitFailureAction {
   type: CustomerActionsTypes.GET_CUSTOMERS_BY_NAME_OR_NIT_FAILURE;
+  payload: AppError;
+}
+
+export interface GetCustomerInfoAction {
+  type: CustomerActionsTypes.GET_CUSTOMER_INFO;
+}
+
+export interface GetCustomerInfoSuccessAction {
+  type: CustomerActionsTypes.GET_CUSTOMER_INFO_SUCCESS;
+  payload: CustomerInfoResponse;
+}
+
+export interface GetCustomerInfoFailureAction {
+  type: CustomerActionsTypes.GET_CUSTOMER_INFO_FAILURE;
   payload: AppError;
 }

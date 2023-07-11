@@ -27,6 +27,9 @@ import {
   GetInventoriesByCategoryIdAction,
   GetInventoriesByCategoryIdSuccessAction,
   GetInventoriesByCategoryIdFailureAction,
+  GetInventoryInfoAction,
+  GetInventoryInfoSuccessAction,
+  GetInventoryInfoFailureAction,
 } from "../interfaces/InventoryActionsInterface";
 import { container } from "../../config/inversifyContainer";
 import { GetInventoriesUseCase } from "../../domain/useCases/inventory/GetInventoriesUseCase";
@@ -46,6 +49,7 @@ import { AddInventoryRequest } from "../../domain/models/AddInventoryRequest";
 import { GetInventoryByNameOrReferenceUseCase } from "../../domain/useCases/inventory/GetInventoryByNameOrReference";
 import { GetInventoryToReportUseCase } from "../../domain/useCases/inventory/GetInventoryToReport";
 import { GetInventoriesByCategoryIdUseCase } from "../../domain/useCases/inventory/getInventoriesByCategoryIdUseCase";
+import { GetInventoryInfoUseCase } from "../../domain/useCases/inventory/GetInventoryInfoUseCase";
 
 export type InventoryAction =
   | GetInventoryAction
@@ -74,7 +78,10 @@ export type InventoryAction =
   | GetInventoryToReportFailureAction
   | GetInventoriesByCategoryIdAction
   | GetInventoriesByCategoryIdSuccessAction
-  | GetInventoriesByCategoryIdFailureAction;
+  | GetInventoriesByCategoryIdFailureAction
+  | GetInventoryInfoAction
+  | GetInventoryInfoSuccessAction
+  | GetInventoryInfoFailureAction;
 
 export const getInventory = () => {
   return async (dispatch: Dispatch<InventoryAction>) => {
@@ -232,6 +239,7 @@ export const getInventoryByNameOrRefrenceFilter = (nameOrRefrence: string) => {
 
     try {
       const inventory = await useCase.execute(nameOrRefrence);
+      console.log(inventory);
       dispatch({
         type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_SUCCESS_FILTER,
         payload: adaptInventories(inventory.data!),
@@ -294,6 +302,32 @@ export const getInventoriesByCategoryId = (categoryId: number) => {
       );
       dispatch({
         type: InventoryActionTypes.GET_INVENTORIES_BY_CATEGORY_ID_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const getInventoryInfo = () => {
+  return async (dispatch: Dispatch) => {
+    const useCase = container.get<GetInventoryInfoUseCase>(
+      TYPES.GetInventoryInfoUseCase
+    );
+
+    dispatch({ type: InventoryActionTypes.GET_INVENTORY_INFO });
+
+    try {
+      const inventoryInfo = await useCase.execute();
+      dispatch({
+        type: InventoryActionTypes.GET_INVENTORY_INFO_SUCCESS,
+        payload: inventoryInfo.data!,
+      });
+    } catch (error: any) {
+      const handleError = new AppError(
+        `Ocurrió un error al obtener el inventario: ${error}`
+      );
+      dispatch({
+        type: InventoryActionTypes.GET_INVENTORY_INFO_FAILURE,
         payload: handleError,
       });
     }

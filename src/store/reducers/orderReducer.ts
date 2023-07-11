@@ -1,3 +1,5 @@
+import { OrderInfoResponse } from "../../domain/models/OrderInfoResponse";
+import { OrderProductionResponseModel } from "../../domain/models/OrderProductionResponseModel";
 import { OrderResponseModel } from "../../domain/models/OrderResponseModel";
 import { OrderAction } from "../actions/orderActions";
 import { OrderActionsTypes } from "../enums/OrderActionsEnum";
@@ -8,6 +10,8 @@ export interface OrderState {
   ordersByReference: OrderResponseModel[] | [];
   orderToReport: OrderResponseModel | null;
   error: Error | null;
+  orderInfo: OrderInfoResponse | null;
+  ordersProduction: OrderProductionResponseModel[] | [];
 }
 
 const initialState: OrderState = {
@@ -16,6 +20,8 @@ const initialState: OrderState = {
   ordersByReference: [],
   orderToReport: null,
   error: null,
+  orderInfo: null,
+  ordersProduction: [],
 };
 
 export const orderReducer = (
@@ -33,9 +39,27 @@ export const orderReducer = (
     case OrderActionsTypes.GET_ORDER_AND_RETURN_BY_ID:
     case OrderActionsTypes.GET_ORDER_BY_REFERENCE:
     case OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER:
+    case OrderActionsTypes.GET_ORDER_STATS:
+    case OrderActionsTypes.GET_ORDERS_PRODUCTION:
       return {
         ...state,
         loading: true,
+        error: null,
+      };
+
+    case OrderActionsTypes.GET_ORDERS_PRODUCTION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        ordersProduction: action.payload,
+        error: null,
+      };
+
+    case OrderActionsTypes.GET_ORDER_STATS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        orderInfo: action.payload,
         error: null,
       };
 
@@ -136,6 +160,22 @@ export const orderReducer = (
         ...state,
         loading: false,
         orderToReport: null,
+        error: action.payload,
+      };
+
+    case OrderActionsTypes.GET_ORDER_STATS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        orderInfo: null,
+        error: action.payload,
+      };
+
+    case OrderActionsTypes.GET_ORDERS_PRODUCTION_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        ordersProduction: [],
         error: action.payload,
       };
 

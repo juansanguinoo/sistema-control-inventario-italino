@@ -37,7 +37,7 @@ export const Orders = () => {
     (state: RootState) => state.navbarReducer.stateOpen
   );
   const navigate = useNavigate();
-  const { orders } = useGetOrders();
+  const { orders, ordersInfo } = useGetOrders();
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
   const [orderData, setOrderData] = useState<OrderRequest>({
     id: 0,
@@ -122,8 +122,8 @@ export const Orders = () => {
                 }}
               >
                 <option value="Pendiente">Pendiente</option>
-                <option value="En-proceso">En-proceso</option>
                 <option value="Entregado">Entregado</option>
+                <option value="Salida">Salida</option>
               </select>
             )}
           </div>
@@ -197,22 +197,6 @@ export const Orders = () => {
     navigate(`orderDetail/${params.id}`);
   };
 
-  const deliveredOrders = orders.filter(
-    (order) => order.statusOrder === "Entregado"
-  );
-
-  const inProcessOrders = orders.filter(
-    (order) => order.statusOrder === "En-proceso"
-  );
-
-  const pendingOrders = orders.filter(
-    (order) => order.statusOrder === "Pendiente"
-  );
-
-  const canceledOrders = orders.filter(
-    (order) => order.statusOrder === "Cancelado"
-  );
-
   return (
     <div className={`orders-container ${navbarClass}`}>
       <div className="orders-header">
@@ -225,17 +209,20 @@ export const Orders = () => {
       <div className="orders-main">
         <CardInformation
           icon={Bag}
-          titles={[
-            "Total de ordenes",
-            "Ordenes entregadas",
-            "Ordenes en proceso",
+          titles={["Total de ordenes", "Ordenes entregadas", "Ordenes salida"]}
+          data={[
+            ordersInfo?.totalOrders,
+            ordersInfo?.totalOrdersPending,
+            ordersInfo?.totalOrdersDelivered,
           ]}
-          data={[orders.length, deliveredOrders.length, inProcessOrders.length]}
         />
         <CardInformation
           icon={Bag}
           titles={["Ordenes pendientes", "Ordenes canceladas"]}
-          data={[pendingOrders.length, canceledOrders.length]}
+          data={[
+            ordersInfo?.totalOrdersInProcess,
+            ordersInfo?.totalOrdersCanceled,
+          ]}
         />
         <div className="main-reports">
           <div className="main-reports-search-container">

@@ -1,3 +1,4 @@
+import { CustomerInfoResponse } from "../../domain/models/CustomerInfoResponse";
 import { CustomerModel } from "../../domain/models/CustomerModel";
 import { CustomerAction } from "../actions/customerActions";
 import { CustomerActionsTypes } from "../enums/CustomerActionsEnum";
@@ -6,12 +7,14 @@ export interface CustomerState {
   loading: boolean;
   customers: CustomerModel[] | [];
   error: Error | null;
+  customerInfo: CustomerInfoResponse | null;
 }
 
 const initialState: CustomerState = {
   loading: false,
   customers: [],
   error: null,
+  customerInfo: null,
 };
 
 export const customerReducer = (
@@ -26,6 +29,7 @@ export const customerReducer = (
     case CustomerActionsTypes.UPDATE_CUSTOMER:
     case CustomerActionsTypes.DELETE_CUSTOMER:
     case CustomerActionsTypes.GET_CUSTOMERS_BY_NAME_OR_NIT:
+    case CustomerActionsTypes.GET_CUSTOMER_INFO:
       return {
         ...state,
         loading: true,
@@ -53,6 +57,22 @@ export const customerReducer = (
         ...state,
         loading: false,
         error: action.payload,
+      };
+
+    case CustomerActionsTypes.GET_CUSTOMER_INFO_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        customerInfo: action.payload,
+      };
+
+    case CustomerActionsTypes.GET_CUSTOMER_INFO_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+        customerInfo: null,
       };
 
     case CustomerActionsTypes.CREATE_CUSTOMER_FAILURE:

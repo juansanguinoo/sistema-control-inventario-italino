@@ -26,6 +26,7 @@ const TYPES = {
   GetInventoriesByCategoryIdUseCase: Symbol.for(
     "GetInventoriesByCategoryIdUseCase"
   ),
+  GetInventoryInfoUseCase: Symbol.for("GetInventoryInfoUseCase"),
 
   CreateUserUseCase: Symbol.for("CreateUserUseCase"),
   GetAllUsersUseCase: Symbol.for("GetAllUsersUseCase"),
@@ -49,6 +50,7 @@ const TYPES = {
   DeleteCustomerUseCase: Symbol.for("DeleteCustomerUseCase"),
   GetCustomerByUserIdUseCase: Symbol.for("GetCustomerByUserIdUseCase"),
   GetCustomersByNameOrNitUseCase: Symbol.for("GetCustomersByNameOrNitUseCase"),
+  GetCustomerInfoUseCase: Symbol.for("GetCustomerInfoUseCase"),
 
   CreateOrderUseCase: Symbol.for("CreateOrderUseCase"),
   GetAllOrdersUseCase: Symbol.for("GetAllOrdersUseCase"),
@@ -58,6 +60,8 @@ const TYPES = {
   CreateOrderReturnUseCase: Symbol.for("CreateOrderReturnUseCase"),
   GetOrderAndReturnByIdUseCase: Symbol.for("GetOrderAndReturnByIdUseCase"),
   GetOrderByReferenceUseCase: Symbol.for("GetOrderByReferenceUseCase"),
+  GetOrderStatsUseCase: Symbol.for("GetOrderStatsUseCase"),
+  GetOrdersProductionUseCase: Symbol.for("GetOrdersProductionUseCase"),
 };
 
 export { TYPES };

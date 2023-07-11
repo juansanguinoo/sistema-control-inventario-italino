@@ -16,11 +16,12 @@ import { inventoryColumns } from "../../utils/columnsDataTable";
 import { LinkButton } from "../../components/buttons/LinkButton";
 import { useNavigate } from "react-router-dom";
 import { InventoryModel } from "../../../domain/models/InventoryModel";
-import { useGetInventoryInformation } from "../../hooks/useGetInventoryInformation";
+import { useGetInventoryInfo } from "../../hooks/useGetInventoryInfo";
 
 export const Inventory = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
+  const { inventoryInfo } = useGetInventoryInfo();
   const [search, setSearch] = useState("");
   const inventories: InventoryModel[] = useSelector(
     (state: RootState) => state.inventoryReducer.inventories
@@ -46,9 +47,6 @@ export const Inventory = () => {
     navigate(`product/${params.id}`);
   };
 
-  const { activeProducts, inactiveProducts, publishedProducts, totalStock } =
-    useGetInventoryInformation();
-
   return (
     <div className={`inventory-container ${navbarClass}`}>
       <div className="inventory-header">
@@ -59,7 +57,10 @@ export const Inventory = () => {
         <CardInformation
           icon={Folder}
           titles={["Todos los productos", "Productos activos"]}
-          data={[inventories.length, activeProducts.length]}
+          data={[
+            inventoryInfo?.totalInventories,
+            inventoryInfo?.activeInventories,
+          ]}
         />
         <CardInformation
           icon={Folder}
@@ -68,7 +69,11 @@ export const Inventory = () => {
             "Productos inactivos",
             "Productos publicados",
           ]}
-          data={[totalStock, inactiveProducts.length, publishedProducts.length]}
+          data={[
+            inventoryInfo?.totalStock,
+            inventoryInfo?.inactiveInventories,
+            inventoryInfo?.totalInventoriesPublished,
+          ]}
         />
         <div className="main-reports">
           <div className="main-reports-search-container">

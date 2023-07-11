@@ -118,6 +118,17 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
           />
         ) : null}
 
+        {getUser?.roleId.activities?.some(
+          (activity: any) => activity.id_activity === 5
+        ) ? (
+          <NavItemHome
+            icon={Bookmark}
+            iconWhite={BookmarkWhite}
+            label="Producción"
+            to={"/private/production"}
+          />
+        ) : null}
+
         {getUser?.roleId.id_role === 1 ? (
           <NavItemHome
             icon={Profile}

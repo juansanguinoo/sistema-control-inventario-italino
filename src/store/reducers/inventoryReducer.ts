@@ -1,3 +1,4 @@
+import { InventoryInfoResponse } from "../../domain/models/InventoryInfoResponse";
 import { InventoryModel } from "../../domain/models/InventoryModel";
 import { InventoryAction } from "../actions/inventoryActions";
 import { InventoryActionTypes } from "../enums/InventoryActionsEnum";
@@ -9,6 +10,7 @@ export interface InventoryState {
   inventoryToReport: InventoryModel | null;
   inventoryByCategory: InventoryModel[] | [];
   error: Error | null;
+  inventoryInfo: InventoryInfoResponse | null;
 }
 
 const initialState: InventoryState = {
@@ -18,6 +20,7 @@ const initialState: InventoryState = {
   inventoryToReport: null,
   inventoryByCategory: [],
   error: null,
+  inventoryInfo: null,
 };
 
 export const inventoryReducer = (
@@ -34,6 +37,7 @@ export const inventoryReducer = (
     case InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_FILTER:
     case InventoryActionTypes.GET_INVENTORY_TO_REPORT:
     case InventoryActionTypes.GET_INVENTORIES_BY_CATEGORY_ID:
+    case InventoryActionTypes.GET_INVENTORY_INFO:
       return {
         ...state,
         loading: true,
@@ -78,6 +82,23 @@ export const inventoryReducer = (
         loading: false,
         inventoryByCategory: action.payload,
         error: null,
+      };
+
+    case InventoryActionTypes.GET_INVENTORY_INFO_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        inventoryInfo: action.payload,
+        error: null,
+      };
+
+    case InventoryActionTypes.GET_INVENTORIES_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+        inventories: [],
+        inventoryInfo: null,
       };
 
     case InventoryActionTypes.GET_INVENTORIES_FAILURE:
