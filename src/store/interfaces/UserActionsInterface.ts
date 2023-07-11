@@ -103,3 +103,17 @@ export interface CheckLoginFailureAction {
 export interface LogoutUserAction {
   type: UserActionsTypes.LOGOUT_USER;
 }
+
+export interface UpdatePasswordAction {
+  type: UserActionsTypes.UPDATE_PASSWORD;
+}
+
+export interface UpdatePasswordSuccessAction {
+  type: UserActionsTypes.UPDATE_PASSWORD_SUCCESS;
+  payload: UserModel;
+}
+
+export interface UpdatePasswordFailureAction {
+  type: UserActionsTypes.UPDATE_PASSWORD_FAILURE;
+  payload: AppError;
+}

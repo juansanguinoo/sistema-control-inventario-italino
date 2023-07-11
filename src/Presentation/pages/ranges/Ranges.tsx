@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { getInventoriesByCategoryId } from "../../../store/actions/inventoryActions";
 import { getCategories } from "../../../store/actions/categoryActions";
 import Swal from "sweetalert2";
+import { FilterMessage } from "../orders/components/FilterMessage";
+import { HeaderButton } from "../../components/buttons/HeaderButton";
 
 export const Ranges = () => {
   const [value, setValue] = useState("");
@@ -29,7 +31,9 @@ export const Ranges = () => {
   }, [dispatch]);
 
   const handleSearch = () => {
-    const categoryId = categories.find((c) => c.nameCategory == value)?.id;
+    const categoryId = categories.find(
+      (c) => c.nameCategory.toLowerCase() === value.toLowerCase()
+    )?.id;
     if (categoryId) {
       dispatch(getInventoriesByCategoryId(categoryId));
     } else {
@@ -59,20 +63,36 @@ export const Ranges = () => {
         </div>
       </div>
       <div className="ranges-main">
-        {inventories.map((inventory) => {
-          const image = inventory.imageInventory?.split(", ")[0];
-          return (
-            <div className="ranges-card" key={inventory.id}>
-              <div className="ranges-card-img">
-                <img src={image} alt="" />
-              </div>
-              <div className="ranges-card-info">
-                <h3>{inventory.nameInventory}</h3>
-                <p>{inventory.referenceInventory}</p>
-              </div>
+        {inventories.length > 0 ? (
+          <>
+            {inventories.map((inventory) => {
+              const image = inventory.imageInventory?.split(", ")[0];
+              return (
+                <div className="ranges-card" key={inventory.id}>
+                  <div className="ranges-card-img">
+                    <img src={image} alt="" />
+                  </div>
+                  <div className="ranges-card-info">
+                    <h3>{inventory.nameInventory}</h3>
+                    <p>{inventory.referenceInventory}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </>
+        ) : (
+          <>
+            <div className="ranges-nosearches">
+              <FilterMessage
+                messageTitle={"Busca por categoría"}
+                messageParagraph={
+                  "Una vez busques por categorías, las podrás ver aquí."
+                }
+              />
             </div>
-          );
-        })}
+            ;
+          </>
+        )}
       </div>
     </div>
   );

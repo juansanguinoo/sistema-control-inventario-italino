@@ -10,4 +10,9 @@ export interface IUserRepository {
   deleteUser(idUser: number): Promise<ResponseAPI<boolean>>;
   loginUser(email: string, password: string): Promise<ResponseAPI<User>>;
   checkLogin(): Promise<ResponseAPI<User>>;
+  updatePassword(
+    idUser: number,
+    password: string,
+    newPassword: string
+  ): Promise<ResponseAPI<User>>;
 }

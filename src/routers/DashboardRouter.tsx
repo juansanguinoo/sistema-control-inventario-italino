@@ -18,6 +18,7 @@ import { DashboardReports } from "../Presentation/pages/home/DashboardReports";
 import { Ranges } from "../Presentation/pages/ranges/Ranges";
 import { Production } from "../Presentation/pages/production/Production";
 import { ViewProductionDetails } from "../Presentation/pages/production/ViewProductionDetails";
+import { UserInfo } from "../Presentation/pages/userInfo/UserInfo";
 
 export const DashboardRouter = () => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
@@ -52,6 +53,7 @@ export const DashboardRouter = () => {
           path="production/productionDetail/:id"
           element={<ViewProductionDetails />}
         />
+        <Route path="user-information" element={<UserInfo />} />
       </Routes>
     </>
   );
