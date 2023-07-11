@@ -69,4 +69,16 @@ export class UserRepositoryImpl implements IUserRepository {
     );
     return response;
   }
+
+  async updatePassword(
+    idUser: number,
+    password: string,
+    newPassword: string
+  ): Promise<ResponseAPI<User>> {
+    const response = await this.httpClient.put<
+      ResponseAPI<User>,
+      { password: string; newPassword: string }
+    >(`${this.baseUrl}/${idUser}/password`, { password, newPassword });
+    return response;
+  }
 }

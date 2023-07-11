@@ -53,6 +53,7 @@ import { GetInventoryToReportUseCase } from "../domain/useCases/inventory/GetInv
 import { GetOrderAndReturnByIdUseCase } from "../domain/useCases/order/getOrderAndReturnByIdUseCase";
 import { GetOrderByReferenceUseCase } from "../domain/useCases/order/getOrderByReferenceUseCase";
 import { GetInventoriesByCategoryIdUseCase } from "../domain/useCases/inventory/getInventoriesByCategoryIdUseCase";
+import { UpdatePasswordUseCase } from "../domain/useCases/user/UpdatePasswordUseCase";
 
 const container = new Container();
 
@@ -150,6 +151,9 @@ container.bind<LoginUserUseCase>(TYPES.LoginUserUseCase).to(LoginUserUseCase);
 container
   .bind<CheckLoginUserUseCase>(TYPES.CheckLoginUserUseCase)
   .to(CheckLoginUserUseCase);
+container
+  .bind<UpdatePasswordUseCase>(TYPES.UpdatePasswordUseCase)
+  .to(UpdatePasswordUseCase);
 
 container
   .bind<CreateRoleUseCase>(TYPES.CreateRoleUseCase)

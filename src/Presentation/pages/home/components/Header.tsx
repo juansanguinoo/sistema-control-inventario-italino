@@ -2,6 +2,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import Menu from "../../../assets/menu.svg";
 import { useIsMobile } from "../../../hooks/useIsMobile";
+import User from "../../../assets/HeaderUser.svg";
+import { useNavigate } from "react-router-dom";
 
 interface IHeaderProps {
   title: string;
@@ -9,6 +11,7 @@ interface IHeaderProps {
 }
 
 export const HeaderHome = ({ title, toggleMenu }: IHeaderProps) => {
+  const navigate = useNavigate();
   const navbarOpen = useSelector(
     (state: RootState) => state.navbarReducer.stateOpen
   );
@@ -22,6 +25,10 @@ export const HeaderHome = ({ title, toggleMenu }: IHeaderProps) => {
     }
   };
 
+  const handleUserIconCLick = () => {
+    navigate("user-information");
+  };
+
   return (
     <div className={`header ${navbarClass}`}>
       {isMobile ? (
@@ -30,7 +37,9 @@ export const HeaderHome = ({ title, toggleMenu }: IHeaderProps) => {
         </div>
       ) : (
         <>
-          <div className="title">{title}</div>
+          <div className="user-icon">
+            <img src={User} alt="user-icon" onClick={handleUserIconCLick} />
+          </div>
         </>
       )}
     </div>

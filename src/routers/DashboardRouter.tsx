@@ -16,6 +16,7 @@ import { ViewOrderDetails } from "../Presentation/pages/orders/ViewOrderDetails"
 import { Dashboard } from "../Presentation/pages/home/Dashboard";
 import { DashboardReports } from "../Presentation/pages/home/DashboardReports";
 import { Ranges } from "../Presentation/pages/ranges/Ranges";
+import { UserInfo } from "../Presentation/pages/userInfo/UserInfo";
 
 export const DashboardRouter = () => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
@@ -45,6 +46,7 @@ export const DashboardRouter = () => {
         <Route path="category" element={<Category />} />
         <Route path="users" element={<Users />} />
         <Route path="role" element={<Roles />} />
+        <Route path="user-information" element={<UserInfo />} />
       </Routes>
     </>
   );
