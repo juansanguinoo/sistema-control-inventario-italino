@@ -6,7 +6,7 @@ import User from "../../assets/Profile.svg";
 import Rol from "../../assets/Edit.svg";
 import Email from "../../assets/email.svg";
 import Phone from "../../assets/phone.svg";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import Lock from "../../assets/lock.svg";
 import { HeaderButton } from "../../components/buttons/HeaderButton";
 import Swal from "sweetalert2";

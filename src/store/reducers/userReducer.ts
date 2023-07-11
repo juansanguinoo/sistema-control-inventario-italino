@@ -33,6 +33,8 @@ export const userReducer = (
     case UserActionsTypes.LOGIN_USER:
     case UserActionsTypes.CHECK_LOGIN:
     case UserActionsTypes.UPDATE_PASSWORD:
+    case UserActionsTypes.FORGOT_PASSWORD:
+    case UserActionsTypes.RESET_PASSWORD:
       return {
         ...state,
         loading: true,
@@ -55,6 +57,8 @@ export const userReducer = (
     case UserActionsTypes.LOGIN_USER_FAILURE:
     case UserActionsTypes.CHECK_LOGIN_FAILURE:
     case UserActionsTypes.UPDATE_PASSWORD_FAILURE:
+    case UserActionsTypes.FORGOT_PASSWORD_FAILURE:
+    case UserActionsTypes.RESET_PASSWORD_FAILURE:
       return {
         ...state,
         loading: false,
@@ -90,6 +94,8 @@ export const userReducer = (
 
     case UserActionsTypes.UPDATE_USER_SUCCESS:
     case UserActionsTypes.UPDATE_PASSWORD_SUCCESS:
+    case UserActionsTypes.FORGOT_PASSWORD_SUCCESS:
+    case UserActionsTypes.RESET_PASSWORD_SUCCESS:
       return {
         ...state,
         loading: false,

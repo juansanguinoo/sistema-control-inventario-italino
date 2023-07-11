@@ -81,4 +81,23 @@ export class UserRepositoryImpl implements IUserRepository {
     >(`${this.baseUrl}/${idUser}/password`, { password, newPassword });
     return response;
   }
+
+  async forgotPassword(email: string): Promise<ResponseAPI<User>> {
+    const response = await this.httpClient.post<
+      ResponseAPI<User>,
+      { email: string }
+    >(`${this.baseUrl}-recover/forgot-password`, { email });
+    return response;
+  }
+
+  async resetPassword(
+    token: string,
+    newPassword: string
+  ): Promise<ResponseAPI<User>> {
+    const response = await this.httpClient.put<
+      ResponseAPI<User>,
+      { token: string; newPassword: string }
+    >(`${this.baseUrl}-reset/reset-password`, { token, newPassword });
+    return response;
+  }
 }

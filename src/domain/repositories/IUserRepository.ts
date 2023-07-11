@@ -15,4 +15,6 @@ export interface IUserRepository {
     password: string,
     newPassword: string
   ): Promise<ResponseAPI<User>>;
+  forgotPassword(email: string): Promise<ResponseAPI<User>>;
+  resetPassword(token: string, newPassword: string): Promise<ResponseAPI<User>>;
 }

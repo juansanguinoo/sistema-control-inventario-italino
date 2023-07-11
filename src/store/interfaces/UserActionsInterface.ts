@@ -117,3 +117,31 @@ export interface UpdatePasswordFailureAction {
   type: UserActionsTypes.UPDATE_PASSWORD_FAILURE;
   payload: AppError;
 }
+
+export interface ForgotPasswordAction {
+  type: UserActionsTypes.FORGOT_PASSWORD;
+}
+
+export interface ForgotPasswordSuccessAction {
+  type: UserActionsTypes.FORGOT_PASSWORD_SUCCESS;
+  payload: UserModel;
+}
+
+export interface ForgotPasswordFailureAction {
+  type: UserActionsTypes.FORGOT_PASSWORD_FAILURE;
+  payload: AppError;
+}
+
+export interface ResetPasswordAction {
+  type: UserActionsTypes.RESET_PASSWORD;
+}
+
+export interface ResetPasswordSuccessAction {
+  type: UserActionsTypes.RESET_PASSWORD_SUCCESS;
+  payload: UserModel;
+}
+
+export interface ResetPasswordFailureAction {
+  type: UserActionsTypes.RESET_PASSWORD_FAILURE;
+  payload: AppError;
+}
