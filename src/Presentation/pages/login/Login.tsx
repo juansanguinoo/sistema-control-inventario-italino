@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { loginUser } from "../../../store/actions/userAction";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
@@ -93,6 +94,15 @@ export const Login = () => {
                     />
                   </>
                 )}
+                <>
+                  <div className="forgot-password">
+                    <p>
+                      <Link to="/recover-password">
+                        ¿Olvidaste tu contraseña?
+                      </Link>
+                    </p>
+                  </div>
+                </>
               </div>
               <button type="submit" className="login-button">
                 Iniciar sesión

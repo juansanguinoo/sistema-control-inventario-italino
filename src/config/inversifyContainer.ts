@@ -59,6 +59,8 @@ import { GetCustomerInfoUseCase } from "../domain/useCases/customer/GetCustomerI
 import { GetOrderStatsUseCase } from "../domain/useCases/order/GetOrderStatsUseCase";
 import { GetOrdersProductionUseCase } from "../domain/useCases/order/GetOrderProductionUseCase";
 import { UpdatePasswordUseCase } from "../domain/useCases/user/UpdatePasswordUseCase";
+import { ForgotPasswordUseCase } from "../domain/useCases/user/ForgotPasswordUseCase";
+import { ResetPasswordUseCase } from "../domain/useCases/user/ResetPasswordUseCase";
 
 const container = new Container();
 
@@ -152,6 +154,12 @@ container
 container
   .bind<UpdatePasswordUseCase>(TYPES.UpdatePasswordUseCase)
   .to(UpdatePasswordUseCase);
+container
+  .bind<ForgotPasswordUseCase>(TYPES.ForgotPasswordUseCase)
+  .to(ForgotPasswordUseCase);
+container
+  .bind<ResetPasswordUseCase>(TYPES.ResetPasswordUseCase)
+  .to(ResetPasswordUseCase);
 
 container
   .bind<CreateRoleUseCase>(TYPES.CreateRoleUseCase)

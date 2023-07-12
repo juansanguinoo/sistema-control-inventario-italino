@@ -1,0 +1,144 @@
+.recover-password {
+  height: 100vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.recover-password-container {
+  border: 1px solid #8b8d97;
+  border-radius: 1rem;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.recover-password h2 {
+  margin-bottom: 0.5rem;
+}
+
+.recover-password p {
+  margin-bottom: 1rem;
+  color: #8b8d97;
+  font-size: 12px;
+}
+
+.recover-form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-item-recover {
+  margin-bottom: 1.5rem;
+}
+
+.form-item-recover label {
+  color: #8b8d97;
+  font-size: 10px;
+}
+
+.form-item-recover input {
+  width: 100%;
+  padding: 12px;
+  background-color: #eff1f9;
+  border: none;
+  border-radius: 1rem;
+}
+
+.recover-button {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: #5570f1;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.recover-button:hover {
+  background-color: #3e4af1;
+}
+
+.go-to-login {
+  color: #8b8d97;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.go-to-login:hover {
+  color: #5570f1;
+  text-decoration: underline;
+}
+
+.reset-password {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.reset-password-container {
+  border: 1px solid #8b8d97;
+  border-radius: 1rem;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.reset-password-title {
+  width: 100%;
+  height: 80px;
+}
+
+.reset-password-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-reset-password {
+  margin-bottom: 2rem;
+
+  display: block;
+}
+
+.form-reset-password label {
+  color: #8b8d97;
+  font-size: 12px;
+}
+
+.form-reset-password input {
+  width: 100%;
+  padding: 12px;
+  background-color: #eff1f9;
+  border: none;
+  border-radius: 1rem;
+}
+
+.form-reset-password button {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: #5570f1;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
