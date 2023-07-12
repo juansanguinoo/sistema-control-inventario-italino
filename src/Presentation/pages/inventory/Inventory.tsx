@@ -16,6 +16,7 @@ import { LinkButton } from "../../components/buttons/LinkButton";
 import { useNavigate } from "react-router-dom";
 import { InventoryModel } from "../../../domain/models/InventoryModel";
 import { useGetInventoryInformation } from "../../hooks/useGetInventoryInformation";
+import { FilterMessage } from "../orders/components/FilterMessage";
 
 export const Inventory = () => {
   const navigate = useNavigate();
@@ -64,14 +65,26 @@ export const Inventory = () => {
           ]}
           data={[totalStock, inactiveProducts.length, publishedProducts.length]}
         />
-        <TableInformation
-          categories={inventories}
-          columns={inventoryColumns}
-          deleteCategory={deleteInventory}
-          handleEditAction={handleEditAction}
-          handlePreviewAction={handlePreviewAction}
-          showDelete={false}
-        />
+        {inventories.length > 0 ? (
+          <TableInformation
+            categories={inventories}
+            columns={inventoryColumns}
+            deleteCategory={deleteInventory}
+            handleEditAction={handleEditAction}
+            handlePreviewAction={handlePreviewAction}
+            showDelete={false}
+          />
+        ) : (
+          <div className="customers-nocustomers">
+            <FilterMessage
+              messageTitle={"¿No tienes productos aún?"}
+              messageParagraph={"Una vez crees productos, los podrás ver aquí."}
+            />
+            <div className="customer-add-customer">
+              <LinkButton title="Crear Producto" />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

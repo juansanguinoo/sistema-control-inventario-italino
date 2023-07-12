@@ -28,6 +28,7 @@ export const ModalCustomers = ({
     userId: initialState?.userId || 0,
     nameCustomer: initialState?.nameCustomer || "",
     nitCustomer: initialState?.nitCustomer || "",
+    emailCustomer: initialState?.emailCustomer || "",
     addressCustomer: initialState?.addressCustomer || "",
     phoneCustomer: initialState?.phoneCustomer || "",
     statusCustomer: initialState?.statusCustomer || "Activo",
@@ -39,6 +40,7 @@ export const ModalCustomers = ({
       customerData.userId === undefined ||
       customerData.nameCustomer === "" ||
       customerData.nitCustomer === "" ||
+      customerData.emailCustomer === "" ||
       customerData.addressCustomer === "" ||
       customerData.phoneCustomer === "" ||
       customerData.statusCustomer === ""
@@ -48,14 +50,24 @@ export const ModalCustomers = ({
         title: "Oops...",
         text: "Por favor completa todos los campos",
       });
-    } else {
-      if (action === "edit") {
-        dispatch(updateCustomer(customerData.id!, customerData));
+    } else if (customerData.emailCustomer !== "") {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      const isValidEmail = emailRegex.test(customerData.emailCustomer);
+      if (!isValidEmail) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Por favor ingresa un correo válido",
+        });
       } else {
-        dispatch(createCustomer({ ...customerData, userId: getUser?.id }));
+        if (action === "edit") {
+          dispatch(updateCustomer(customerData.id!, customerData));
+        } else {
+          dispatch(createCustomer({ ...customerData, userId: getUser?.id }));
+        }
+        Swal.fire("Buen trabajo!", "Cliente creado correctamente!", "success");
+        onCloseModal && onCloseModal();
       }
-      Swal.fire("Buen trabajo!", "Cliente creado correctamente!", "success");
-      onCloseModal && onCloseModal();
     }
   };
 
@@ -95,6 +107,20 @@ export const ModalCustomers = ({
                   setCustomerData((prevData) => ({
                     ...prevData,
                     nitCustomer: event.target.value,
+                  }))
+                }
+              />
+            </div>
+            <div className="form-group-customers">
+              <input
+                type="text"
+                id="customerEmail"
+                placeholder="Agregar correo electrónico"
+                value={customerData.emailCustomer}
+                onChange={(event) =>
+                  setCustomerData((prevData) => ({
+                    ...prevData,
+                    emailCustomer: event.target.value,
                   }))
                 }
               />

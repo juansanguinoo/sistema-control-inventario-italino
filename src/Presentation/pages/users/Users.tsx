@@ -13,6 +13,7 @@ import { getAllUsers, updateUser } from "../../../store/actions/userAction";
 import { ModalUsers } from "./components/Modal";
 import { UserModel } from "../../../domain/models/UserModel";
 import Swal from "sweetalert2";
+import { FilterMessage } from "../orders/components/FilterMessage";
 
 export const Users = () => {
   const [userData, setUserData] = useState<UserModel>({
@@ -121,13 +122,28 @@ export const Users = () => {
           titles={["Usuarios activos", "Usuarios inactivos"]}
           data={[activeUsers.length, inactiveUsers.length]}
         />
-        <TableInformation
-          categories={users}
-          columns={userColumns}
-          deleteCategory={handleDeleteAction}
-          handleEditAction={handleEditAction}
-          handlePreviewAction={handlePreviewAction}
-        />
+        {users.length > 0 ? (
+          <TableInformation
+            categories={users}
+            columns={userColumns}
+            deleteCategory={handleDeleteAction}
+            handleEditAction={handleEditAction}
+            handlePreviewAction={handlePreviewAction}
+          />
+        ) : (
+          <div className="customers-nocustomers">
+            <FilterMessage
+              messageTitle={"¿No tienes usuarios aún?"}
+              messageParagraph={"Una vez crees usuarios, los podrás ver aquí."}
+            />
+            <div className="customer-add-customer">
+              <HeaderButton
+                title="Crear un nuevo usuario"
+                handleFunction={openModal}
+              />
+            </div>
+          </div>
+        )}
         {showModal && (
           <ModalUsers
             onCloseModal={closeModal}

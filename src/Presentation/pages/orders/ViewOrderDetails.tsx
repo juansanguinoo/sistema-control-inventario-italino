@@ -123,7 +123,7 @@ export const ViewOrderDetails = () => {
           titles={["Telefono", "Correo", "Dirección del cliente"]}
           data={[
             customer?.phone_customer,
-            "customer@mail.com",
+            customer?.email_customer,
             customer?.address_customer,
           ]}
         />

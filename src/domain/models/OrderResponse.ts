@@ -5,6 +5,7 @@ export interface OrderResponse {
   user: any;
   order_details: any;
   status_order: string;
+  description_order: string;
   payment_order: string;
   type_order: string;
   total_order: number;

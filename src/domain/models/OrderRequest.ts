@@ -6,6 +6,7 @@ export interface OrderRequest {
   customerId: number;
   userId: number;
   statusOrder: string;
+  descriptionOrder: string;
   paymentOrder: string;
   typeOrder: string;
   totalOrder: number;
