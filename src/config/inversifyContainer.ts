@@ -52,7 +52,12 @@ import { GetInventoryByNameOrReferenceUseCase } from "../domain/useCases/invento
 import { GetInventoryToReportUseCase } from "../domain/useCases/inventory/GetInventoryToReport";
 import { GetOrderAndReturnByIdUseCase } from "../domain/useCases/order/getOrderAndReturnByIdUseCase";
 import { GetOrderByReferenceUseCase } from "../domain/useCases/order/getOrderByReferenceUseCase";
+import { GetCustomersByNameOrNitUseCase } from "../domain/useCases/customer/GetCustomersByNameOrNit";
 import { GetInventoriesByCategoryIdUseCase } from "../domain/useCases/inventory/getInventoriesByCategoryIdUseCase";
+import { GetInventoryInfoUseCase } from "../domain/useCases/inventory/GetInventoryInfoUseCase";
+import { GetCustomerInfoUseCase } from "../domain/useCases/customer/GetCustomerInfoUseCase";
+import { GetOrderStatsUseCase } from "../domain/useCases/order/GetOrderStatsUseCase";
+import { GetOrdersProductionUseCase } from "../domain/useCases/order/GetOrderProductionUseCase";
 import { UpdatePasswordUseCase } from "../domain/useCases/user/UpdatePasswordUseCase";
 import { ForgotPasswordUseCase } from "../domain/useCases/user/ForgotPasswordUseCase";
 import { ResetPasswordUseCase } from "../domain/useCases/user/ResetPasswordUseCase";
@@ -70,28 +75,18 @@ container
 // Repositories
 container
   .bind<ICategoryRepository>(TYPES.ICategoryRepository)
-  .to(CategoryRepositoryImpl)
-  .inSingletonScope();
-container
-  .bind<IUserRepository>(TYPES.IUserRepository)
-  .to(UserRepositoryImpl)
-  .inSingletonScope();
-container
-  .bind<IRoleRepository>(TYPES.IRoleRepository)
-  .to(RoleRepositoryImpl)
-  .inSingletonScope();
+  .to(CategoryRepositoryImpl);
+container.bind<IUserRepository>(TYPES.IUserRepository).to(UserRepositoryImpl);
+container.bind<IRoleRepository>(TYPES.IRoleRepository).to(RoleRepositoryImpl);
 container
   .bind<IInventoryRepository>(TYPES.IInventoryRepository)
-  .to(InventoryRepositoryImpl)
-  .inSingletonScope();
+  .to(InventoryRepositoryImpl);
 container
   .bind<ICustomerRepository>(TYPES.ICustomerRepository)
-  .to(CustomerRepositoryImpl)
-  .inSingletonScope();
+  .to(CustomerRepositoryImpl);
 container
   .bind<IOrderRepository>(TYPES.IOrderRepository)
-  .to(OrderRepositoryImpl)
-  .inSingletonScope();
+  .to(OrderRepositoryImpl);
 
 // UseCases
 container
@@ -135,6 +130,9 @@ container
     TYPES.GetInventoriesByCategoryIdUseCase
   )
   .to(GetInventoriesByCategoryIdUseCase);
+container
+  .bind<GetInventoryInfoUseCase>(TYPES.GetInventoryInfoUseCase)
+  .to(GetInventoryInfoUseCase);
 
 container
   .bind<CreateUserUseCase>(TYPES.CreateUserUseCase)
@@ -198,6 +196,12 @@ container
 container
   .bind<GetCustomerByUserIdUseCase>(TYPES.GetCustomerByUserIdUseCase)
   .to(GetCustomerByUserIdUseCase);
+container
+  .bind<GetCustomersByNameOrNitUseCase>(TYPES.GetCustomersByNameOrNitUseCase)
+  .to(GetCustomersByNameOrNitUseCase);
+container
+  .bind<GetCustomerInfoUseCase>(TYPES.GetCustomerInfoUseCase)
+  .to(GetCustomerInfoUseCase);
 
 container
   .bind<CreateOrderUseCase>(TYPES.CreateOrderUseCase)
@@ -223,5 +227,11 @@ container
 container
   .bind<GetOrderByReferenceUseCase>(TYPES.GetOrderByReferenceUseCase)
   .to(GetOrderByReferenceUseCase);
+container
+  .bind<GetOrderStatsUseCase>(TYPES.GetOrderStatsUseCase)
+  .to(GetOrderStatsUseCase);
+container
+  .bind<GetOrdersProductionUseCase>(TYPES.GetOrdersProductionUseCase)
+  .to(GetOrdersProductionUseCase);
 
 export { container };

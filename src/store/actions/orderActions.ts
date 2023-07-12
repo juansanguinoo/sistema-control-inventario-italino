@@ -18,12 +18,21 @@ import {
   GetOrderAndReturnByIdSuccessAction,
   GetOrderByReferenceAction,
   GetOrderByReferenceFailureAction,
+  GetOrderByReferenceFilterAction,
+  GetOrderByReferenceFilterFailureAction,
+  GetOrderByReferenceFilterSuccessAction,
   GetOrderByReferenceSuccessAction,
   GetOrderFailureAction,
+  GetOrderStatsAction,
+  GetOrderStatsFailureAction,
+  GetOrderStatsSuccessAction,
   GetOrderSuccessAction,
   GetOrdersByUserAction,
   GetOrdersByUserFailureAction,
   GetOrdersByUserSuccessAction,
+  GetOrdersProductionAction,
+  GetOrdersProductionFailureAction,
+  GetOrdersProductionSuccessAction,
   UpdateOrderAction,
   UpdateOrderFailureAction,
   UpdateOrderSuccessAction,
@@ -37,6 +46,7 @@ import { OrderRequest } from "../../domain/models/OrderRequest";
 import {
   adaptOrder,
   adaptOrders,
+  adaptOrdersProduction,
 } from "../../infrastructure/adapters/orderAdapter";
 import { GetAllOrdersUseCase } from "../../domain/useCases/order/GetAllOrdersUseCase";
 import { GetOrderByUserIdUseCase } from "../../domain/useCases/order/GetOrderByUserIdUseCase";
@@ -46,6 +56,8 @@ import { OrderReturnRequest } from "../../domain/models/OrderReturnRequest";
 import { CreateOrderReturnUseCase } from "../../domain/useCases/order/CreateOrderReturnUseCase";
 import { GetOrderAndReturnByIdUseCase } from "../../domain/useCases/order/getOrderAndReturnByIdUseCase";
 import { GetOrderByReferenceUseCase } from "../../domain/useCases/order/getOrderByReferenceUseCase";
+import { GetOrderStatsUseCase } from "../../domain/useCases/order/GetOrderStatsUseCase";
+import { GetOrdersProductionUseCase } from "../../domain/useCases/order/GetOrderProductionUseCase";
 
 export type OrderAction =
   | GetAllOrdersAction
@@ -74,7 +86,16 @@ export type OrderAction =
   | GetOrderAndReturnByIdFailureAction
   | GetOrderByReferenceAction
   | GetOrderByReferenceSuccessAction
-  | GetOrderByReferenceFailureAction;
+  | GetOrderByReferenceFailureAction
+  | GetOrderByReferenceFilterAction
+  | GetOrderByReferenceFilterSuccessAction
+  | GetOrderByReferenceFilterFailureAction
+  | GetOrderStatsAction
+  | GetOrderStatsSuccessAction
+  | GetOrderStatsFailureAction
+  | GetOrdersProductionAction
+  | GetOrdersProductionSuccessAction
+  | GetOrdersProductionFailureAction;
 
 export const createOrder = (order: OrderRequest) => {
   return async (dispatch: Dispatch<OrderAction>) => {
@@ -282,6 +303,114 @@ export const getOrderByReference = (reference: string) => {
       );
       dispatch({
         type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const getOrderByReferenceFilter = (reference: string) => {
+  return async (dispatch: Dispatch<OrderAction>) => {
+    const useCase = container.get<GetOrderByReferenceUseCase>(
+      TYPES.GetOrderByReferenceUseCase
+    );
+
+    dispatch({ type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER });
+
+    try {
+      const result = await useCase.execute(reference);
+
+      dispatch({
+        type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER_SUCCESS,
+        payload: adaptOrders(result.data!),
+      });
+    } catch (error) {
+      const handleError = new AppError(
+        `Ocurrió un error al obtener la orden ${error}`
+      );
+      dispatch({
+        type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const getOrderByReferenceProductionFilter = (reference: string) => {
+  return async (dispatch: Dispatch<OrderAction>) => {
+    const useCase = container.get<GetOrderByReferenceUseCase>(
+      TYPES.GetOrderByReferenceUseCase
+    );
+
+    dispatch({ type: OrderActionsTypes.GET_ORDERS_PRODUCTION });
+
+    try {
+      const result = await useCase.execute(reference);
+
+      dispatch({
+        type: OrderActionsTypes.GET_ORDERS_PRODUCTION_SUCCESS,
+        payload: adaptOrdersProduction(result.data!),
+      });
+    } catch (error) {
+      const handleError = new AppError(
+        `Ocurrió un error al obtener la orden ${error}`
+      );
+      dispatch({
+        type: OrderActionsTypes.GET_ORDERS_PRODUCTION_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const getOrderStats = () => {
+  return async (dispatch: Dispatch<OrderAction>) => {
+    const useCase = container.get<GetOrderStatsUseCase>(
+      TYPES.GetOrderStatsUseCase
+    );
+
+    dispatch({ type: OrderActionsTypes.GET_ORDER_STATS });
+
+    try {
+      const result = await useCase.execute();
+
+      dispatch({
+        type: OrderActionsTypes.GET_ORDER_STATS_SUCCESS,
+        payload: result.data!,
+      });
+    } catch (error) {
+      const handleError = new AppError(
+        `Ocurrió un error al obtener las estadísticas de las ordenes ${error}`
+      );
+      dispatch({
+        type: OrderActionsTypes.GET_ORDER_STATS_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const getOrdersProduction = () => {
+  return async (dispatch: Dispatch<OrderAction>) => {
+    const useCase = container.get<GetOrdersProductionUseCase>(
+      TYPES.GetOrdersProductionUseCase
+    );
+
+    dispatch({ type: OrderActionsTypes.GET_ORDERS_PRODUCTION });
+
+    try {
+      const result = await useCase.execute();
+
+      dispatch({
+        type: OrderActionsTypes.GET_ORDERS_PRODUCTION_SUCCESS,
+        payload: adaptOrdersProduction(result.data!),
+      });
+    } catch (error) {
+      const handleError = new AppError(
+        `Ocurrió un error al obtener las ordenes en producción ${error}`
+      );
+      dispatch({
+        type: OrderActionsTypes.GET_ORDERS_PRODUCTION_FAILURE,
         payload: handleError,
       });
     }

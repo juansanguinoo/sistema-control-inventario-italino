@@ -5,16 +5,17 @@ import { FilteredProductList } from "./FilteredProductList";
 import { SelectedProducts } from "./SelectedProducts";
 import { FilterMessage } from "./FilterMessage";
 import { IInventoryModelSelected } from "../../../interfaces/IInventoryModelSelected";
-import { useGetInventory } from "../../../hooks/useGetInventory";
 import { useGetCustomerByUser } from "../../../hooks/useGetCustomerByUser";
 import { OrderRequest } from "../../../../domain/models/OrderRequest";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import {
   createOrder,
   updateOrder,
 } from "../../../../store/actions/orderActions";
 import Swal from "sweetalert2";
+import { RootState } from "../../../../store/store";
+import { getInventoryByNameOrRefrence } from "../../../../store/actions/inventoryActions";
 
 interface IModalOrdersProps {
   onCloseModal?: () => void;
@@ -30,7 +31,6 @@ export const ModalOrders = ({
   isEdit = false,
 }: IModalOrdersProps) => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
-  const { inventories } = useGetInventory();
   const { customers, getUser } = useGetCustomerByUser();
   const [search, setSearch] = useState<string>("");
   const [inventoriesFiltered, setInventoriesFiltered] = useState<
@@ -51,6 +51,9 @@ export const ModalOrders = ({
     totalOrder: initialData?.totalOrder || 0,
     orderDetails: initialData?.orderDetails || [],
   });
+  const inventoryByNameOrReference = useSelector(
+    (state: RootState) => state.inventoryReducer.inventoryByNameOrReference
+  );
 
   const moneyFormat = (value: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -203,12 +206,20 @@ export const ModalOrders = ({
       setInventoriesFiltered([]);
       return;
     } else {
-      const filtered = inventories.filter((inventory) =>
-        inventory.nameInventory.toLowerCase().includes(search.toLowerCase())
+      const filtered = inventoryByNameOrReference.filter(
+        (inventory) =>
+          inventory.nameInventory
+            .toLowerCase()
+            .includes(search.toLowerCase()) &&
+          inventory.statusInventory === "Activo"
       );
       setInventoriesFiltered(filtered);
     }
-  }, [search]);
+  }, [inventoryByNameOrReference, search]);
+
+  const handleSearch = () => {
+    dispatch(getInventoryByNameOrRefrence(search));
+  };
 
   useEffect(() => {
     const total = selectedInventory.reduce(
@@ -322,8 +333,8 @@ export const ModalOrders = ({
                     value={dataToSend.statusOrder}
                   >
                     <option value="Pendiente">Pendiente</option>
-                    <option value="En-proceso">En-proceso</option>
                     <option value="Entregado">Entregado</option>
+                    <option value="Salida">Salida</option>
                   </select>
                 </div>
                 <div className="form-group">
@@ -352,8 +363,8 @@ export const ModalOrders = ({
                     onChange={(e) => setSearch(e.target.value)}
                     readOnly={isEdit}
                   />
-                  <div className="search-button">
-                    <img src={SearchIcon} alt="" />
+                  <div className="search-button" onClick={handleSearch}>
+                    <img src={SearchIcon} alt="search" />
                   </div>
                 </div>
 

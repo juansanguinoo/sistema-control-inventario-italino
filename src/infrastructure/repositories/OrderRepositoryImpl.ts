@@ -1,4 +1,5 @@
 import { TYPES } from "../../config/types";
+import { OrderInfoResponse } from "../../domain/models/OrderInfoResponse";
 import { OrderRequest } from "../../domain/models/OrderRequest";
 import { OrderResponse } from "../../domain/models/OrderResponse";
 import { OrderReturnRequest } from "../../domain/models/OrderReturnRequest";
@@ -18,6 +19,20 @@ export class OrderRepositoryImpl implements IOrderRepository {
   ) {
     this.httpClient = httpClient;
     this.baseUrl = `${apiUrl}`;
+  }
+
+  async getOrdersProduction(): Promise<ResponseAPI<OrderResponse[]>> {
+    const response = await this.httpClient.get<ResponseAPI<OrderResponse[]>>(
+      `${this.baseUrl}/order-production`
+    );
+    return response;
+  }
+
+  async getOrderStats(): Promise<ResponseAPI<OrderInfoResponse>> {
+    const response = await this.httpClient.get<ResponseAPI<OrderInfoResponse>>(
+      `${this.baseUrl}/order-stats/stats`
+    );
+    return response;
   }
 
   async getOrderByReference(

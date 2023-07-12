@@ -6,21 +6,24 @@ import { RootState } from "../../../store/store";
 import { CardInformation } from "../../components/cards/CardInformation";
 import { TableInformation } from "../../components/tables/TableInformation";
 import { Dispatch } from "redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   deleteInventory,
   getInventory,
+  getInventoryByNameOrRefrenceFilter,
 } from "../../../store/actions/inventoryActions";
 import { inventoryColumns } from "../../utils/columnsDataTable";
 import { LinkButton } from "../../components/buttons/LinkButton";
 import { useNavigate } from "react-router-dom";
 import { InventoryModel } from "../../../domain/models/InventoryModel";
-import { useGetInventoryInformation } from "../../hooks/useGetInventoryInformation";
 import { FilterMessage } from "../orders/components/FilterMessage";
+import { useGetInventoryInfo } from "../../hooks/useGetInventoryInfo";
 
 export const Inventory = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
+  const { inventoryInfo } = useGetInventoryInfo();
+  const [search, setSearch] = useState("");
   const inventories: InventoryModel[] = useSelector(
     (state: RootState) => state.inventoryReducer.inventories
   );
@@ -28,6 +31,10 @@ export const Inventory = () => {
     (state: RootState) => state.navbarReducer.stateOpen
   );
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
+
+  const handleSearch = () => {
+    dispatch(getInventoryByNameOrRefrenceFilter(search));
+  };
 
   useEffect(() => {
     dispatch(getInventory());
@@ -41,9 +48,6 @@ export const Inventory = () => {
     navigate(`product/${params.id}`);
   };
 
-  const { activeProducts, inactiveProducts, publishedProducts, totalStock } =
-    useGetInventoryInformation();
-
   return (
     <div className={`inventory-container ${navbarClass}`}>
       <div className="inventory-header">
@@ -54,7 +58,10 @@ export const Inventory = () => {
         <CardInformation
           icon={Folder}
           titles={["Todos los productos", "Productos activos"]}
-          data={[inventories.length, activeProducts.length]}
+          data={[
+            inventoryInfo?.totalInventories,
+            inventoryInfo?.activeInventories,
+          ]}
         />
         <CardInformation
           icon={Folder}
@@ -63,7 +70,11 @@ export const Inventory = () => {
             "Productos inactivos",
             "Productos publicados",
           ]}
-          data={[totalStock, inactiveProducts.length, publishedProducts.length]}
+          data={[
+            inventoryInfo?.totalStock,
+            inventoryInfo?.inactiveInventories,
+            inventoryInfo?.totalInventoriesPublished,
+          ]}
         />
         {inventories.length > 0 ? (
           <TableInformation
@@ -85,6 +96,31 @@ export const Inventory = () => {
             </div>
           </div>
         )}
+        <div className="main-reports">
+          <div className="main-reports-search-container">
+            <input
+              type="text"
+              placeholder="Buscar por nombre o referencia"
+              className="main-reports-search-container-input-text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button
+              className="main-reports-search-container-input-button"
+              onClick={handleSearch}
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+        <TableInformation
+          categories={inventories}
+          columns={inventoryColumns}
+          deleteCategory={deleteInventory}
+          handleEditAction={handleEditAction}
+          handlePreviewAction={handlePreviewAction}
+          showDelete={false}
+        />
       </div>
     </div>
   );

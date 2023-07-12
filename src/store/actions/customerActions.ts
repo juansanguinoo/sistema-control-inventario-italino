@@ -18,6 +18,12 @@ import {
   GetCustomerByUserIdAction,
   GetCustomerByUserIdFailureAction,
   GetCustomerByUserIdSuccessAction,
+  GetCustomersByNameOrNitAction,
+  GetCustomersByNameOrNitSuccessAction,
+  GetCustomersByNameOrNitFailureAction,
+  GetCustomerInfoAction,
+  GetCustomerInfoSuccessAction,
+  GetCustomerInfoFailureAction,
 } from "../interfaces/CustomerActionsInterface";
 import { container } from "../../config/inversifyContainer";
 import { GetAllCustomerUseCase } from "../../domain/useCases/customer/GetAllCustomerUseCase";
@@ -34,6 +40,8 @@ import { CreateCustomerUseCase } from "../../domain/useCases/customer/CreateCust
 import { UpdateCustomerUseCase } from "../../domain/useCases/customer/UpdateCustomerUseCase";
 import { DeleteCustomerUseCase } from "../../domain/useCases/customer/DeleteCustomerUseCase";
 import { GetCustomerByUserIdUseCase } from "../../domain/useCases/customer/GetCustomerByUserIdUseCase";
+import { GetCustomersByNameOrNitUseCase } from "../../domain/useCases/customer/GetCustomersByNameOrNit";
+import { GetCustomerInfoUseCase } from "../../domain/useCases/customer/GetCustomerInfoUseCase";
 
 export type CustomerAction =
   | GetAllCustomersAction
@@ -53,7 +61,13 @@ export type CustomerAction =
   | DeleteCustomerFailureAction
   | GetCustomerByUserIdAction
   | GetCustomerByUserIdSuccessAction
-  | GetCustomerByUserIdFailureAction;
+  | GetCustomerByUserIdFailureAction
+  | GetCustomersByNameOrNitAction
+  | GetCustomersByNameOrNitSuccessAction
+  | GetCustomersByNameOrNitFailureAction
+  | GetCustomerInfoAction
+  | GetCustomerInfoSuccessAction
+  | GetCustomerInfoFailureAction;
 
 export const getAllCustomers = () => {
   return async (dispatch: Dispatch<CustomerAction>) => {
@@ -200,6 +214,58 @@ export const deleteCustomer = (idCustomer: number) => {
       );
       dispatch({
         type: CustomerActionsTypes.DELETE_CUSTOMER_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const getCustomersByNameOrNit = (nameOrNit: string) => {
+  return async (dispatch: Dispatch<CustomerAction>) => {
+    const useCase = container.get<GetCustomersByNameOrNitUseCase>(
+      TYPES.GetCustomersByNameOrNitUseCase
+    );
+
+    dispatch({ type: CustomerActionsTypes.GET_CUSTOMERS_BY_NAME_OR_NIT });
+
+    try {
+      const response = await useCase.execute(nameOrNit);
+      dispatch({
+        type: CustomerActionsTypes.GET_CUSTOMERS_BY_NAME_OR_NIT_SUCCESS,
+        payload: adaptCustomers(response.data!),
+      });
+    } catch (error) {
+      const handleError = new AppError(
+        `Ocurrió un error al obtener los usuarios ${error}`
+      );
+      dispatch({
+        type: CustomerActionsTypes.GET_CUSTOMERS_BY_NAME_OR_NIT_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const getCustomerInfo = () => {
+  return async (dispatch: Dispatch<CustomerAction>) => {
+    const useCase = container.get<GetCustomerInfoUseCase>(
+      TYPES.GetCustomerInfoUseCase
+    );
+
+    dispatch({ type: CustomerActionsTypes.GET_CUSTOMER_INFO });
+
+    try {
+      const response = await useCase.execute();
+      dispatch({
+        type: CustomerActionsTypes.GET_CUSTOMER_INFO_SUCCESS,
+        payload: response.data!,
+      });
+    } catch (error) {
+      const handleError = new AppError(
+        `Ocurrió un error al obtener la información del cliente ${error}`
+      );
+      dispatch({
+        type: CustomerActionsTypes.GET_CUSTOMER_INFO_FAILURE,
         payload: handleError,
       });
     }

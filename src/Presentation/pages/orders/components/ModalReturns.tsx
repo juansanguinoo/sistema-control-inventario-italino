@@ -9,6 +9,8 @@ import {
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { createOrderReturn } from "../../../../store/actions/orderActions";
+import { useGetUser } from "../../../hooks/useGetUser";
+import { FilterMessage } from "./FilterMessage";
 
 interface ModalReturnsProps {
   onCloseModal?: () => void;
@@ -19,6 +21,7 @@ export const ModalReturns = ({
   onCloseModal,
   orderData,
 }: ModalReturnsProps) => {
+  const { getUser } = useGetUser();
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const [search, setSearch] = useState<string>("");
   const [returnProducts, setReturnProducts] = useState<OrderReturn[]>([]);
@@ -62,6 +65,36 @@ export const ModalReturns = ({
     });
     setReturnProducts(updatedReturnProducts);
   };
+
+  if (getUser?.roleId.id_role !== 1) {
+    return (
+      <>
+        <div className="modal-orders-returns">
+          <div className="modal-orders-returns-content">
+            <div className="modal-orders-returns-header">
+              <h4>Devoluciones</h4>
+              <span className="close" onClick={onCloseModal}>
+                &times;
+              </span>
+            </div>
+            <div className="modal-order-returns-main">
+              <div className="orders-noorders">
+                <FilterMessage
+                  messageTitle={
+                    "Solo el administrador puede crear devoluciones."
+                  }
+                  messageParagraph={
+                    "Indica al administrador que cree la devolución."
+                  }
+                />
+                <div className="order-add-order"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

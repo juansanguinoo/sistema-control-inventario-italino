@@ -6,6 +6,7 @@ import { Inventory } from "../../domain/models/Inventory";
 import { InventoryModel } from "../../domain/models/InventoryModel";
 import { ResponseAPI } from "../api/models/ResponseApi";
 import { AddInventoryRequest } from "../../domain/models/AddInventoryRequest";
+import { InventoryInfoResponse } from "../../domain/models/InventoryInfoResponse";
 
 @injectable()
 export class InventoryRepositoryImpl implements IInventoryRepository {
@@ -18,6 +19,13 @@ export class InventoryRepositoryImpl implements IInventoryRepository {
   ) {
     this.httpClient = httpClient;
     this.baseUrl = `${apiUrl}/inventories`;
+  }
+
+  async getInventoryInfo(): Promise<ResponseAPI<InventoryInfoResponse>> {
+    const response = await this.httpClient.get<
+      ResponseAPI<InventoryInfoResponse>
+    >(`${this.baseUrl}-stats/stats`);
+    return response;
   }
 
   async getInventoryToReport(

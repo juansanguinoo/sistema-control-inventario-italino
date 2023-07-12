@@ -4,8 +4,6 @@ import Bag from "../../../assets/Bag.svg";
 import Folder from "../../../assets/Folder.svg";
 import { FilterMessage } from "../../orders/components/FilterMessage";
 import { LinkButton } from "../../../components/buttons/LinkButton";
-import { useGetInventory } from "../../../hooks/useGetInventory";
-import { useGetInventoryInformation } from "../../../hooks/useGetInventoryInformation";
 import { useGetCustomerInformation } from "../../../hooks/useGetCustomerInformation";
 import { useGetOrders } from "../../../hooks/useGetOrders";
 import {
@@ -20,9 +18,7 @@ import {
 } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../store/store";
-import { useState, useEffect } from "react";
+import { useGetInventoryInfo } from "../../../hooks/useGetInventoryInfo";
 
 ChartJS.register(
   ArcElement,
@@ -35,78 +31,31 @@ ChartJS.register(
 );
 
 export const MainHome = () => {
-  const totalOrders = useSelector(
-    (state: RootState) => state.orderReducer.orders
-  );
-  const [orderTotalByMonth, orderTotalByYear] = useState<any>([]);
-  const [productsMostSoldLabel, setProductsMostSoldLabel] = useState<any>([]);
-  const [productsMostSoldData, setProductsMostSoldData] = useState<any>([]);
+  const { inventoryInfo } = useGetInventoryInfo();
+  const { customerInfo } = useGetCustomerInformation();
+  const { orders, ordersInfo } = useGetOrders();
 
-  useEffect(() => {
-    // get just the top 5 products most sold from totalOrders.orderDetails.quantity is the quantity of the product and totalOrders.orderDetails.inventory.name_inventory is the product
-
-    const products = totalOrders.map((order) => {
-      return order.orderDetails.map((detail: any) => {
-        return {
-          name: detail.inventory.name_inventory,
-          quantity: detail.quantity,
-        };
-      });
-    });
-
-    const productsFlatten = products.flat();
-
-    const productsGrouped = productsFlatten.reduce((acc, curr) => {
-      if (acc[curr.name]) {
-        acc[curr.name] += curr.quantity;
-      } else {
-        acc[curr.name] = curr.quantity;
-      }
-      return acc;
-    }, {});
-
-    const productsSorted = Object.entries(productsGrouped).sort(
-      (a: any, b: any) => b[1] - a[1]
-    );
-
-    const productsMostSold = productsSorted.slice(0, 5);
-
-    const productsMostSoldLabel = productsMostSold.map((product: any) => {
-      return product[0].length > 30
-        ? product[0].slice(0, 30) + "..."
-        : product[0];
-    });
-
-    const productsMostSoldData = productsMostSold.map((product: any) => {
-      return product[1];
-    });
-
-    setProductsMostSoldLabel(productsMostSoldLabel);
-    setProductsMostSoldData(productsMostSoldData);
-  }, [totalOrders]);
-
-  useEffect(() => {
-    const totalOrdersByMonth = months.map((month) => {
-      const filteredOrders = totalOrders.filter((order) => {
-        const date = new Date(order.createdAt);
-        return date.toLocaleString("es-MX", { month: "long" }) === month;
-      });
-      if (filteredOrders.length > 0) {
-        return filteredOrders.reduce((a, b) => a + b.totalOrder, 0);
-      } else {
-        return 0;
-      }
-    });
-
-    orderTotalByYear(totalOrdersByMonth);
-  }, [totalOrders]);
+  const months = [
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+    "julio",
+    "agosto",
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre",
+  ];
 
   const data = {
-    labels: productsMostSoldLabel,
+    labels: ordersInfo?.productsMostSold.map((product) => product.reference),
     datasets: [
       {
-        label: "# of Votes",
-        data: productsMostSoldData,
+        label: "# de compras",
+        data: ordersInfo?.productsMostSold.map((product) => product.total),
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
           "rgba(54, 162, 235, 0.2)",
@@ -142,60 +91,45 @@ export const MainHome = () => {
   };
 
   const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiempre",
+    "Octubre",
+    "Noviembre",
+    "Dicembre",
   ];
+
+  const soldsByMonthMap: any = {};
+  ordersInfo?.soldsByMonth.forEach((item: any) => {
+    soldsByMonthMap[item.month] = item.total;
+  });
+
+  const soldsByMonthWithNames = [];
+  for (let i = 1; i <= 12; i++) {
+    const monthName = months[i - 1];
+    const total = soldsByMonthMap[i] || 0;
+    soldsByMonthWithNames.push({
+      month: monthName,
+      total: total,
+    });
+  }
 
   const dataTable = {
     labels,
     datasets: [
       {
         label: "Ventas por mes",
-        data: orderTotalByMonth,
+        data: soldsByMonthWithNames.map((item: any) => item.total),
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
     ],
   };
-
-  const { inventories } = useGetInventory();
-  const { activeProducts } = useGetInventoryInformation();
-  const { customers, activeCustomers } = useGetCustomerInformation();
-  const { orders } = useGetOrders();
-
-  // get all th active orders
-  const completedOrders = orders.filter(
-    (order) => order.statusOrder === "Entregado"
-  );
-
-  // get all the pending orders
-  const pendingOrders = orders.filter(
-    (order) => order.statusOrder === "Pendiente"
-  );
-
-  const months = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ];
 
   return (
     <>
@@ -224,11 +158,11 @@ export const MainHome = () => {
               <div className="customers-content">
                 <div className="customers">
                   <h3>Clientes</h3>
-                  <h4>{customers.length}</h4>
+                  <h4>{customerInfo?.totalCustomers}</h4>
                 </div>
                 <div className="customers-active">
                   <h3>Activos</h3>
-                  <h4>{activeCustomers.length}</h4>
+                  <h4>{customerInfo?.activeCustomers}</h4>
                 </div>
               </div>
             </div>
@@ -245,11 +179,11 @@ export const MainHome = () => {
                 <div className="products-content">
                   <div className="products">
                     <h3>Total productos</h3>
-                    <h4>{inventories.length}</h4>
+                    <h4>{inventoryInfo?.totalInventories}</h4>
                   </div>
                   <div className="products-active">
                     <h3>Activos</h3>
-                    <h4>{activeProducts.length}</h4>
+                    <h4>{inventoryInfo?.activeInventories}</h4>
                   </div>
                 </div>
               </div>
@@ -260,11 +194,11 @@ export const MainHome = () => {
                 <div className="products-content">
                   <div className="products">
                     <h3>Total productos</h3>
-                    <h4>{inventories.length}</h4>
+                    <h4>{inventoryInfo?.totalInventories}</h4>
                   </div>
                   <div className="products-active">
                     <h3>Activos</h3>
-                    <h4>{activeProducts.length}</h4>
+                    <h4>{inventoryInfo?.activeInventories}</h4>
                   </div>
                 </div>
               </div>
@@ -277,7 +211,7 @@ export const MainHome = () => {
             <div className="custom-content">
               <div className="custom">
                 <h3>Total ordenes</h3>
-                <h4>{orders.length}</h4>
+                <h4>{ordersInfo?.totalOrders}</h4>
               </div>
             </div>
           </div>
@@ -290,15 +224,15 @@ export const MainHome = () => {
             <div className="orders-content">
               <div className="orders">
                 <h3>Total ordenes</h3>
-                <h4>{orders.length}</h4>
+                <h4>{ordersInfo?.totalOrders}</h4>
               </div>
               <div className="pending">
                 <h3>Pendientes</h3>
-                <h4>{pendingOrders.length}</h4>
+                <h4>{ordersInfo?.totalOrdersInProcess}</h4>
               </div>
               <div className="completed">
                 <h3>Completadas</h3>
-                <h4>{completedOrders.length}</h4>
+                <h4>{ordersInfo?.totalOrdersDelivered}</h4>
               </div>
             </div>
           </div>

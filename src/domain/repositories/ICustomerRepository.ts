@@ -1,5 +1,6 @@
 import { ResponseAPI } from "../../infrastructure/api/models/ResponseApi";
 import { Customer } from "../models/Customer";
+import { CustomerInfoResponse } from "../models/CustomerInfoResponse";
 import { CustomerModel } from "../models/CustomerModel";
 
 export interface ICustomerRepository {
@@ -12,4 +13,6 @@ export interface ICustomerRepository {
   ): Promise<ResponseAPI<Customer>>;
   deleteCustomer(idCustomer: number): Promise<ResponseAPI<boolean>>;
   getCustomerByUserId(idUser: number): Promise<ResponseAPI<Customer[]>>;
+  getCustomerByNameOrNIT(nameOrNit: string): Promise<ResponseAPI<Customer[]>>;
+  getCustomerInfo(): Promise<ResponseAPI<CustomerInfoResponse>>;
 }

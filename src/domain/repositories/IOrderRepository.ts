@@ -1,4 +1,5 @@
 import { ResponseAPI } from "../../infrastructure/api/models/ResponseApi";
+import { OrderInfoResponse } from "../models/OrderInfoResponse";
 import { OrderRequest } from "../models/OrderRequest";
 import { OrderResponse } from "../models/OrderResponse";
 import { OrderReturnRequest } from "../models/OrderReturnRequest";
@@ -17,4 +18,6 @@ export interface IOrderRepository {
   getOrderByReference(
     referenceOrder: string
   ): Promise<ResponseAPI<OrderResponse[]>>;
+  getOrderStats(): Promise<ResponseAPI<OrderInfoResponse>>;
+  getOrdersProduction(): Promise<ResponseAPI<OrderResponse[]>>;
 }

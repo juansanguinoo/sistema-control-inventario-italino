@@ -22,9 +22,6 @@ export const NavItemHome = ({ icon, iconWhite, label, to }: NavItemProps) => {
   );
 
   const handleNavItemClick = () => {
-    if (label === "Usuarios") {
-      window.location.reload();
-    }
     dispatch(selectedNavItem(to));
   };
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
