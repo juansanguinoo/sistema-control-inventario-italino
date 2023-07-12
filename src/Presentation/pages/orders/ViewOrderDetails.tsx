@@ -19,6 +19,11 @@ import { Dispatch } from "redux";
 import { updateOrder } from "../../../store/actions/orderActions";
 import { OrderRequest } from "../../../domain/models/OrderRequest";
 import { ModalReturns } from "./components/ModalReturns";
+import { ReportPDF } from "./components/Report/ReportPDF";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import moment from "moment";
+import { Button } from "@mui/material";
+import { ReportBillPDF } from "./components/Report/ReportBillPDF";
 
 const moneyFormat = (value: number) => {
   return new Intl.NumberFormat("en-US", {
@@ -37,6 +42,7 @@ export const ViewOrderDetails = () => {
   const [orderData, setOrderData] = useState<OrderResponseModel>();
   const [customer, setCustomer] = useState<Customer>();
   const [returnModal, setReturnModal] = useState<boolean>(false);
+  const [invoiceData, setInvoiceData] = useState<any>(null);
   const navigate = useNavigate();
 
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
@@ -100,11 +106,60 @@ export const ViewOrderDetails = () => {
     }
   }, [orders]);
 
+  useEffect(() => {
+    const invoice = {
+      id: "5df3180a09ea16dc4b95f910",
+      invoice_no: orderData?.referenceOrder,
+      company: customer?.name_customer,
+      email: customer?.nit_customer,
+      phone: customer?.phone_customer,
+      address: customer?.address_customer,
+      trans_date: moment(orderData?.createdAt).format("DD/MM/YYYY"),
+      items: orderData?.orderDetails?.map((item: any, index: number) => {
+        return {
+          sno: index + 1,
+          ref: item?.inventory?.reference_inventory,
+          desc: "Descripción del producto",
+          qty: item?.quantity,
+          rate: item?.inventory?.selling_price_inventory,
+        };
+      }),
+    };
+
+    setInvoiceData(invoice);
+  }, [orderData, customer]);
+
   return (
     <div className={`orders-container ${navbarClass}`}>
       <div className="orders-header">
         <PageTitle title="Ordenes" />
         <div className="orders-header-buttons">
+          {invoiceData?.company &&
+          invoiceData?.invoice_no &&
+          customer &&
+          orderData ? (
+            <PDFDownloadLink
+              document={<ReportBillPDF invoice={invoiceData} />}
+              fileName="orden.pdf"
+            >
+              <Button variant="outlined" size="small">
+                PDF Reporte
+              </Button>
+            </PDFDownloadLink>
+          ) : null}
+          {invoiceData?.company &&
+          invoiceData?.invoice_no &&
+          customer &&
+          orderData ? (
+            <PDFDownloadLink
+              document={<ReportPDF invoice={invoiceData} />}
+              fileName="orden.pdf"
+            >
+              <Button variant="outlined" size="small">
+                PDF Producción
+              </Button>
+            </PDFDownloadLink>
+          ) : null}
           <HeaderButton
             title="Devoluciones"
             handleFunction={openModal}

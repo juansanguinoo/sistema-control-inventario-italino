@@ -495,3 +495,46 @@ export const orderDetailColumns = [
     },
   },
 ];
+
+export const orderDetailProductionColumns = [
+  {
+    field: "imageInventory",
+    headerName: "Imagen",
+    width: 200,
+    renderCell: (params: any) => {
+      return (
+        <div className="cellWithImage">
+          {params.row.inventory.image_inventory.split(",")[0] === "" ? (
+            <img src={params.row.inventory.image_inventory} alt="" />
+          ) : (
+            <img
+              src={params.row.inventory.image_inventory.split(",")[0]}
+              alt=""
+            />
+          )}
+        </div>
+      );
+    },
+  },
+  {
+    field: "name_inventory",
+    headerName: "Nombre del producto",
+    width: 500,
+    renderCell: (params: any) => {
+      return <div>{params.row.inventory.name_inventory}</div>;
+    },
+  },
+  {
+    field: "reference_inventory",
+    headerName: "Referencia",
+    width: 240,
+    renderCell: (params: any) => {
+      return <div>{params.row.inventory.reference_inventory}</div>;
+    },
+  },
+  {
+    field: "quantity",
+    headerName: "Cantidad",
+    width: 200,
+  },
+];

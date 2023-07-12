@@ -14,7 +14,10 @@ import { deleteCategory } from "../../../store/actions/categoryActions";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { Dispatch } from "redux";
-import { updateOrder } from "../../../store/actions/orderActions";
+import {
+  getOrderByReferenceFilter,
+  updateOrder,
+} from "../../../store/actions/orderActions";
 import { OrderRequest } from "../../../domain/models/OrderRequest";
 import { IInventoryModelSelected } from "../../interfaces/IInventoryModelSelected";
 
@@ -29,11 +32,12 @@ export const Orders = () => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
   const [showModalCreate, setShowModalCreate] = useState<boolean>(false);
   const [showModalEdit, setShowModalEdit] = useState<boolean>(false);
+  const [search, setSearch] = useState("");
   const navbarOpen = useSelector(
     (state: RootState) => state.navbarReducer.stateOpen
   );
   const navigate = useNavigate();
-  const { orders } = useGetOrders();
+  const { orders, ordersInfo } = useGetOrders();
   const navbarClass = navbarOpen ? "expanded" : "collapsed";
   const [orderData, setOrderData] = useState<OrderRequest>({
     id: 0,
@@ -50,6 +54,11 @@ export const Orders = () => {
   >([]);
 
   const orderColumns = [
+    {
+      field: "referenceOrder",
+      headerName: "Referencia",
+      width: 120,
+    },
     {
       field: "Customer",
       headerName: "Nombre del cliente",
@@ -113,8 +122,8 @@ export const Orders = () => {
                 }}
               >
                 <option value="Pendiente">Pendiente</option>
-                <option value="En-proceso">En-proceso</option>
                 <option value="Entregado">Entregado</option>
+                <option value="Salida">Salida</option>
               </select>
             )}
           </div>
@@ -180,25 +189,13 @@ export const Orders = () => {
     openModalEdit();
   };
 
+  const handleSearch = () => {
+    dispatch(getOrderByReferenceFilter(search));
+  };
+
   const handlePreviewAction = (params: any) => {
     navigate(`orderDetail/${params.id}`);
   };
-
-  const deliveredOrders = orders.filter(
-    (order) => order.statusOrder === "Entregado"
-  );
-
-  const inProcessOrders = orders.filter(
-    (order) => order.statusOrder === "En-proceso"
-  );
-
-  const pendingOrders = orders.filter(
-    (order) => order.statusOrder === "Pendiente"
-  );
-
-  const canceledOrders = orders.filter(
-    (order) => order.statusOrder === "Cancelado"
-  );
 
   return (
     <div className={`orders-container ${navbarClass}`}>
@@ -212,18 +209,38 @@ export const Orders = () => {
       <div className="orders-main">
         <CardInformation
           icon={Bag}
-          titles={[
-            "Total de ordenes",
-            "Ordenes entregadas",
-            "Ordenes en proceso",
+          titles={["Total de ordenes", "Ordenes entregadas", "Ordenes salida"]}
+          data={[
+            ordersInfo?.totalOrders,
+            ordersInfo?.totalOrdersPending,
+            ordersInfo?.totalOrdersDelivered,
           ]}
-          data={[orders.length, deliveredOrders.length, inProcessOrders.length]}
         />
         <CardInformation
           icon={Bag}
           titles={["Ordenes pendientes", "Ordenes canceladas"]}
-          data={[pendingOrders.length, canceledOrders.length]}
+          data={[
+            ordersInfo?.totalOrdersInProcess,
+            ordersInfo?.totalOrdersCanceled,
+          ]}
         />
+        <div className="main-reports">
+          <div className="main-reports-search-container">
+            <input
+              type="text"
+              placeholder="Buscar por referencia"
+              className="main-reports-search-container-input-text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button
+              className="main-reports-search-container-input-button"
+              onClick={handleSearch}
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
         {orders.length > 0 ? (
           <TableInformation
             categories={orders}

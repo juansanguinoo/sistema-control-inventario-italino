@@ -8,6 +8,7 @@ interface ITableInformationProps {
   deleteCategory?: (params: any) => void;
   showView?: boolean;
   showDelete?: boolean;
+  showEdit?: boolean;
   handleEditAction?: (params: any) => void;
   handlePreviewAction?: (params: any) => void;
   showActions?: boolean;
@@ -19,6 +20,7 @@ export const TableInformation = ({
   deleteCategory,
   showView = true,
   showDelete = true,
+  showEdit = true,
   handleEditAction,
   handlePreviewAction,
   showActions = true,
@@ -58,9 +60,11 @@ export const TableInformation = ({
                 Ver
               </div>
             )}
-            <div className="editButton" onClick={() => handleEdit(params)}>
-              Editar
-            </div>
+            {showEdit && (
+              <div className="editButton" onClick={() => handleEdit(params)}>
+                Editar
+              </div>
+            )}
             {showDelete && (
               <div
                 className="deleteButton"

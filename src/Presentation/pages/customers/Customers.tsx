@@ -14,7 +14,12 @@ import { useGetCustomerByUser } from "../../hooks/useGetCustomerByUser";
 import { FilterMessage } from "../orders/components/FilterMessage";
 import Swal from "sweetalert2";
 import { Dispatch } from "redux";
-import { updateCustomer } from "../../../store/actions/customerActions";
+import {
+  getCustomerInfo,
+  getCustomersByNameOrNit,
+  updateCustomer,
+} from "../../../store/actions/customerActions";
+import { useGetCustomerInformation } from "../../hooks/useGetCustomerInformation";
 
 export const Customers = () => {
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
@@ -31,6 +36,8 @@ export const Customers = () => {
   const [actions, setActions] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
   const [deleteAction, setDeleteAction] = useState<boolean>(false);
+  const [search, setSearch] = useState("");
+  const { customerInfo } = useGetCustomerInformation();
   const navbarOpen = useSelector(
     (state: RootState) => state.navbarReducer.stateOpen
   );
@@ -38,6 +45,10 @@ export const Customers = () => {
 
   const openModal = () => {
     setShowModal(true);
+  };
+
+  const handleSearch = () => {
+    dispatch(getCustomersByNameOrNit(search));
   };
 
   const closeModal = () => {
@@ -54,6 +65,7 @@ export const Customers = () => {
   };
 
   useEffect(() => {
+    dispatch(getCustomerInfo());
     if (deleteAction) {
       Swal.fire({
         title: "¿Estás seguro?",
@@ -98,32 +110,6 @@ export const Customers = () => {
     setDeleteAction(true);
   };
 
-  // get the active customers
-  const activeCustomers = customers.filter(
-    (customer) => customer.statusCustomer === "Activo"
-  );
-
-  // get the inactive customers
-  const inactiveCustomers = customers.filter(
-    (customer) => customer.statusCustomer === "Inactivo"
-  );
-
-  // get the createdAt date of the customers reducer
-  const createdAt = customers.map((customer) => customer.createdAt);
-
-  // get the total of customers added in the last 30 days
-  const totalCustomers = createdAt.filter((date) => {
-    if (date === undefined) {
-      return false;
-    }
-
-    const today = new Date();
-    const dateCustomer = new Date(date);
-    const difference = today.getTime() - dateCustomer.getTime();
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    return days <= 30;
-  });
-
   return (
     <div className={`customer-container ${navbarClass}`}>
       <div className="customer-header">
@@ -142,16 +128,33 @@ export const Customers = () => {
             "Clientes inactivos",
           ]}
           data={[
-            customers.length,
-            activeCustomers.length,
-            inactiveCustomers.length,
+            customerInfo?.totalCustomers,
+            customerInfo?.activeCustomers,
+            customerInfo?.inactiveCustomers,
           ]}
         />
         <CardInformation
           icon={User}
           titles={["Clientes agregados en el último mes"]}
-          data={[totalCustomers.length]}
+          data={[customerInfo?.ultimateCustomersAdded]}
         />
+        <div className="main-reports">
+          <div className="main-reports-search-container">
+            <input
+              type="text"
+              placeholder="Buscar por nombre o NIT"
+              className="main-reports-search-container-input-text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button
+              className="main-reports-search-container-input-button"
+              onClick={handleSearch}
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
         {customers.length > 0 ? (
           <TableInformation
             categories={customers}

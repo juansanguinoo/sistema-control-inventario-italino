@@ -5,6 +5,7 @@ import type { IHttpClient } from "../api/interfaces/IHttpClient";
 import { Customer } from "../../domain/models/Customer";
 import { CustomerModel } from "../../domain/models/CustomerModel";
 import { ResponseAPI } from "../api/models/ResponseApi";
+import { CustomerInfoResponse } from "../../domain/models/CustomerInfoResponse";
 
 @injectable()
 export class CustomerRepositoryImpl implements ICustomerRepository {
@@ -19,6 +20,22 @@ export class CustomerRepositoryImpl implements ICustomerRepository {
     this.httpClient = httpClient;
     this.baseUrl = `${apiUrl}/customers`;
     this.customUrl = `${apiUrl}/customersBySaller`;
+  }
+
+  async getCustomerInfo(): Promise<ResponseAPI<CustomerInfoResponse>> {
+    const response = await this.httpClient.get<
+      ResponseAPI<CustomerInfoResponse>
+    >(`${this.baseUrl}-stats/stats`);
+    return response;
+  }
+
+  async getCustomerByNameOrNIT(
+    nameOrNit: string
+  ): Promise<ResponseAPI<Customer[]>> {
+    const response = await this.httpClient.get<ResponseAPI<Customer[]>>(
+      `${this.baseUrl}/search/${nameOrNit}`
+    );
+    return response;
   }
 
   async getAllCustomers(): Promise<ResponseAPI<Customer[]>> {

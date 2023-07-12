@@ -13,7 +13,7 @@
 }
 
 .activo,
-.en-proceso {
+.salida {
   background-color: #e6e7fc;
   color: #5570f1;
 }

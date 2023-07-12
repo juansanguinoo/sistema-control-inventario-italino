@@ -1,4 +1,6 @@
 import { AppError } from "../../domain/errors/AppError";
+import { OrderInfoResponse } from "../../domain/models/OrderInfoResponse";
+import { OrderProductionResponseModel } from "../../domain/models/OrderProductionResponseModel";
 import { OrderResponseModel } from "../../domain/models/OrderResponseModel";
 import { OrderActionsTypes } from "../enums/OrderActionsEnum";
 
@@ -125,5 +127,47 @@ export interface GetOrderByReferenceSuccessAction {
 
 export interface GetOrderByReferenceFailureAction {
   type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FAILURE;
+  payload: AppError;
+}
+
+export interface GetOrderByReferenceFilterAction {
+  type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER;
+}
+
+export interface GetOrderByReferenceFilterSuccessAction {
+  type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER_SUCCESS;
+  payload: OrderResponseModel[];
+}
+
+export interface GetOrderByReferenceFilterFailureAction {
+  type: OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER_FAILURE;
+  payload: AppError;
+}
+
+export interface GetOrderStatsAction {
+  type: OrderActionsTypes.GET_ORDER_STATS;
+}
+
+export interface GetOrderStatsSuccessAction {
+  type: OrderActionsTypes.GET_ORDER_STATS_SUCCESS;
+  payload: OrderInfoResponse;
+}
+
+export interface GetOrderStatsFailureAction {
+  type: OrderActionsTypes.GET_ORDER_STATS_FAILURE;
+  payload: AppError;
+}
+
+export interface GetOrdersProductionAction {
+  type: OrderActionsTypes.GET_ORDERS_PRODUCTION;
+}
+
+export interface GetOrdersProductionSuccessAction {
+  type: OrderActionsTypes.GET_ORDERS_PRODUCTION_SUCCESS;
+  payload: OrderProductionResponseModel[];
+}
+
+export interface GetOrdersProductionFailureAction {
+  type: OrderActionsTypes.GET_ORDERS_PRODUCTION_FAILURE;
   payload: AppError;
 }

@@ -17,7 +17,7 @@ export const Dashboard = () => {
           <PageTitle title="Dashboard" />
           <div className="orders-header-buttons">
             <LinkButton
-              title="Crear Producto"
+              title="Ver reportes"
               to={"/private/dashboard/view-reports"}
             />
           </div>

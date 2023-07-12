@@ -1,3 +1,5 @@
+import { OrderInfoResponse } from "../../domain/models/OrderInfoResponse";
+import { OrderProductionResponseModel } from "../../domain/models/OrderProductionResponseModel";
 import { OrderResponseModel } from "../../domain/models/OrderResponseModel";
 import { OrderAction } from "../actions/orderActions";
 import { OrderActionsTypes } from "../enums/OrderActionsEnum";
@@ -8,6 +10,8 @@ export interface OrderState {
   ordersByReference: OrderResponseModel[] | [];
   orderToReport: OrderResponseModel | null;
   error: Error | null;
+  orderInfo: OrderInfoResponse | null;
+  ordersProduction: OrderProductionResponseModel[] | [];
 }
 
 const initialState: OrderState = {
@@ -16,6 +20,8 @@ const initialState: OrderState = {
   ordersByReference: [],
   orderToReport: null,
   error: null,
+  orderInfo: null,
+  ordersProduction: [],
 };
 
 export const orderReducer = (
@@ -32,13 +38,40 @@ export const orderReducer = (
     case OrderActionsTypes.CREATE_ORDER_RETURN:
     case OrderActionsTypes.GET_ORDER_AND_RETURN_BY_ID:
     case OrderActionsTypes.GET_ORDER_BY_REFERENCE:
+    case OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER:
+    case OrderActionsTypes.GET_ORDER_STATS:
+    case OrderActionsTypes.GET_ORDERS_PRODUCTION:
       return {
         ...state,
         loading: true,
         error: null,
       };
 
+    case OrderActionsTypes.GET_ORDERS_PRODUCTION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        ordersProduction: action.payload,
+        error: null,
+      };
+
+    case OrderActionsTypes.GET_ORDER_STATS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        orderInfo: action.payload,
+        error: null,
+      };
+
     case OrderActionsTypes.GET_ALL_ORDERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        orders: action.payload,
+        error: null,
+      };
+
+    case OrderActionsTypes.GET_ORDER_BY_REFERENCE_FILTER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -130,6 +163,22 @@ export const orderReducer = (
         error: action.payload,
       };
 
+    case OrderActionsTypes.GET_ORDER_STATS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        orderInfo: null,
+        error: action.payload,
+      };
+
+    case OrderActionsTypes.GET_ORDERS_PRODUCTION_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        ordersProduction: [],
+        error: action.payload,
+      };
+
     case OrderActionsTypes.GET_ALL_ORDERS_FAILURE:
     case OrderActionsTypes.GET_ORDER_FAILURE:
     case OrderActionsTypes.CREATE_ORDER_FAILURE:
@@ -137,6 +186,7 @@ export const orderReducer = (
     case OrderActionsTypes.DELETE_ORDER_FAILURE:
     case OrderActionsTypes.GET_ORDERS_BY_USER_FAILURE:
     case OrderActionsTypes.CREATE_ORDER_RETURN_FAILURE:
+    case OrderActionsTypes.GET_ORDER_BY_REFERENCE_FAILURE:
       return {
         ...state,
         loading: false,

@@ -1,4 +1,5 @@
 import { AppError } from "../../domain/errors/AppError";
+import { InventoryInfoResponse } from "../../domain/models/InventoryInfoResponse";
 import { InventoryModel } from "../../domain/models/InventoryModel";
 import { InventoryActionTypes } from "../enums/InventoryActionsEnum";
 
@@ -86,6 +87,20 @@ export interface GetInventoryByNameOrReferenceFailureAction {
   payload: AppError;
 }
 
+export interface GetInventoryByNameOrReferenceFilterAction {
+  type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_FILTER;
+}
+
+export interface GetInventoryByNameOrReferenceFilterSuccessAction {
+  type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_SUCCESS_FILTER;
+  payload: InventoryModel[];
+}
+
+export interface GetInventoryByNameOrReferenceFilterFailureAction {
+  type: InventoryActionTypes.GET_INVENTORY_BY_NAME_OR_REFERENCE_FAILURE_FILTER;
+  payload: AppError;
+}
+
 export interface GetInventoryToReportAction {
   type: InventoryActionTypes.GET_INVENTORY_TO_REPORT;
 }
@@ -111,5 +126,19 @@ export interface GetInventoriesByCategoryIdSuccessAction {
 
 export interface GetInventoriesByCategoryIdFailureAction {
   type: InventoryActionTypes.GET_INVENTORIES_BY_CATEGORY_ID_FAILURE;
+  payload: AppError;
+}
+
+export interface GetInventoryInfoAction {
+  type: InventoryActionTypes.GET_INVENTORY_INFO;
+}
+
+export interface GetInventoryInfoSuccessAction {
+  type: InventoryActionTypes.GET_INVENTORY_INFO_SUCCESS;
+  payload: InventoryInfoResponse;
+}
+
+export interface GetInventoryInfoFailureAction {
+  type: InventoryActionTypes.GET_INVENTORY_INFO_FAILURE;
   payload: AppError;
 }
