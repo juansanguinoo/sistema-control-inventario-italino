@@ -35,6 +35,8 @@ const TYPES = {
   LoginUserUseCase: Symbol.for("LoginUserUseCase"),
   CheckLoginUserUseCase: Symbol.for("CheckLoginUserUseCase"),
   UpdatePasswordUseCase: Symbol.for("UpdatePasswordUseCase"),
+  ForgotPasswordUseCase: Symbol.for("ForgotPasswordUseCase"),
+  ResetPasswordUseCase: Symbol.for("ResetPasswordUseCase"),
 
   CreateRoleUseCase: Symbol.for("CreateRoleUseCase"),
   GetAllRolesUseCase: Symbol.for("GetAllRolesUseCase"),

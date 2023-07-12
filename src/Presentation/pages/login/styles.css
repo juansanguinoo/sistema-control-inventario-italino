@@ -76,6 +76,15 @@
   cursor: pointer;
 }
 
+.forgot-password {
+  font-size: 14px;
+}
+
+.forgot-password:hover {
+  color: #5a189a;
+  text-decoration: underline;
+}
+
 .login-button:hover {
   background-color: #a21ce0;
   border: 1px solid #000;

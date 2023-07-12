@@ -54,6 +54,8 @@ import { GetOrderAndReturnByIdUseCase } from "../domain/useCases/order/getOrderA
 import { GetOrderByReferenceUseCase } from "../domain/useCases/order/getOrderByReferenceUseCase";
 import { GetInventoriesByCategoryIdUseCase } from "../domain/useCases/inventory/getInventoriesByCategoryIdUseCase";
 import { UpdatePasswordUseCase } from "../domain/useCases/user/UpdatePasswordUseCase";
+import { ForgotPasswordUseCase } from "../domain/useCases/user/ForgotPasswordUseCase";
+import { ResetPasswordUseCase } from "../domain/useCases/user/ResetPasswordUseCase";
 
 const container = new Container();
 
@@ -154,6 +156,12 @@ container
 container
   .bind<UpdatePasswordUseCase>(TYPES.UpdatePasswordUseCase)
   .to(UpdatePasswordUseCase);
+container
+  .bind<ForgotPasswordUseCase>(TYPES.ForgotPasswordUseCase)
+  .to(ForgotPasswordUseCase);
+container
+  .bind<ResetPasswordUseCase>(TYPES.ResetPasswordUseCase)
+  .to(ResetPasswordUseCase);
 
 container
   .bind<CreateRoleUseCase>(TYPES.CreateRoleUseCase)

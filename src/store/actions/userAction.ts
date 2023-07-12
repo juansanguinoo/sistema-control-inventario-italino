@@ -25,6 +25,12 @@ import {
   UpdatePasswordAction,
   UpdatePasswordFailureAction,
   UpdatePasswordSuccessAction,
+  ForgotPasswordAction,
+  ForgotPasswordFailureAction,
+  ForgotPasswordSuccessAction,
+  ResetPasswordAction,
+  ResetPasswordFailureAction,
+  ResetPasswordSuccessAction,
 } from "../interfaces/UserActionsInterface";
 import { container } from "../../config/inversifyContainer";
 import { GetAllUserUseCase } from "../../domain/useCases/user/GetAllUserUseCase";
@@ -41,6 +47,8 @@ import { DeleteUserUseCase } from "../../domain/useCases/user/DeleteUserUseCase"
 import { LoginUserUseCase } from "../../domain/useCases/user/LoginUserUseCase";
 import { CheckLoginUserUseCase } from "../../domain/useCases/user/CheckLoginUserUseCase";
 import { UpdatePasswordUseCase } from "../../domain/useCases/user/UpdatePasswordUseCase";
+import { ForgotPasswordUseCase } from "../../domain/useCases/user/ForgotPasswordUseCase";
+import { ResetPasswordUseCase } from "../../domain/useCases/user/ResetPasswordUseCase";
 
 export type UserAction =
   | GetAllUsersAction
@@ -67,7 +75,13 @@ export type UserAction =
   | LogoutUserAction
   | UpdatePasswordAction
   | UpdatePasswordSuccessAction
-  | UpdatePasswordFailureAction;
+  | UpdatePasswordFailureAction
+  | ForgotPasswordAction
+  | ForgotPasswordSuccessAction
+  | ForgotPasswordFailureAction
+  | ResetPasswordAction
+  | ResetPasswordSuccessAction
+  | ResetPasswordFailureAction;
 
 export const getAllUsers = () => {
   return async (dispatch: Dispatch<UserAction>) => {
@@ -281,6 +295,56 @@ export const updatePassword = (
       );
       dispatch({
         type: UserActionsTypes.UPDATE_PASSWORD_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const forgotPassword = (email: string) => {
+  return async (dispatch: Dispatch<UserAction>) => {
+    const useCase = container.get<ForgotPasswordUseCase>(
+      TYPES.ForgotPasswordUseCase
+    );
+    dispatch({ type: UserActionsTypes.FORGOT_PASSWORD });
+
+    try {
+      const response = await useCase.execute(email);
+      dispatch({
+        type: UserActionsTypes.FORGOT_PASSWORD_SUCCESS,
+        payload: adaptUser(response.data!),
+      });
+    } catch (error: any) {
+      const handleError = new AppError(
+        `Ocurrió un error al actualizar el usuario ${error}`
+      );
+      dispatch({
+        type: UserActionsTypes.FORGOT_PASSWORD_FAILURE,
+        payload: handleError,
+      });
+    }
+  };
+};
+
+export const resetPassword = (token: string, newPassword: string) => {
+  return async (dispatch: Dispatch<UserAction>) => {
+    const useCase = container.get<ResetPasswordUseCase>(
+      TYPES.ResetPasswordUseCase
+    );
+    dispatch({ type: UserActionsTypes.RESET_PASSWORD });
+
+    try {
+      const response = await useCase.execute(token, newPassword);
+      dispatch({
+        type: UserActionsTypes.RESET_PASSWORD_SUCCESS,
+        payload: adaptUser(response.data!),
+      });
+    } catch (error: any) {
+      const handleError = new AppError(
+        `Ocurrió un error al actualizar el usuario ${error}`
+      );
+      dispatch({
+        type: UserActionsTypes.RESET_PASSWORD_FAILURE,
         payload: handleError,
       });
     }
