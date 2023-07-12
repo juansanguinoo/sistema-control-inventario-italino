@@ -38,6 +38,7 @@ export const FormInventory = () => {
   });
   const [send, setSend] = useState(false);
   const [hasImage, setHasImage] = useState(false);
+  const [execute, setExecute] = useState(false);
 
   const [fileData, setFileData] = useState<IFilesState>({
     file1: null,
@@ -134,7 +135,11 @@ export const FormInventory = () => {
           inventoryData.categoryId !== 0
         ) {
           if (params.id) {
-            dispatch(updateInventory(inventoryData));
+            if (execute) {
+              console.log(inventoryData);
+              dispatch(updateInventory(inventoryData));
+              setExecute(false);
+            }
           } else {
             dispatch(createInventory(inventoryData));
           }
@@ -203,7 +208,9 @@ export const FormInventory = () => {
       if (urlsList) {
         setInventoryData((prevData) => ({
           ...prevData,
-          imageInventory: urlsList,
+          imageInventory: inventoryData.imageInventory
+            ? inventoryData.imageInventory + ", " + urlsList
+            : urlsList,
         }));
         setHasImage(true);
       } else {
@@ -218,6 +225,30 @@ export const FormInventory = () => {
     e.preventDefault();
     handleUploadImages();
     setSend(true);
+
+    const images = Object.values(fileData)
+      .filter((file) => file !== null && typeof file === "string")
+      .map((file) => file);
+
+    let urlsList = images.join(", ");
+    urlsList = urlsList.trim();
+
+    if (urlsList.endsWith(",")) {
+      urlsList = urlsList.slice(0, -1);
+    }
+
+    if (urlsList.startsWith(",")) {
+      urlsList = urlsList.slice(1);
+    }
+
+    urlsList = urlsList.replace(/\s+/g, " ");
+
+    setInventoryData((prevData) => ({
+      ...prevData,
+      imageInventory: urlsList,
+    }));
+
+    setExecute(true);
   };
 
   return (
