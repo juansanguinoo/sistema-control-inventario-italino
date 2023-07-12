@@ -12,7 +12,6 @@ export class AxiosHttpClient implements IHttpClient {
 
     const token = sessionStorage.getItem("token");
     if (token) {
-      console.log("token", token);
       this.instance.defaults.headers.common["x-token"] = token;
     }
   }

@@ -54,11 +54,6 @@ export const ModalOrders = ({
     (state: RootState) => state.inventoryReducer.inventoryByNameOrReference
   );
 
-  useEffect(() => {
-    console.log(selectedInventory);
-    console.log(search);
-  }, [selectedInventory, search]);
-
   const moneyFormat = (value: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -67,7 +62,6 @@ export const ModalOrders = ({
   };
 
   const handleAddInventory = (inventory: InventoryModel) => {
-    console.log(inventory);
     const inventorySelected: IInventoryModelSelected = {
       inventoryId: inventory.id!,
       nameInventory: inventory.nameInventory,

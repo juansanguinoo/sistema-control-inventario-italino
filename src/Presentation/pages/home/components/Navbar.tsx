@@ -54,7 +54,7 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
       )}
       <ul className={`navigation`}>
         {getUser?.roleId.activities?.some(
-          (activity: any) => activity.id_activity === 2
+          (activity: any) => activity.id_activity === 1
         ) ? (
           <NavItemHome
             icon={Dashboard}
@@ -64,7 +64,7 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
           />
         ) : null}
         {getUser?.roleId.activities?.some(
-          (activity: any) => activity.id_activity === 3
+          (activity: any) => activity.id_activity === 2
         ) ? (
           <NavItemHome
             icon={Bag}
@@ -75,7 +75,7 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
         ) : null}
 
         {getUser?.roleId.activities?.some(
-          (activity: any) => activity.id_activity === 4
+          (activity: any) => activity.id_activity === 3
         ) ? (
           <NavItemHome
             icon={User}
@@ -86,7 +86,7 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
         ) : null}
 
         {getUser?.roleId.activities?.some(
-          (activity: any) => activity.id_activity === 5
+          (activity: any) => activity.id_activity === 4
         ) ? (
           <NavItemHome
             icon={Folder}
@@ -108,7 +108,7 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
         ) : null}
 
         {getUser?.roleId.activities?.some(
-          (activity: any) => activity.id_activity === 6
+          (activity: any) => activity.id_activity === 5
         ) ? (
           <NavItemHome
             icon={Bookmark}
