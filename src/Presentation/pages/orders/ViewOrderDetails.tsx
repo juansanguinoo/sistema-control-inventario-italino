@@ -111,7 +111,7 @@ export const ViewOrderDetails = () => {
       id: "5df3180a09ea16dc4b95f910",
       invoice_no: orderData?.referenceOrder,
       company: customer?.name_customer,
-      email: customer?.nit_customer,
+      email: customer?.email_customer,
       phone: customer?.phone_customer,
       address: customer?.address_customer,
       trans_date: moment(orderData?.createdAt).format("DD/MM/YYYY"),

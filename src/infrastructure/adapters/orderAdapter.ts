@@ -31,6 +31,7 @@ export const adaptOrderProduction = (
     id: order.id_order,
     referenceOrder: order.reference_order,
     statusOrder: order.status_order,
+    descriptionOrder: order.description_order,
     paymentOrder: order.payment_order,
     typeOrder: order.type_order,
     totalOrder: order.total_order,

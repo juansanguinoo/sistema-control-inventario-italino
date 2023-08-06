@@ -77,14 +77,33 @@ export const Inventory = () => {
           ]}
         />
         {inventories.length > 0 ? (
-          <TableInformation
-            categories={inventories}
-            columns={inventoryColumns}
-            deleteCategory={deleteInventory}
-            handleEditAction={handleEditAction}
-            handlePreviewAction={handlePreviewAction}
-            showDelete={false}
-          />
+          <>
+            <div className="main-reports">
+              <div className="main-reports-search-container">
+                <input
+                  type="text"
+                  placeholder="Buscar por nombre o referencia"
+                  className="main-reports-search-container-input-text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                <button
+                  className="main-reports-search-container-input-button"
+                  onClick={handleSearch}
+                >
+                  Buscar
+                </button>
+              </div>
+            </div>
+            <TableInformation
+              categories={inventories}
+              columns={inventoryColumns}
+              deleteCategory={deleteInventory}
+              handleEditAction={handleEditAction}
+              handlePreviewAction={handlePreviewAction}
+              showDelete={false}
+            />
+          </>
         ) : (
           <div className="customers-nocustomers">
             <FilterMessage
@@ -96,31 +115,6 @@ export const Inventory = () => {
             </div>
           </div>
         )}
-        <div className="main-reports">
-          <div className="main-reports-search-container">
-            <input
-              type="text"
-              placeholder="Buscar por nombre o referencia"
-              className="main-reports-search-container-input-text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <button
-              className="main-reports-search-container-input-button"
-              onClick={handleSearch}
-            >
-              Buscar
-            </button>
-          </div>
-        </div>
-        <TableInformation
-          categories={inventories}
-          columns={inventoryColumns}
-          deleteCategory={deleteInventory}
-          handleEditAction={handleEditAction}
-          handlePreviewAction={handlePreviewAction}
-          showDelete={false}
-        />
       </div>
     </div>
   );

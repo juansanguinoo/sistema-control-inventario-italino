@@ -34,6 +34,10 @@ export const ViewProductionDetails = () => {
     }
   }, [ordersToProduction]);
 
+  useEffect(() => {
+    console.log(orderData);
+  }, [orderData]);
+
   return (
     <div className={`orders-container ${navbarClass}`}>
       <div className="orders-header">
