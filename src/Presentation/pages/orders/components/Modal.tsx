@@ -1,5 +1,5 @@
 import SearchIcon from "../../../assets/icons8-search.svg";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { InventoryModel } from "../../../../domain/models/InventoryModel";
 import { FilteredProductList } from "./FilteredProductList";
 import { SelectedProducts } from "./SelectedProducts";

@@ -38,7 +38,7 @@ export const Home = () => {
 
   return (
     <div className="app">
-      <HeaderHome title={""} toggleMenu={toggleMenuResponsive} />
+      <HeaderHome toggleMenu={toggleMenuResponsive} />
       <NavbarHome toggleNavbar={toggleNavbar} />
     </div>
   );
