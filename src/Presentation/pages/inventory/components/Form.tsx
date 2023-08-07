@@ -50,9 +50,18 @@ export const FormInventory = () => {
     const images = inventoryData.imageInventory?.split(",");
     if (images) {
       setFileData({
-        file1: images[0],
-        file2: images[1] || null,
-        file3: images[2] || null,
+        file1: {
+          file: null,
+          url: images[0],
+        },
+        file2: {
+          file: null,
+          url: images[1] || null,
+        },
+        file3: {
+          file: null,
+          url: images[2] || null,
+        },
       });
     }
   }, [inventoryData]);
@@ -136,7 +145,6 @@ export const FormInventory = () => {
         ) {
           if (params.id) {
             if (execute) {
-              console.log(inventoryData);
               dispatch(updateInventory(inventoryData));
               setExecute(false);
             }
@@ -187,7 +195,7 @@ export const FormInventory = () => {
     const apiKey = import.meta.env.VITE_CLOUDINARY_API_KEY;
 
     const imagesPromise = Object.values(fileData)
-      .filter((file) => file !== null && typeof file !== "string")
+      .filter((file) => file?.file !== null && typeof file?.url !== null)
       .map((file) => {
         const formData = new FormData();
         formData.append("file", file?.file);
@@ -227,8 +235,8 @@ export const FormInventory = () => {
     setSend(true);
 
     const images = Object.values(fileData)
-      .filter((file) => file !== null && typeof file === "string")
-      .map((file) => file);
+      .filter((file) => file?.file === null && file?.url !== null)
+      .map((file) => file?.url);
 
     let urlsList = images.join(", ");
     urlsList = urlsList.trim();

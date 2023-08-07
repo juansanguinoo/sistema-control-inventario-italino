@@ -5,8 +5,8 @@ export interface IColumnsDataTable {
 }
 
 export interface IFileData {
-  file: File;
-  url: string;
+  file: File | null;
+  url: string | null;
 }
 
 export interface IFileName {

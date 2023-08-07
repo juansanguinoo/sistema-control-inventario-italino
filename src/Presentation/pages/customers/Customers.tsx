@@ -102,7 +102,6 @@ export const Customers = () => {
   };
 
   const handleDeleteAction = (params: any) => {
-    console.log(params.row);
     setCustomerData({
       ...params.row,
       statusCustomer: "Inactivo",
