@@ -10,11 +10,10 @@ import { io } from "socket.io-client";
 import { useGetUser } from "../../../hooks/useGetUser";
 
 interface IHeaderProps {
-  title: string;
   toggleMenu?: () => void;
 }
 
-export const HeaderHome = ({ title, toggleMenu }: IHeaderProps) => {
+export const HeaderHome = ({ toggleMenu }: IHeaderProps) => {
   const navigate = useNavigate();
   const navbarOpen = useSelector(
     (state: RootState) => state.navbarReducer.stateOpen

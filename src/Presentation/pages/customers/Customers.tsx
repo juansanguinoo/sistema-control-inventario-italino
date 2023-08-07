@@ -32,6 +32,7 @@ export const Customers = () => {
     addressCustomer: "",
     phoneCustomer: "",
     statusCustomer: "Activo",
+    emailCustomer: "",
   });
   const [actions, setActions] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -59,6 +60,7 @@ export const Customers = () => {
       addressCustomer: "",
       phoneCustomer: "",
       statusCustomer: "Activo",
+      emailCustomer: "",
     });
     setShowModal(false);
     setActions("");
@@ -100,7 +102,6 @@ export const Customers = () => {
   };
 
   const handleDeleteAction = (params: any) => {
-    console.log(params.row);
     setCustomerData({
       ...params.row,
       statusCustomer: "Inactivo",
