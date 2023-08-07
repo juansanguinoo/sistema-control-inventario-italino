@@ -216,6 +216,32 @@ export const roleColumns = [
     },
   },
   {
+    field: "Producción",
+    headerName: "Producción",
+    width: 140,
+    renderCell: (params: any) => {
+      return (
+        <div
+          className={`cellWithStatus ${
+            params.row.activities.find(
+              (activity: any) => activity.name_activity === "Producción"
+            )
+              ? "access"
+              : "noaccess"
+          }`}
+        >
+          {params.row.activities.find(
+            (activity: any) => activity.name_activity === "Producción"
+          ) ? (
+            <div>Con acceso</div>
+          ) : (
+            <div>Sin acceso</div>
+          )}
+        </div>
+      );
+    },
+  },
+  {
     field: "statusRole",
     headerName: "Status",
     width: 200,

@@ -29,7 +29,7 @@ export const HeaderHome = ({ title, toggleMenu }: IHeaderProps) => {
 
   useEffect(() => {
     // const token = sessionStorage.getItem("token");
-    const newSocket = io(`http://localhost:3000/`, {
+    const newSocket = io(import.meta.env.VITE_BACKEND_URL, {
       transports: ["websocket"],
       autoConnect: true,
       forceNew: true,
@@ -51,7 +51,7 @@ export const HeaderHome = ({ title, toggleMenu }: IHeaderProps) => {
 
     if (
       getUser?.roleId.activities?.some(
-        (activity: any) => activity.id_activity === 5
+        (activity: any) => activity.id_activity === 7
       )
     ) {
       socket?.on("nuevaProducción", (data: any) => {

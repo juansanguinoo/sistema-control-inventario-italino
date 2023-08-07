@@ -9,6 +9,7 @@ import {
   updateRole,
 } from "../../../../store/actions/roleActions";
 import Swal from "sweetalert2";
+import { ActivityModel } from "../../../../domain/models/ActivitiesModel";
 
 interface IModalRoleProps {
   onCloseModal?: () => void;
@@ -29,6 +30,7 @@ export const ModalRoles = ({
     activities: initialState?.activities || [],
   });
   const dispatch = useDispatch<Dispatch<any>>(); // eslint-disable-line
+  const [activitiesToShow, setActivitiesToShow] = useState<ActivityModel[]>([]);
   const activities = useSelector(
     (state: RootState) => state.roleReducer.activities
   );
@@ -36,6 +38,10 @@ export const ModalRoles = ({
   useEffect(() => {
     dispatch(getAllActivities());
   }, [dispatch]);
+
+  useEffect(() => {
+    setActivitiesToShow(activities.filter((activity) => activity.id !== 6));
+  }, [activities]);
 
   const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
@@ -130,7 +136,7 @@ export const ModalRoles = ({
             <div className="form-group-rol">
               <label className="activities-rol-label">Actividades:</label>
               <div className="activity-checkboxes">
-                {activities.map((activity) => (
+                {activitiesToShow.map((activity) => (
                   <div key={activity.id} className="activity-checkbox">
                     <label
                       htmlFor={`activity-${activity.id}`}
