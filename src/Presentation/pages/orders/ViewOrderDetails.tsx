@@ -75,6 +75,7 @@ export const ViewOrderDetails = () => {
           typeOrder: orderData?.typeOrder!,
           totalOrder: orderData?.totalOrder!,
           orderDetails: orderData?.orderDetails,
+          descriptionOrder: orderData?.descriptionOrder!,
         };
         dispatch(updateOrder(orderUpdates));
         Swal.fire(

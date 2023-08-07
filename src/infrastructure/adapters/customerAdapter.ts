@@ -12,7 +12,7 @@ export const adaptCustomer = (customer: Customer): CustomerModel => {
     statusCustomer: customer.status_customer,
     createdAt: customer.created_at,
     updatedAt: customer.updated_at,
-    userId: customer.user,
+    userId: customer.user.id_user,
   };
 };
 

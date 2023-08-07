@@ -139,7 +139,7 @@ export const FormImagesInventory = ({
           hidden
         />
 
-        {fileData.file1 ? (
+        {fileData.file1?.url ? (
           <img src={fileData.file1.url} width={280} height={200} alt="file-1" />
         ) : (
           <>
@@ -184,7 +184,7 @@ export const FormImagesInventory = ({
               hidden
             />
 
-            {fileData.file2 ? (
+            {fileData.file2?.url ? (
               <img
                 src={fileData.file2.url}
                 width={130}
@@ -236,7 +236,7 @@ export const FormImagesInventory = ({
               hidden
             />
 
-            {fileData.file3 ? (
+            {fileData.file3?.url ? (
               <img
                 src={fileData.file3.url}
                 width={130}

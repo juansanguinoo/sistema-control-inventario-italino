@@ -8,7 +8,6 @@ import { getInventoriesByCategoryId } from "../../../store/actions/inventoryActi
 import { getCategories } from "../../../store/actions/categoryActions";
 import Swal from "sweetalert2";
 import { FilterMessage } from "../orders/components/FilterMessage";
-import { HeaderButton } from "../../components/buttons/HeaderButton";
 
 export const Ranges = () => {
   const [value, setValue] = useState("");
