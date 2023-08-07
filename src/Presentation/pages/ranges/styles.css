@@ -1,0 +1,170 @@
+.ranges-container {
+  min-height: 100vh;
+  height: calc(100% - 60px);
+  background-color: #eef0fa;
+  padding: 1rem;
+  transition: margin-left 0.5s ease;
+}
+
+.ranges-container.collapsed {
+  margin-left: 5rem;
+}
+
+.ranges-container.expanded {
+  margin-left: 17.5rem;
+}
+
+.ranges-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ranges-input-container {
+  width: 60%;
+  height: auto;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.ranges-input-container input {
+  width: 50%;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  border-radius: 0.5rem;
+}
+
+.ranges-input-container button {
+  width: 18%;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.ranges-main {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ranges-nosearches {
+  width: 100%;
+  height: 450px;
+  padding: 10px;
+  margin: 2rem 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.ranges-card {
+  width: 20%;
+  height: 16rem;
+  margin: 1rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.ranges-card-img {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ranges-card-img img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+
+.ranges-card-info {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.ranges-card-info h3 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.ranges-card-info p {
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 1200px) {
+  .ranges-input-container {
+    justify-content: flex-end;
+  }
+  .ranges-input-container input {
+    width: 60%;
+  }
+  .ranges-card {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .ranges-input-container input {
+    width: 70%;
+  }
+
+  .ranges-input-container button {
+    width: 30%;
+  }
+
+  .ranges-card {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .ranges-header {
+    flex-direction: column;
+  }
+
+  .ranges-input-container {
+    width: 100%;
+  }
+
+  .ranges-card {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .ranges-container.collapsed {
+    margin-left: 0;
+  }
+
+  .ranges-container.expanded {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .ranges-card {
+    width: 90%;
+  }
+}
