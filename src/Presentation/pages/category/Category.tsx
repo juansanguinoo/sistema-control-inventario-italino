@@ -16,6 +16,7 @@ import { Dispatch } from "redux";
 import { categoryColumns } from "../../utils/columnsDataTable";
 import { CategoryModel } from "../../../domain/models/CategoryModel";
 import Swal from "sweetalert2";
+import { FilterMessage } from "../orders/components/FilterMessage";
 
 export const Category = () => {
   const [categoryData, setCategoryData] = useState<CategoryModel>({
@@ -123,13 +124,30 @@ export const Category = () => {
           titles={["Categorías activas", "Categorías inactivas"]}
           data={[activeCategories.length, inactiveCategories.length]}
         />
-        <TableInformation
-          categories={categories}
-          columns={categoryColumns}
-          deleteCategory={handleDeleteAction}
-          handleEditAction={handleEditAction}
-          handlePreviewAction={handlePreviewAction}
-        />
+        {categories.length > 0 ? (
+          <TableInformation
+            categories={categories}
+            columns={categoryColumns}
+            deleteCategory={handleDeleteAction}
+            handleEditAction={handleEditAction}
+            handlePreviewAction={handlePreviewAction}
+          />
+        ) : (
+          <div className="customers-nocustomers">
+            <FilterMessage
+              messageTitle={"¿No tienes categorías aún?"}
+              messageParagraph={
+                "Una vez crees categorías, las podrás ver aquí."
+              }
+            />
+            <div className="customer-add-customer">
+              <HeaderButton
+                title="Crear una nueva categoría"
+                handleFunction={openModal}
+              />
+            </div>
+          </div>
+        )}
         {showModal && (
           <ModalCategory
             onCloseModal={closeModal}

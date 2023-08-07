@@ -45,6 +45,7 @@ export const ModalOrders = ({
     customerId: initialData?.customerId || 0,
     userId: initialData?.userId || getUser?.id!,
     statusOrder: initialData?.statusOrder || "Pendiente",
+    descriptionOrder: initialData?.descriptionOrder || "",
     paymentOrder: initialData?.paymentOrder || "",
     typeOrder: initialData?.typeOrder || "",
     totalOrder: initialData?.totalOrder || 0,
@@ -136,7 +137,7 @@ export const ModalOrders = ({
     setIsQuantityInputFocused(value);
   };
 
-  const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectChange = (event: any) => {
     const { name, value } = event.target;
     if (name === "customerId") {
       setDataToSend((prevData) => ({
@@ -341,6 +342,13 @@ export const ModalOrders = ({
                     name="notes"
                     id="notes"
                     placeholder="Notas"
+                    onChange={(event) =>
+                      setDataToSend((prevData) => ({
+                        ...prevData,
+                        descriptionOrder: event.target.value,
+                      }))
+                    }
+                    value={dataToSend.descriptionOrder}
                   ></textarea>
                 </div>
               </div>

@@ -16,6 +16,7 @@ import { inventoryColumns } from "../../utils/columnsDataTable";
 import { LinkButton } from "../../components/buttons/LinkButton";
 import { useNavigate } from "react-router-dom";
 import { InventoryModel } from "../../../domain/models/InventoryModel";
+import { FilterMessage } from "../orders/components/FilterMessage";
 import { useGetInventoryInfo } from "../../hooks/useGetInventoryInfo";
 
 export const Inventory = () => {
@@ -75,31 +76,45 @@ export const Inventory = () => {
             inventoryInfo?.totalInventoriesPublished,
           ]}
         />
-        <div className="main-reports">
-          <div className="main-reports-search-container">
-            <input
-              type="text"
-              placeholder="Buscar por nombre o referencia"
-              className="main-reports-search-container-input-text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+        {inventories.length > 0 ? (
+          <>
+            <div className="main-reports">
+              <div className="main-reports-search-container">
+                <input
+                  type="text"
+                  placeholder="Buscar por nombre o referencia"
+                  className="main-reports-search-container-input-text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                <button
+                  className="main-reports-search-container-input-button"
+                  onClick={handleSearch}
+                >
+                  Buscar
+                </button>
+              </div>
+            </div>
+            <TableInformation
+              categories={inventories}
+              columns={inventoryColumns}
+              deleteCategory={deleteInventory}
+              handleEditAction={handleEditAction}
+              handlePreviewAction={handlePreviewAction}
+              showDelete={false}
             />
-            <button
-              className="main-reports-search-container-input-button"
-              onClick={handleSearch}
-            >
-              Buscar
-            </button>
+          </>
+        ) : (
+          <div className="customers-nocustomers">
+            <FilterMessage
+              messageTitle={"¿No tienes productos aún?"}
+              messageParagraph={"Una vez crees productos, los podrás ver aquí."}
+            />
+            <div className="customer-add-customer">
+              <LinkButton title="Crear Producto" />
+            </div>
           </div>
-        </div>
-        <TableInformation
-          categories={inventories}
-          columns={inventoryColumns}
-          deleteCategory={deleteInventory}
-          handleEditAction={handleEditAction}
-          handlePreviewAction={handlePreviewAction}
-          showDelete={false}
-        />
+        )}
       </div>
     </div>
   );

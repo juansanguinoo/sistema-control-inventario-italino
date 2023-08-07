@@ -31,23 +31,23 @@
 
 .card-customer-name {
   font-size: 16px;
-  color: #8B8D97;
+  color: #8b8d97;
 }
 
 .card-customer-date {
   font-size: 14px;
-  color: #8B8D97;
+  color: #8b8d97;
 }
 
 .card-customer-date-text {
   font-size: 14px;
-  color: #45464E;
+  color: #45464e;
   margin-left: 0.5rem;
 }
 
 .card-client-status {
   height: 2rem;
-  padding: 2px 4px; 
+  padding: 2px 4px;
   border-radius: 12px;
   background-color: #fff2e2;
 }
@@ -69,12 +69,12 @@
 
 .card-main-info-title {
   font-size: 12px;
-  color: #8B8D97;
+  color: #8b8d97;
 }
 
 .card-main-info-text {
   font-size: 14px;
-  color: #45464E;
+  color: #45464e;
 }
 
 .card-img img {
@@ -101,7 +101,7 @@
 }
 
 .card-data h6 {
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: #000;
 }
 

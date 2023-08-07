@@ -45,9 +45,9 @@ export const Production = () => {
       },
     },
     {
-      field: "typeOrder",
-      headerName: "Tipo de orden",
-      width: 250,
+      field: "descriptionOrder",
+      headerName: "Descripción de la ordén",
+      width: 500,
     },
     {
       field: "statusOrder",

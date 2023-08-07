@@ -97,7 +97,7 @@ export const NavbarHome = ({ toggleNavbar }: INavbarProps) => {
         ) : null}
 
         {getUser?.roleId.activities?.some(
-          (activity: any) => activity.id_activity === 5
+          (activity: any) => activity.id_activity === 4
         ) ? (
           <NavItemHome
             icon={Folder}

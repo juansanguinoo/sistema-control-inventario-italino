@@ -178,8 +178,6 @@ export const orderReducer = (
         ordersProduction: [],
         error: action.payload,
       };
-
-    case OrderActionsTypes.GET_ALL_ORDERS_FAILURE:
     case OrderActionsTypes.GET_ORDER_FAILURE:
     case OrderActionsTypes.CREATE_ORDER_FAILURE:
     case OrderActionsTypes.UPDATE_ORDER_FAILURE:

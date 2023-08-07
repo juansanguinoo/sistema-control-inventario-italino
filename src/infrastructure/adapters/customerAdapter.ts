@@ -6,6 +6,7 @@ export const adaptCustomer = (customer: Customer): CustomerModel => {
     id: customer.id_customer,
     nameCustomer: customer.name_customer,
     nitCustomer: customer.nit_customer,
+    emailCustomer: customer.email_customer,
     addressCustomer: customer.address_customer,
     phoneCustomer: customer.phone_customer,
     statusCustomer: customer.status_customer,
